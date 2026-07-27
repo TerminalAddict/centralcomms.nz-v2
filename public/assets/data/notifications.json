@@ -1,13 +1,23 @@
 {
     "notifications": [
         {
+            "id": "14cc874a-52e2-4f91-a678-d0087604af93",
+            "title": "No audio on calls, and calls dropping",
+            "body": "Many customers are experiencing issues with their cloud PBX not having audio.\nCustomers on the older \"S-Series\" platform seem to be the only ones affected.\n\nAll hands are on deck trying to resolve the issue.",
+            "status": "resolved",
+            "author": "paul",
+            "created_at": "2026-07-06T09:48:56+12:00",
+            "updated_at": "2026-07-17T15:26:19+12:00",
+            "comments": []
+        },
+        {
             "id": "149e89e0-3b8a-402f-9a86-469cad786b5f",
             "title": "2026 new pbx / phone systems requirements",
             "body": "In 2026 we are expecting to retire what refer to as our \"S\" series phone platform ☎️.\nThis is as a result of new technologies in the telecommunications world, and a need to stay moving forward with our tech.\n\nOne of our technicians will likely contact you to discuss options for your future telecommunications needs.",
-            "status": "warning",
+            "status": "resolved",
             "author": "paul",
             "created_at": "2026-04-08T13:22:52+12:00",
-            "updated_at": "2026-04-08T13:54:02+12:00",
+            "updated_at": "2026-07-06T09:43:30+12:00",
             "comments": []
         },
         {

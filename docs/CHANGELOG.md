@@ -141,7 +141,7 @@ All service pages (voip, cctv, networking--data, wireless, ultra-fast-broadband,
 ## 2026-04-07
 
 ### c87571e — Various fixes and improvements
-- Contact form email address changed from `info@centralcomms.nz` to `support@smtp.centralcomms.nz`
+- Contact form email address changed from `support@centralcomms.nz` to `support@smtp.centralcomms.nz`
 - Notifications status banner: removed `reveal` animation class so the loading character displays immediately on page load (previously the banner was invisible until the user scrolled)
 - Support page `.content-h2` headings darkened to `#27448f` for readability against the light background
 - Nav: added "Call Now" `tel:0800848038` button before "Get in Touch" in both desktop nav and mobile menu; phone number extracted to a frontmatter constant to avoid duplication
