@@ -232,6 +232,21 @@ const extraSchemaItems = Array.isArray(extraSchema)
     );
     document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
   </script>
+  <script>
+    (() => {
+      document.querySelectorAll('a[data-mail][data-domain]').forEach((link) => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+
+          const mail = link.getAttribute('data-mail');
+          const domain = link.getAttribute('data-domain');
+          if (!mail || !domain) return;
+
+          window.location.href = `mailto:${mail}@${domain}?subject=New Contact From Centralcomms.nz.`;
+        });
+      });
+    })();
+  </script>
   <script async src="/assets/console.js"></script>
   <script src="https://app.slack-web-chat.com/widget/widget.min.js?key=976e50aa6dbf06ab735d2af54b21f2ec8eb8c3abaa518a51" async defer></script>
 </body>
