@@ -8,7 +8,30 @@ const updates = Array.isArray(data.updates) ? data.updates : [];
 let changed = false;
 
 function normalizeYouTubeIframeAttrs(html) {
-  return html.replace(/<iframe\b[^>]*>/gi, (tag) => {
+  return html.replace(/<iframe\b[^>]*>(?:\s*<\/iframe>)+/gi, (tag) => {
+    const openTag = tag.match(/<iframe\b[^>]*>/i)?.[0] ?? tag;
+
+    if (!/\bsrc\s*=\s*["'][^"']*youtube(?:-nocookie)?\.com\/embed\//i.test(openTag)) {
+      return tag;
+    }
+
+    const attrs = [];
+    const matches = openTag.matchAll(/\s([^\s=/>]+)(?:\s*=\s*("([^"]*)"|'([^']*)'|([^\s>]+)))?/gi);
+    for (const match of matches) {
+      const originalName = match[1];
+      const name = originalName.toLowerCase();
+      const value = match[3] ?? match[4] ?? match[5] ?? '';
+      if (name === 'src' || name === 'width' || name === 'height' || name === 'allow' || name === 'title') {
+        attrs.push(value === '' ? originalName : `${originalName}="${value}"`);
+      } else if (name === 'allowfullscreen') {
+        attrs.push('allowfullscreen');
+      }
+    }
+
+    const normalized = `<iframe${attrs.length ? ` ${attrs.join(' ')}` : ''}></iframe>`;
+    if (normalized !== tag) changed = true;
+    return normalized;
+  }).replace(/<iframe\b[^>]*>(?!\s*<\/iframe>)/gi, (tag) => {
     if (!/\bsrc\s*=\s*["'][^"']*youtube(?:-nocookie)?\.com\/embed\//i.test(tag)) {
       return tag;
     }

@@ -30,10 +30,10 @@ if (isset($_GET["embedimages"])) {
     $linkBase64 = 'data:image/' . $type . ';base64,' . base64_encode($linkIcondata);
     $logoBase64 = 'data:image/' . $type . ';base64,' . base64_encode($logoImgdata);
 } else {
-    $phoneBase64 = "{{ site.url }}{{site.baseurl}}assets/email-sig/phone-icon-2x.png";
-    $emailBase64 = "{{ site.url }}{{site.baseurl}}assets/email-sig/email-icon-2x.png"; 
-    $linkBase64 = "{{ site.url }}{{site.baseurl}}assets/email-sig/link-icon-2x.png";
-    $logoBase64 = "{{ site.url }}{{site.baseurl}}assets/email-sig/centralcomms.email.png";
+    $phoneBase64 = "https://www.centralcomms.nz/assets/email-sig/phone-icon-2x.png";
+    $emailBase64 = "https://www.centralcomms.nz/assets/email-sig/email-icon-2x.png";
+    $linkBase64 = "https://www.centralcomms.nz/assets/email-sig/link-icon-2x.png";
+    $logoBase64 = "https://www.centralcomms.nz/assets/email-sig/centralcomms.email.png";
 }
 
 ?>
