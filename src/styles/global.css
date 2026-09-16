@@ -362,3 +362,8 @@ img { max-width: 100%; height: auto; }
 
 /* ─── Focus visible ───────────────────────────────── */
 :focus-visible { outline: 2px solid #0284c7; outline-offset: 3px; }
+
+/* Make the first card (Paul Willard) span the full grid width */
+.team-grid > :first-child {
+    grid-column: 1 / -1;
+}
