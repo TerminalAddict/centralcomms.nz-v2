@@ -8,6 +8,12 @@ All notable changes to centralcomms.nz v2.
 
 ### SEO and structured data
 
+- Replaced the CCTV stock hero with a WebP montage based on the owner's school/work-vehicle and camera-installation photographs. Updated the matching sharing image, added an installation-focused mobile crop, and documented the AI-assisted composition and source photos. Original uploads remain unchanged.
+- Expanded `/cctv.html` with six example use cases, Nx Witness feature analysis and qualified comparisons, SADPTools and NX Camera Info benefits, installation/maintenance guidance, an existing freezer project example and 16 FAQs.
+- Added CCTV `Service`, `WebPage`, `BreadcrumbList` and matching `FAQPage` metadata, software mentions and credentials linked to the existing business entity. All new content is build-time HTML, with keyboard-accessible native FAQ disclosures and no new client-side dependency.
+- Corrected the CCTV company licence to `26-136711` from the displayed certificate, keeping the separately listed individual licence on the About page unchanged. Corrected Nx Witness's description from a free/open-source NVR to a commercially licensed VMS with an open-source desktop client.
+- Shared the existing TeTauru, Jordon and Peter testimonials between the home and CCTV pages without altering their wording or implying product endorsements.
+- Added locally hosted CCTV photography, vendor/app illustrations, a readable company licence image and a dedicated 1200 x 630 sharing image. External references open in a new tab; competitor names remain unlinked. Added asset provenance, claim boundaries and maintenance guidance in `docs/cctv-content.md`.
 - Expanded `/voip.html` with Hamilton/Waikato service content, six business use cases, Yeastar P-Series feature analysis, Linkus benefits, qualified competitor comparisons, deployment/migration guidance and 14 FAQs.
 - Added matching `Service`, `WebPage`, `BreadcrumbList` and `FAQPage` JSON-LD, with visible FAQ answers and schema generated from one data source. Added crawl-friendly `robots.txt` pointing to the existing sitemap.
 - Corrected sitemap generation to use the same `.html` URLs as the built pages' canonicals, retaining the origin for the home page.

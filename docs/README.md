@@ -27,6 +27,7 @@ Complete reference for developing, building, deploying, and managing the Central
 17. [Screenshots](Screenshots/README.md)
 18. [Performance and PageSpeed](#webp-images)
 19. [VoIP content and SEO maintenance](voip-content.md)
+20. [CCTV content and SEO maintenance](cctv-content.md)
 
 ---
 
@@ -535,9 +536,12 @@ The `From` header comes from `$CONTACT_FROM`. The `Reply-To` is set to the sende
 | `extraSchema` | No | None | Additional JSON-LD object or array of objects; use the existing business `@id` for service providers |
 | `noindex` | No | `false` | Set to `true` to add `<meta name="robots" content="noindex,nofollow">` |
 
-The VoIP page is an example of static long-form service content with shared FAQ
-data and page-specific sharing metadata. See [VoIP content maintenance](voip-content.md)
-for sources, local image provenance, schema conventions and verification steps.
+The VoIP and CCTV pages are examples of static long-form service content with
+shared FAQ data and page-specific sharing metadata. See
+[VoIP content maintenance](voip-content.md) and
+[CCTV content maintenance](cctv-content.md) for sources, local image provenance,
+schema conventions and verification steps. The CCTV notes also distinguish the
+company PSPLA licence from the individual licence listed on the About page.
 
 ---
 

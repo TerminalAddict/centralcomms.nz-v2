@@ -1,385 +1,413 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { cctvCredentials, cctvFaqs, cctvUseCases, nxFeatures } from '../data/cctv';
+import { cctvTestimonials } from '../data/cctv-testimonials';
 
-const pageUrl = 'https://www.centralcomms.nz/cctv.html';
-const cctvServiceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "@id": `${pageUrl}#service`,
-  "name": "PSPLA Licensed CCTV Installation",
-  "serviceType": "CCTV supply, installation, configuration and maintenance",
-  "description": "PSPLA licensed CCTV installation, upgrades, configuration and maintenance for Hamilton and Waikato homes, shops, warehouses and business sites.",
-  "url": pageUrl,
-  "areaServed": ["Hamilton", "Waikato"],
-  "provider": {
-    "@id": "https://www.centralcomms.nz/#business"
+const title = 'CCTV Installers Hamilton | Nx Witness | Central Comms';
+const description = 'PSPLA licensed CCTV installation in Hamilton and Waikato. Nx Witness, security cameras, upgrades and local support for businesses, schools and homes.';
+const canonical = new URL('/cctv.html', Astro.site).href;
+const businessId = new URL('/#business', Astro.site).href;
+const image = '/assets/images/cctv/central-comms-cctv-installations-og.png';
+const extraSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${canonical}#service`,
+    name: 'CCTV installation and maintenance in Hamilton and Waikato',
+    serviceType: 'CCTV design, supply, installation, configuration and maintenance',
+    description,
+    url: canonical,
+    image: new URL(image, Astro.site).href,
+    provider: { '@id': businessId },
+    areaServed: [
+      { '@type': 'City', name: 'Hamilton' },
+      { '@type': 'AdministrativeArea', name: 'Waikato' },
+    ],
   },
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "CCTV Services",
-    "itemListElement": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Commercial CCTV installation"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Residential CCTV installation"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "CCTV maintenance and upgrades"
-        }
-      }
-    ]
-  }
-};
-
-const cctvBusinessSchema = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": `${pageUrl}#security-business`,
-  "name": "Central Communications Ltd",
-  "legalName": "Central Communications Ltd",
-  "url": pageUrl,
-  "telephone": "+648008480038",
-  "areaServed": "Hamilton, Waikato, New Zealand",
-  "identifier": [
-    { "@type": "PropertyValue", "name": "PSPLA Licence", "value": "26-136741" },
-    { "@type": "PropertyValue", "name": "NZBN", "value": "9429050077809" }
-  ],
-  "hasCredential": [
-    {
-      "@type": "EducationalOccupationalCredential",
-      "credentialCategory": "Licence",
-      "name": "PSPLA security technician company licence",
-      "identifier": "26-136741",
-      "issuingBody": "Private Security Personnel Licensing Authority"
-    }
-  ],
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Unit 3/103C Greenwood Street, Frankton",
-    "addressLocality": "Hamilton",
-    "addressRegion": "Waikato",
-    "postalCode": "3204",
-    "addressCountry": "NZ"
-  }
-};
-
-const cctvFaqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Are you PSPLA licensed in Hamilton?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Central Communications Ltd operates with PSPLA licence 26-136741 and NZBN 9429050077809 for CCTV installation and related security work in Hamilton and the Waikato."
-      }
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    '@id': businessId,
+    name: 'Central Communications Ltd',
+    identifier: [
+      { '@type': 'PropertyValue', name: 'PSPLA Company Licence', value: cctvCredentials.companyLicence },
+      { '@type': 'PropertyValue', name: 'NZBN', value: cctvCredentials.nzbn },
+    ],
+    hasCredential: {
+      '@type': 'EducationalOccupationalCredential',
+      credentialCategory: 'Licence',
+      name: 'PSPLA company licence: Security Consultant and Security Technician',
+      identifier: cctvCredentials.companyLicence,
+      recognizedBy: { '@type': 'GovernmentOrganization', name: 'Private Security Personnel Licensing Authority' },
+      url: new URL('/assets/images/cctv/pspla-company-licence.webp', Astro.site).href,
     },
-    {
-      "@type": "Question",
-      "name": "Do you install CCTV for both homes and businesses?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. We install and maintain CCTV systems for homes, retail shops, offices, warehouses, yards and multi-site business environments."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is included in a CCTV installation?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "We handle site surveys, system design, camera and recorder supply, installation, remote viewing setup, integration work and ongoing maintenance."
-      }
-    }
-  ]
-};
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    inLanguage: 'en-NZ',
+    about: { '@id': `${canonical}#service` },
+    publisher: { '@id': businessId },
+    primaryImageOfPage: { '@type': 'ImageObject', url: new URL(image, Astro.site).href, width: 1200, height: 630 },
+    breadcrumb: { '@id': `${canonical}#breadcrumb` },
+    hasPart: { '@id': `${canonical}#faqs` },
+    mentions: [
+      { '@type': 'SoftwareApplication', name: 'Nx Witness', applicationCategory: 'Video management software', url: 'https://www.networkoptix.com/nx-witness' },
+      { '@type': 'SoftwareApplication', name: 'SADPTools', applicationCategory: 'CCTV commissioning and diagnostics', url: 'https://sadptools.com/', creator: { '@type': 'Person', name: 'Paul Willard' } },
+      { '@type': 'SoftwareApplication', name: 'NX Camera Info', applicationCategory: 'CCTV inventory and reporting', url: 'https://nx-camera-info.com/', creator: { '@type': 'Person', name: 'Paul Willard' } },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': `${canonical}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'CCTV', item: canonical },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faqs`,
+    url: `${canonical}#faqs`,
+    inLanguage: 'en-NZ',
+    isPartOf: { '@id': `${canonical}#webpage` },
+    mainEntity: cctvFaqs.map(({ question, answer }) => ({
+      '@type': 'Question', name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  },
+];
+const sections = [
+  ['benefits', 'Benefits'], ['use-cases', 'Use cases'], ['nx-witness', 'Nx Witness'],
+  ['compare', 'Compare systems'], ['apps', 'Our CCTV tools'], ['installation', 'Installation'],
+  ['licensing', 'PSPLA licence'], ['testimonials', 'Customer stories'], ['faqs', 'FAQs'],
+];
 ---
-<Layout
-  title="CCTV Installers Hamilton | PSPLA Licensed | Central Communications"
-  description="PSPLA licensed CCTV installation, upgrades and maintenance for Hamilton and Waikato homes, retail and commercial sites. Free site visits and system design."
-  canonicalURL={pageUrl}
-  extraSchema={[cctvServiceSchema, cctvBusinessSchema, cctvFaqSchema]}
->
-  <div class="page-hero">
-    <div class="container">
-      <span class="section-tag">Services — CCTV</span>
-      <h1 class="page-title">CCTV Installers<br /><em>Hamilton</em></h1>
-      <p class="page-sub">PSPLA licensed CCTV supply, installation, configuration and maintenance for homes, shops, warehouses and business sites across Hamilton and the Waikato.</p>
-      <ul class="trust-strip" aria-label="CCTV business credentials">
-        <li>PSPLA Licence 26-136741</li>
-        <li>NZBN 9429050077809</li>
-        <li>Hamilton &amp; wider Waikato</li>
-        <li>Residential &amp; commercial CCTV</li>
-      </ul>
-    </div>
-  </div>
-
-  <section class="section">
-    <div class="container">
-      <div class="content-grid">
-        <div class="prose">
-          <h2>Keep an Eye on What's Important</h2>
-          <p>
-            Central Communications supply, install &amp; service only the highest quality IP cameras and
-            NVR (Network Video Recorder) systems. With Hikvision, Dahua, Uniview &amp; Mobotix all bases
-            are covered. If you want cutting-edge VMS software then Central Communications can point you
-            in the right direction with the feature-rich, user-friendly NxWitness platform.
-          </p>
-          <p>
-            We love open source at Central Comms. Open source allows thousands of engineers to inspect
-            the security and safety of the software used in CCTV installations — adding an extra layer
-            of trust on top of your system.
-          </p>
-
-          <h2>PSPLA Licensed CCTV Installers in Hamilton</h2>
-          <p>
-            Yes, we are PSPLA licensed in Hamilton. Central Communications Ltd operates under
-            <strong> PSPLA licence 26-136741</strong> and <strong>NZBN 9429050077809</strong>,
-            supplying, installing and maintaining CCTV systems throughout the Waikato.
-          </p>
-          <ul class="credential-list" aria-label="Licensing and service coverage">
-            <li>Security technician company licence for installation work</li>
-            <li>Security consultant company authority for commercial advice and sales</li>
-            <li>Coverage for homes, retail, offices, warehouses, yards and multi-site businesses</li>
-          </ul>
-          <p>
-            Did you know that the company that installs your CCTV is legally required to be licensed?
-            Central Communications is fully licensed as both a <strong>security technician company</strong>
-            (legally authorised to carry out installations) and a <strong>security consultant company</strong>
-            (legally allowed to sell and advise commercially).
-          </p>
-          <p>
-            In 2026 when we renewed our license, it was a reminder that many companies we encounter
-            are <em>not</em> licensed. Doing CCTV work without a license can mean huge fines.
-          </p>
-          <div style="margin:1.5rem 0;">
-            <img src="/assets/images/pspla-license-2026.png" alt="PSPLA licensed CCTV installer in Hamilton - Central Communications licence 26-136741" style="width:100%;max-width:420px;border-radius:0.75rem;border:1px solid rgba(14,165,233,0.15);" loading="lazy" />
-          </div>
-
-          <h2>Our CCTV Brands</h2>
-          <div class="brands-grid">
-            <img src="/assets/images/hikvision.svg" alt="Hikvision" width="120" height="40" />
-            <img src="/assets/images/dahua.svg" alt="Dahua" width="120" height="40" />
-            <img src="/assets/images/uniview.svg" alt="Uniview" width="120" height="40" />
-            <img src="/assets/images/mobotix.svg" alt="Mobotix" width="120" height="40" />
-            <img src="/assets/images/unifi.svg" alt="Unifi" width="120" height="40" />
-          </div>
-
-          <h2>What's included?</h2>
-          <ul class="feature-list">
-            <li>Full site survey and system design</li>
-            <li>Supply &amp; installation of IP cameras (dome, bullet, PTZ)</li>
-            <li>NVR setup &amp; configuration</li>
-            <li>Remote viewing on mobile &amp; desktop</li>
-            <li>Open-source NVR software (NxWitness) integration</li>
-            <li>Integration with alarm and access control systems</li>
-            <li>Ongoing maintenance &amp; support</li>
-          </ul>
-
-          <section class="faq" aria-labelledby="cctv-faq-heading">
-            <h2 id="cctv-faq-heading">CCTV installer FAQs</h2>
-
-            <details>
-              <summary>Are you PSPLA licensed in Hamilton?</summary>
-              <p>
-                Yes. Central Communications Ltd holds PSPLA licence 26-136741 and NZBN
-                9429050077809, and we carry out CCTV installation and related work across
-                Hamilton and the wider Waikato.
-              </p>
-            </details>
-
-            <details>
-              <summary>Do you install CCTV for both homes and businesses?</summary>
-              <p>
-                We do. We install and maintain CCTV systems for homes, retail shops, offices,
-                warehouses, yards and multi-site business environments.
-              </p>
-            </details>
-
-            <details>
-              <summary>What does a CCTV installation usually include?</summary>
-              <p>
-                Most projects include a site survey, system design, camera and recorder supply,
-                cabling, remote viewing setup, configuration, integration and ongoing support.
-              </p>
-            </details>
-          </section>
+<Layout title={title} description={description} canonicalURL={canonical}
+  image={image} imageWidth={1200} imageHeight={630}
+  imageAlt="CCTV installation in Hamilton and Waikato. Nx Witness and local support from Central Communications."
+  extraSchema={extraSchema}>
+  <div class="cctv-page">
+    <header class="cctv-hero">
+      <img class="hero-image" src="/assets/images/cctv/cctv-installations-hero.webp" alt="Photo montage of a Central Communications work vehicle at a school and a technician fitting a CCTV camera" width="2022" height="778" fetchpriority="high" />
+      <div class="container hero-copy">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">CCTV</span></nav>
+        <p class="eyebrow">Hamilton &amp; Waikato</p>
+        <h1>CCTV installers.<br />Clarity when it counts.</h1>
+        <p class="hero-intro">Security cameras, Nx Witness and local support. From a single entrance to a multi-site business.</p>
+        <div class="actions">
+          <a href="/support.html#contact" class="btn btn-primary">Talk about your site</a>
+          <a href="#nx-witness">Explore Nx Witness <span aria-hidden="true">&darr;</span></a>
         </div>
+        <p class="hero-footnote">PSPLA company licence {cctvCredentials.companyLicence} &middot; Design, installation &amp; maintenance</p>
+      </div>
+    </header>
 
-        <div class="sidebar">
-          <div class="cta-box">
-            <h3>Need a CCTV system?</h3>
-            <p>Call us for a free consultation. We'll design the right system for your home or business.</p>
-            <a href="tel:+6480084800038" class="btn btn-ember">0800 848 0038</a>
-            <a href="/#contact" class="btn btn-outline" style="margin-top:0.75rem;">Send a message</a>
-          </div>
-          <img src="/assets/images/posts/cctv-graphic.jpg" alt="CCTV surveillance systems" class="sidebar-img" loading="lazy" />
+    <nav class="page-index" aria-label="CCTV topics"><div class="container"><ul>{sections.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}</ul></div></nav>
+
+    <section id="benefits" class="band" aria-labelledby="benefits-title">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">More than a wall of camera feeds</p>
+          <h2 id="benefits-title">Useful footage. A system you can work with.</h2>
+          <p>Central Communications Ltd designs, installs and maintains CCTV systems for Hamilton and Waikato businesses, schools and homes. We bring the cameras, cabling, recording, remote access and ongoing support together, so you have a local team responsible for the whole installation.</p>
+          <p>A high-resolution camera is only one part of the answer. The lens, angle, lighting, network and recording settings determine whether you can actually understand what happened. We start with that question, then choose the equipment.</p>
+        </div>
+        <div class="three-columns benefits">
+          <div><h3>See the detail that matters</h3><p>A wide overview and an identification view do different jobs. Plan the entrances, stock movements or activity you need to see, then check the image at the real distance and time of day.</p></div>
+          <div><h3>Find the moment, not just the camera</h3><p>Clear camera names, accurate time and practical playback help an authorised person investigate an incident. A useful system makes finding and exporting the relevant footage part of the design.</p></div>
+          <div><h3>Keep the system maintainable</h3><p>Documentation, access controls, storage checks and a support plan matter long after installation. We help you understand what is installed, who can use it and what needs attention as the site changes.</p></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section id="use-cases" class="band band-soft" aria-labelledby="use-cases-title">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">Different sites, different priorities</p>
+          <h2 id="use-cases-title">Where CCTV earns its place.</h2>
+          <p>These are example requirements, not fixed packages or customer case studies. We scope the coverage, recording and permissions around your property and the people who use it.</p>
+        </div>
+        <div class="use-case-grid">
+          {cctvUseCases.map(({ title, need, approach, benefit }) => (
+            <article class="use-case"><h3>{title}</h3><p>{need}</p><p>{approach}</p><p class="outcome"><strong>The benefit:</strong> {benefit}</p></article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="nx-witness" class="band" aria-labelledby="nx-title">
+      <div class="container">
+        <div class="product-intro">
+          <div>
+            <p class="eyebrow">Nx Witness by Network Optix</p>
+            <h2 id="nx-title">A clearer way to manage cameras and investigate incidents.</h2>
+            <p>Nx Witness is a <strong>video management system (VMS)</strong>: software for connecting supported cameras, recording video and giving authorised people a way to view, search and export it. It runs on suitable server hardware, rather than requiring every installation to revolve around one proprietary recorder.</p>
+            <p>We recommend considering it when camera choice, day-to-day usability and future growth matter. A warehouse can organise views around its loading bays; a school can assign access by responsibility; a multi-site business can plan a consistent viewing workflow across locations.</p>
+            <p>Its appeal is the combination: flexible camera support, an approachable client and a server platform that can grow with the job. We demonstrate the functions your team will actually use before settling the design.</p>
+            <a class="text-link" href="https://www.networkoptix.com/nx-witness/how-it-works" target="_blank" rel="noopener noreferrer">How Nx Witness works <span class="external-note">(opens in a new tab)</span></a>
+          </div>
+          <figure><img src="/assets/images/cctv/nx-witness.webp" alt="Network Optix Nx Witness video management product illustration" width="1160" height="1120" loading="lazy" decoding="async" /><figcaption>Nx Witness by Network Optix. Capabilities depend on the edition, devices and system design.</figcaption></figure>
+        </div>
+        <h3 class="table-heading">Nx Witness features and their practical value</h3>
+        <div class="table-scroll" role="region" aria-label="Nx Witness feature analysis" tabindex="0">
+          <table>
+            <caption>What each capability can do for your organisation, and what to confirm</caption>
+            <thead><tr><th scope="col">Capability</th><th scope="col">Business benefit</th><th scope="col">What we check</th></tr></thead>
+            <tbody>{nxFeatures.map(({ feature, benefit, check }) => <tr><th scope="row">{feature}</th><td>{benefit}</td><td>{check}</td></tr>)}</tbody>
+          </table>
+        </div>
+        <p class="source-note">See Network Optix's <a href="https://www.networkoptix.com/nx-witness" target="_blank" rel="noopener noreferrer">Nx Witness overview</a>, <a href="https://resources.vmsproxy.com/nx_vms_help/motion_tab.html" target="_blank" rel="noopener noreferrer">motion search guidance</a> and <a href="https://resources.vmsproxy.com/nx_vms_help/configuring_failover.html" target="_blank" rel="noopener noreferrer">camera failover requirements</a>. Analytics and integrations need their own compatibility and licensing checks.</p>
+        <div class="practical-note">
+          <h3>Open integration does not mean free software</h3>
+          <p>Nx Witness is a commercially licensed VMS. Its desktop client is open source, and APIs and development tools support integration, but the complete recording system is not a free open-source NVR. <a href="https://www.networkoptix.com/nx-witness/faq" target="_blank" rel="noopener noreferrer">Licensing options vary by edition and region</a>; we confirm the applicable licences, services and ongoing costs in your quote.</p>
+          <p>Remote access is also different from cloud recording. Connecting through Nx Cloud does not, by itself, mean your video archive is backed up in the cloud.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare" class="band band-soft" aria-labelledby="compare-title">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">Choose around the job</p>
+          <h2 id="compare-title">Why choose Nx Witness over another CCTV system?</h2>
+          <p>For a growing organisation with a mix of cameras and people who need to investigate footage, Nx Witness is a strong candidate. These are our practical trade-offs, not a claim that one platform is best for every site.</p>
+        </div>
+        <div class="comparison-list">
+          <article><h3>Compared with a basic NVR appliance</h3><div><p><strong>Where Nx Witness can win:</strong> a flexible server-based design, supported cameras from multiple manufacturers and a consistent investigation workflow can be valuable as your site grows beyond a straightforward recorder installation. You can assess server and storage capacity around the workload.</p><p><strong>What to weigh up:</strong> a dedicated NVR may be simpler and more economical for a small site. Nx Witness introduces software licensing and server maintenance. Check whether you need that flexibility before paying for it.</p></div></article>
+          <article><h3>Compared with Milestone XProtect</h3><div><p><strong>Where Nx Witness can win:</strong> when the priority is straightforward daily viewing, search and export, we would put Nx Witness in front of your operators and test how quickly they can complete those tasks. Its workflow and the design we can support locally may be a better fit for your team.</p><p><strong>What to weigh up:</strong> XProtect is also an open-platform VMS with scalable architecture, integrations and failover options. Nx Witness does not have a monopoly on those features. Existing standards, specialist integrations, operator preference and the required edition should drive the choice.</p></div></article>
+          <article><h3>Compared with UniFi Protect</h3><div><p><strong>Where Nx Witness can win:</strong> organisations that want to choose server hardware, build a multi-server VMS and evaluate a mixed camera estate may prefer its deployment flexibility. It is worth considering when video management needs to extend beyond a single appliance ecosystem.</p><p><strong>What to weigh up:</strong> UniFi Protect can be attractive when the organisation already uses UniFi and wants an integrated setup. It supports third-party ONVIF cameras too, although feature support varies. Test the exact cameras and workflows on either platform rather than assuming a brand label settles compatibility.</p></div></article>
+        </div>
+        <p class="decision"><strong>Our recommendation:</strong> compare a complete working design, not a licence price or a feature count. Include cameras, server hardware, usable storage, access, migration, training and ongoing support. We can assess the equipment you already own before proposing a replacement.</p>
+      </div>
+    </section>
+
+    <section id="apps" class="band" aria-labelledby="apps-title">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">Built from hands-on CCTV work</p>
+          <h2 id="apps-title">Better tools for commissioning, maintenance and handover.</h2>
+          <p>Central Communications' Paul Willard created <strong>SADPTools</strong> and <strong>NX Camera Info</strong> to help technicians make sense of camera installations. They tackle different parts of the job: working with reachable devices, and understanding information saved in an Nx Witness database.</p>
+          <p>For a customer, the benefit is practical: clearer site records, better-informed troubleshooting and less dependence on someone remembering how a system was installed years ago. These are independent tools, not official Hikvision or Network Optix applications.</p>
+        </div>
+        <article id="sadptools" class="app-section" aria-labelledby="sadptools-title">
+          <div class="app-heading"><p class="eyebrow">Discover &middot; Commission &middot; Document</p><h3 id="sadptools-title">SADPTools: turn camera discovery into useful site knowledge.</h3><p>A free desktop toolkit for supported Hikvision SADP discovery and configuration, with ONVIF and ISAPI tools where devices support them. Windows, Linux and macOS packages let technicians choose the appropriate platform for the job.</p></div>
+          <figure class="app-image"><img src="/assets/images/cctv/sadptools.webp" alt="SADPTools showing a demonstration site's device inventory, camera details and diagnostic controls" width="1400" height="856" loading="lazy" decoding="async" /><figcaption>SADPTools with demonstration inventory. Available functions depend on the device, firmware and network.</figcaption></figure>
+          <div class="three-columns">
+            <div><h4>Make commissioning repeatable</h4><p>Discover supported devices, inspect identity and network information, and carry out supported configuration work in one place. Saved sites and installation records help turn a list of addresses into an understandable handover.</p></div>
+            <div><h4>Investigate with evidence</h4><p>Network probes, supported Live View and diagnostic information help a technician narrow down connectivity or configuration problems. That gives a maintenance visit a better starting point than guessing from an offline camera icon.</p></div>
+            <div><h4>Carry the knowledge forward</h4><p>Keep inventory, notes and history together, protect saved credentials and transfer site records in encrypted form. Reports and imports from NX Camera Info help reduce repeated data entry when taking over an existing installation.</p></div>
+          </div>
+          <p class="app-limit"><strong>Know the boundary:</strong> SADP discovery normally stays on the local network segment; routed sites need appropriate access and supported checks. The app is not a video recorder, a universal recovery tool or a substitute for checking the physical installation.</p>
+          <a class="text-link" href="https://sadptools.com/features.html" target="_blank" rel="noopener noreferrer">Explore SADPTools features and downloads <span class="external-note">(opens in a new tab)</span></a>
+        </article>
+
+        <article id="nx-camera-info" class="app-section" aria-labelledby="camera-info-title">
+          <div class="app-heading"><p class="eyebrow">Understand &middot; Recover context &middot; Plan</p><h3 id="camera-info-title">NX Camera Info: make an Nx Witness backup useful before you reconnect.</h3><p>A saved database can hold valuable information when a site changes hands or a server is unavailable. NX Camera Info reads supported Nx Witness databases and backups so you can inspect that information without a running Nx server for a local file.</p></div>
+          <figure class="app-image"><img src="/assets/images/cctv/nx-camera-info.webp" alt="NX Camera Info Pro displaying a demonstration camera inventory with masked passwords" width="1240" height="800" loading="lazy" decoding="async" /><figcaption>NX Camera Info Pro with demonstration data. A saved database is a snapshot, not a live health check.</figcaption></figure>
+          <div class="three-columns">
+            <div><h4>Find out what was installed</h4><p>The free edition browses, filters and sorts a local camera inventory without an account. That can establish a starting list of camera names and addresses before planning a site visit or replacement server.</p></div>
+            <div><h4>Recover authorised site knowledge</h4><p>Pro adds supported stored camera credential recovery, CSV and JSON exports, and reports covering users, servers, system settings, storage and licences. It also supports authorised server and Nx Cloud backup connections.</p></div>
+            <div><h4>Plan a better handover</h4><p>Use the reports to identify what needs verification, prepare migration records and import compatible JSON into SADPTools. Inspecting a local database is read-only, helping preserve the original file while you document the site.</p></div>
+          </div>
+          <p class="app-limit"><strong>Know the boundary:</strong> saved camera credentials may be old or absent. The app does not recover recorded video or Nx user passwords, reset cameras, restore a server or bypass access controls. Pro functions require a licence; connection features require the appropriate permissions.</p>
+          <a class="text-link" href="https://nx-camera-info.com/features" target="_blank" rel="noopener noreferrer">Explore NX Camera Info Free and Pro <span class="external-note">(opens in a new tab)</span></a>
+        </article>
+
+        <div class="practical-note workflow">
+          <h3>One example: taking over a poorly documented site</h3>
+          <p>Start with an authorised Nx Witness backup. Use NX Camera Info to understand the saved inventory and, with Pro, export the relevant records. Import supported JSON into SADPTools, then check the reachable devices and reconcile those records with the actual installation.</p>
+          <p><strong>The benefit:</strong> a more informed site survey and a usable starting point for maintenance or migration. A backup may be out of date, so the final design still depends on live checks. Databases, credentials and reports are sensitive; keep them access-controlled and share them only with authorised people.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="installation" class="band band-green" aria-labelledby="installation-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">From first survey to ongoing support</p><h2 id="installation-title">A CCTV system is only as good as its installation.</h2><p>We scope new systems and review existing installations. Camera brands we work with include Hikvision, Dahua, Uniview, Mobotix and UniFi. The selection follows the site requirements, not the other way around.</p></div>
+        <div class="three-columns">
+          <div><h3>Design the views and infrastructure</h3><p>Agree the purpose of each camera, coverage gaps, lighting and privacy boundaries. Assess cable routes, power, switching and links between buildings, then size the recorder or VMS and storage around the required footage.</p></div>
+          <div><h3>Commission and hand over</h3><p>Check images, time settings, recording and playback. Set up authorised access, document the installation and show the people responsible how to find and export an incident. Test remote viewing where it will actually be used.</p></div>
+          <div><h3>Maintain what you rely on</h3><p>Review camera views, available recording history, storage condition and user access. Plan updates and recovery arrangements, and revisit the design when new buildings, stock layouts or responsibilities change the job.</p></div>
+        </div>
+        <div class="brands" role="group" aria-label="Camera brands we work with">
+          <img src="/assets/images/hikvision.svg" alt="Hikvision" width="120" height="40" loading="lazy" />
+          <img src="/assets/images/dahua.svg" alt="Dahua" width="120" height="40" loading="lazy" />
+          <img src="/assets/images/uniview.svg" alt="Uniview" width="120" height="40" loading="lazy" />
+          <img src="/assets/images/mobotix.svg" alt="Mobotix" width="120" height="40" loading="lazy" />
+          <img src="/assets/images/unifi.svg" alt="UniFi" width="120" height="40" loading="lazy" />
+        </div>
+        <article class="customer-example" aria-labelledby="freezer-title"><p class="eyebrow">From our project archive</p><h3 id="freezer-title">Freezer CCTV: the environment changes the specification.</h3><p>At a local meat works, we upgraded ageing analogue cameras to IP cameras in a freezer reaching <strong>-40&deg;C</strong>. The project used cameras rated to -40&deg;C and cable rated to -50&deg;C.</p><p>The lesson for an industrial installation is simple: camera resolution alone cannot tell you whether the equipment is suitable. Temperature, cabling and the working environment belong in the design from the start.</p><a class="text-link" href="/updates/freezer-cctv.html">Read about the freezer CCTV installation</a></article>
+        <p class="network-note">Need to connect a remote building or improve the network underneath your cameras? We also handle <a href="/networking--data.html">structured data cabling and fibre</a> and <a href="/wireless.html">wireless networking and links</a>.</p>
+      </div>
+    </section>
+
+    <section id="licensing" class="band" aria-labelledby="licensing-title">
+      <div class="container">
+        <div class="licence-layout">
+          <div>
+            <p class="eyebrow">Licensed locally. Accountable locally.</p>
+            <h2 id="licensing-title">PSPLA licensed CCTV installers in Hamilton.</h2>
+            <p>Central Communications Ltd holds <strong>PSPLA company licence {cctvCredentials.companyLicence}</strong>, covering <strong>Security Consultant</strong> and <strong>Security Technician</strong> work. Our NZBN is {cctvCredentials.nzbn}.</p>
+            <p>We supply, install, configure and maintain CCTV systems across Hamilton and the wider Waikato. You can view our company certificate here and read the Ministry of Justice guidance on <a href="https://www.justice.govt.nz/tribunals/licences-certificates/pspla/apply-or-renew/who-needs-a-licence-or-certificate/work-you-need-a-licence-or-certificate-for/" target="_blank" rel="noopener noreferrer">work covered by security licensing</a>.</p>
+            <p>A licence is one part of choosing an installer. Ask about the proposed camera views, recording, training, documentation and support as well.</p>
+          </div>
+          <figure><a href="/assets/images/cctv/pspla-company-licence.webp" target="_blank" rel="noopener noreferrer"><img src="/assets/images/cctv/pspla-company-licence.webp" alt={`PSPLA licensed CCTV installer in Hamilton: Central Communications Ltd company licence ${cctvCredentials.companyLicence}`} width="1042" height="724" loading="lazy" decoding="async" /></a><figcaption>Company licence certificate. <a href="/assets/images/cctv/pspla-company-licence.webp" target="_blank" rel="noopener noreferrer">Open full size in a new tab</a>.</figcaption></figure>
+        </div>
+        <div class="practical-note"><h3>Privacy belongs in the design</h3><p>Decide why you need CCTV, limit views to that purpose and make recording clear to the people affected. Restrict access, set an appropriate retention policy and consider how you will respond to footage requests. Audio needs particular care; it should not be enabled just because a camera has a microphone.</p><p>We help with technical settings, but your organisation remains responsible for its privacy obligations. The New Zealand Privacy Commissioner's <a href="https://www.privacy.org.nz/resources-and-learning/a-z-topics/privacy-and-cctv/" target="_blank" rel="noopener noreferrer">CCTV guidance</a> is a useful starting point.</p></div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="band band-soft" aria-labelledby="testimonials-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">Customers across the Waikato</p><h2 id="testimonials-title">Installation is the beginning. Support matters too.</h2><p>Jordon and Peter describe their CCTV experience; TeTauru reflects on our wider support for the school. Their words about working with Central Communications.</p></div>
+        <div class="testimonials">
+          {cctvTestimonials.map(({ name, company, img, quote }) => (
+            <figure class="testimonial"><blockquote><p>{quote}</p></blockquote><figcaption><picture><source type="image/webp" srcset={`${img.replace('.jpg', '-160.webp')} 1x, ${img.replace('.jpg', '-320.webp')} 2x`} /><img src={img} alt={name} width="64" height="64" loading="lazy" decoding="async" /></picture><span><strong>{name}</strong><span>{company}</span></span></figcaption></figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="faqs" class="band" aria-labelledby="faqs-title">
+      <div class="container faq-layout">
+        <div><p class="eyebrow">Before you choose</p><h2 id="faqs-title">CCTV questions, answered.</h2><p>Installation, cameras, Nx Witness, maintenance tools and the practical details behind a useful security system.</p><a class="text-link" href="/support.html#contact">Ask us about your site</a></div>
+        <div class="faq-list">{cctvFaqs.map(({ question, answer }, index) => <details id={`cctv-faq-${index + 1}`}><summary>{question}</summary><p>{answer}</p></details>)}</div>
+      </div>
+    </section>
+
+    <section class="band contact-band" aria-labelledby="contact-title"><div class="container contact-inner"><div><p class="eyebrow">Your site. Your priorities.</p><h2 id="contact-title">What do you need to see more clearly?</h2><p>Tell us about your property, the equipment already there and the questions you need your footage to answer. We'll help scope a practical CCTV system and the support behind it.</p></div><a href="/support.html#contact" class="btn btn-primary">Talk to Central Communications</a></div></section>
+  </div>
 </Layout>
 
 <style>
-  .page-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    color: #e8f1ff;
-    margin: 0.5rem 0 1rem;
+  .cctv-page { color: #263b40; background: #fff; line-height: 1.75; letter-spacing: 0; overflow-wrap: break-word; }
+  .cctv-page :is(h1, h2, h3, h4, p, figure, blockquote) { margin: 0; }
+  .cctv-page :is(h1, h2, h3, h4) { letter-spacing: 0; overflow-wrap: anywhere; }
+  .cctv-page h2 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 1.4rem; }
+  .cctv-page h3 { font-size: 1.3rem; line-height: 1.3; margin-bottom: 0.8rem; }
+  .cctv-page h4 { font-size: 1.125rem; line-height: 1.4; margin-bottom: 0.8rem; }
+  .cctv-page p + p { margin-top: 1rem; }
+  .cctv-page a:not(.btn) { text-decoration: underline; text-underline-offset: 4px; }
+  .cctv-page a:hover { text-decoration-thickness: 2px; }
+  .cctv-page :is(a, summary, [tabindex]):focus-visible { outline: 3px solid #007b63; outline-offset: 5px; }
+  .cctv-page .btn { letter-spacing: 0; text-align: center; justify-content: center; border-radius: 6px; white-space: normal; }
+  .cctv-page .btn-primary { background: #0369a1; color: #fff; }
+  .cctv-page .btn-primary:hover { background: #075985; }
+  .cctv-page .eyebrow { color: #006b55; font-family: 'Space Mono', monospace; font-size: 0.75rem; line-height: 1.6; margin-bottom: 1rem; }
+  .band { padding: 5rem 0; scroll-margin-top: 5rem; }
+  .band-soft { background: #f3f6f6; }
+  .band-green { background: #eaf5ef; }
+  .section-intro { max-width: 780px; margin-bottom: 3rem; }
+  .cctv-hero { position: relative; isolation: isolate; overflow: hidden; background: #252e2a; padding: 6.5rem 0 3rem; }
+  .hero-image { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 86% top; }
+  .cctv-hero::after { content: ''; position: absolute; z-index: -1; inset: 0; background: rgba(10, 25, 21, 0.72); }
+  .hero-copy { color: #fff; }
+  .breadcrumbs { display: flex; gap: 0.75rem; font-size: 0.8rem; margin-bottom: 1.5rem; }
+  .cctv-hero .eyebrow { color: #b3eddb; }
+  .cctv-hero h1 { font-size: 3.5rem; color: #fff; max-width: 800px; margin-bottom: 1.2rem; }
+  .hero-intro { max-width: 610px; font-size: 1.125rem; line-height: 1.7; }
+  .actions { display: flex; flex-wrap: wrap; gap: 1.25rem 1.75rem; align-items: center; margin: 1.6rem 0 1.2rem; }
+  .hero-footnote { color: #dbede7; font-size: 0.8rem; }
+  .cctv-hero :is(a, [tabindex]):focus-visible { outline-color: #b3eddb; }
+  .page-index { border-bottom: 1px solid #d6e3de; background: #fff; }
+  .page-index ul { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; padding: 1.25rem 0; margin: 0; list-style: none; }
+  .page-index a { display: inline-block; font-size: 0.875rem; padding: 0.25rem 0; color: #245f56; }
+  .three-columns, .use-case-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+  .benefits > div { border-top: 2px solid #c3e1d3; padding-top: 1.5rem; }
+  .use-case { border-top: 1px solid #b9cdc5; padding-top: 1.5rem; }
+  .outcome { color: #00634e; font-size: 0.95rem; }
+  .product-intro { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center; gap: 3rem; margin-bottom: 3rem; }
+  .product-intro figure { text-align: center; }
+  .cctv-page figcaption { font-size: 0.8rem; line-height: 1.6; color: #4e6463; }
+  .text-link { display: inline-block; margin-top: 1.25rem; font-weight: 600; color: #03658d; }
+  .external-note { font-size: 0.8rem; font-weight: 400; }
+  .cctv-page .table-heading { margin-bottom: 0.25rem; }
+  .table-scroll { overflow-x: auto; margin-bottom: 1rem; border-bottom: 1px solid #bfd4cc; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left; }
+  caption { text-align: left; font-size: 0.875rem; color: #4e6463; padding: 0.5rem 0 1.25rem; }
+  th, td { padding: 1.2rem; vertical-align: top; border-bottom: 1px solid #dce6e2; }
+  thead th { background: #eaf5ef; color: #174b40; }
+  tbody th { width: 24%; color: #193b39; }
+  td { width: 38%; }
+  .source-note { font-size: 0.85rem; line-height: 1.7; color: #405956; }
+  .practical-note { border-left: 3px solid #00735c; padding-left: 1.5rem; margin: 3rem 0 0; max-width: 900px; }
+  .comparison-list article { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 3rem; padding: 2rem 0; border-top: 1px solid #cbdcd4; }
+  .decision { border-top: 2px solid #006b55; padding-top: 1.5rem; margin-top: 1rem !important; }
+  .app-section { padding: 3rem 0; border-top: 1px solid #bfd4cc; scroll-margin-top: 5rem; }
+  .app-heading { max-width: 800px; margin-bottom: 2rem; }
+  .cctv-page .app-heading h3 { font-size: 1.75rem; }
+  .app-image { margin: 0 auto 2.5rem !important; max-width: 1000px; }
+  .app-image img { width: 100%; height: auto; }
+  .app-image figcaption { margin-top: 0.75rem; }
+  .app-limit { margin-top: 2rem !important; font-size: 0.95rem; }
+  .workflow { margin-top: 0; }
+  .brands { display: flex; align-items: center; flex-wrap: wrap; gap: 2rem 3rem; padding: 2.5rem 0; }
+  .brands img { width: 120px; height: 40px; object-fit: contain; }
+  .customer-example { border-top: 1px solid #b9cdc5; padding: 2.5rem 0; }
+  .customer-example p { max-width: 850px; }
+  .network-note { border-top: 1px solid #b9cdc5; padding-top: 1.5rem; }
+  .licence-layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); align-items: center; gap: 3rem; }
+  .licence-layout figure { max-width: 440px; }
+  .licence-layout img { border: 1px solid #d6e3de; }
+  .licence-layout figcaption { margin-top: 0.75rem; }
+  .testimonials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+  .testimonial { display: flex; flex-direction: column; justify-content: space-between; border-top: 3px solid #006b55; padding-top: 1.5rem; }
+  .testimonial blockquote { font-size: 0.95rem; }
+  .testimonial figcaption { display: flex; align-items: center; gap: 1rem; margin-top: 1.75rem; }
+  .testimonial picture { flex: 0 0 64px; }
+  .testimonial img { width: 64px; height: 64px; object-fit: cover; border-radius: 4px; }
+  .testimonial figcaption strong, .testimonial figcaption span span { display: block; }
+  .testimonial figcaption strong { color: #183b36; font-size: 0.95rem; }
+  .faq-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 4rem; }
+  .faq-list { min-width: 0; }
+  details { border-top: 1px solid #bfd4cc; scroll-margin-top: 6rem; }
+  details:last-child { border-bottom: 1px solid #bfd4cc; }
+  summary { cursor: pointer; font-weight: 600; color: #193b39; padding: 1.2rem 0; line-height: 1.5; }
+  summary::marker { color: #00735c; }
+  details[open] summary { color: #00634e; }
+  details p { padding: 0 0 1.5rem; }
+  .contact-band { background: #deeee7; }
+  .contact-inner { display: flex; gap: 3rem; align-items: center; justify-content: space-between; }
+  .contact-inner > div { max-width: 650px; }
+  .contact-inner .btn { flex-shrink: 0; max-width: 100%; }
+  @media (max-width: 1000px) {
+    .use-case-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .testimonials { grid-template-columns: 1fr; }
+    .testimonial { max-width: 800px; }
+    .product-intro, .licence-layout { gap: 1.5rem; }
+    .faq-layout { gap: 2rem; }
+    .contact-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
   }
-  .page-title em { font-style: normal; color: #0ea5e9; }
-  .page-sub { font-size: 1.1rem; color: #7ea3c8; max-width: 520px; }
-  .trust-strip {
-    list-style: none;
-    padding: 0;
-    margin: 1.5rem 0 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+  @media (max-width: 700px) {
+    .band { padding: 3.5rem 0; }
+    .cctv-page h2 { font-size: 2rem; }
+    .cctv-hero { padding: 6rem 0 2.25rem; }
+    .cctv-hero h1 { font-size: 2.25rem; }
+    .hero-intro { font-size: 1rem; }
+    .hero-footnote { max-width: 330px; }
+    .page-index ul { gap: 0.4rem 1rem; }
+    .section-intro { margin-bottom: 2rem; }
+    .three-columns, .use-case-grid, .product-intro, .comparison-list article, .licence-layout, .faq-layout { grid-template-columns: 1fr; }
+    .comparison-list article { gap: 0.5rem; }
+    .product-intro figure { max-width: 400px; margin: 0 auto; }
+    .app-section { padding: 2.5rem 0; }
+    table { min-width: 640px; }
+    th, td { padding: 1rem; }
+    .brands { gap: 1.5rem 2rem; }
   }
-  .trust-strip li {
-    border: 1px solid rgba(126, 163, 200, 0.28);
-    border-radius: 8px;
-    color: #c8dbef;
-    font-size: 0.9rem;
-    padding: 0.55rem 0.8rem;
-  }
-
-  .content-grid {
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 4rem;
-    align-items: start;
-  }
-  .prose { min-width: 0; }
-
-  .brands-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    align-items: center;
-    padding: 1.5rem;
-    margin: 1.5rem 0;
-  }
-  .brands-grid img {
-    height: 32px;
-    width: auto;
-    filter: brightness(0) invert(0.6);
-    transition: filter 0.2s;
-  }
-  .brands-grid img:hover { filter: none; }
-
-  .credential-list {
-    list-style: none;
-    padding: 0;
-    margin: 1.25rem 0;
-    display: grid;
-    gap: 0.75rem;
-  }
-  .credential-list li {
-    border-left: 3px solid #0ea5e9;
-    color: #1e3a5f;
-    padding-left: 0.9rem;
-  }
-
-  .feature-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-  .feature-list li {
-    padding-left: 1.5rem;
-    position: relative;
-    color: #1e3a5f;
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
-  .feature-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.6rem;
-    width: 6px;
-    height: 6px;
-    background: #0ea5e9;
-    border-radius: 50%;
-  }
-
-  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 6rem; }
-
-  .cta-box {
-    background: #0c1d35;
-    border: 1px solid rgba(14, 165, 233, 0.15);
-    border-radius: 1rem;
-    padding: 1.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .cta-box h3 { font-size: 1.1rem; color: #e8f1ff; margin: 0; }
-  .cta-box p  { font-size: 0.875rem; color: #7ea3c8; margin: 0; line-height: 1.6; }
-  .cta-box .btn-outline { color: #e8f1ff; border-color: rgba(232, 241, 255, 0.35); }
-  .cta-box .btn-outline:hover { color: #38bdf8; border-color: #38bdf8; }
-
-  .sidebar-img {
-    border-radius: 1rem;
-    border: 1px solid rgba(14, 165, 233, 0.12);
-    width: 100%;
-    height: auto;
-  }
-
-  .faq {
-    margin-top: 3rem;
-  }
-  .faq details {
-    border-top: 1px solid rgba(14, 165, 233, 0.2);
-    padding: 1rem 0;
-  }
-  .faq details:last-of-type {
-    border-bottom: 1px solid rgba(14, 165, 233, 0.2);
-  }
-  .faq summary {
-    color: #0c1d35;
-    cursor: pointer;
-    font-weight: 600;
-    list-style: none;
-    padding-right: 1.5rem;
-    position: relative;
-  }
-  .faq summary::-webkit-details-marker {
-    display: none;
-  }
-  .faq summary::after {
-    color: #0ea5e9;
-    content: '+';
-    font-size: 1.1rem;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .faq details[open] summary::after {
-    content: '-';
-  }
-  .faq p {
-    margin: 0.75rem 0 0;
-  }
-
-  @media (max-width: 900px) {
-    .content-grid { grid-template-columns: 1fr; }
-    .sidebar { position: static; }
+  @media (max-width: 360px) {
+    .cctv-hero h1 { font-size: 1.875rem; margin-bottom: 0.8rem; }
+    .cctv-hero { padding: 5.5rem 0 1rem; }
+    .cctv-hero .eyebrow, .breadcrumbs { margin-bottom: 0.75rem; }
+    .actions { gap: 0.75rem; margin: 1.2rem 0 0.8rem; }
+    .hero-intro { line-height: 1.6; }
+    .cctv-page .btn { padding: 0.75rem 1rem; }
   }
 </style>
