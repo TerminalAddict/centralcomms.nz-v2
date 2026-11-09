@@ -26,6 +26,7 @@ Complete reference for developing, building, deploying, and managing the Central
 16. [Environment details](#environment-details)
 17. [Screenshots](Screenshots/README.md)
 18. [Performance and PageSpeed](#webp-images)
+19. [VoIP content and SEO maintenance](voip-content.md)
 
 ---
 
@@ -518,7 +519,7 @@ The `From` header comes from `$CONTACT_FROM`. The `Reply-To` is set to the sende
      <!-- page content -->
    </Layout>
    ```
-3. The page will be built to `dist/new-service.html` and will appear in the sitemap automatically (via `@astrojs/sitemap`)
+3. The page will be built to `dist/new-service.html` and will appear in the sitemap automatically (via `@astrojs/sitemap`, serialised to match the `.html` canonical)
 4. Add a link to `Nav.astro` or `Footer.astro` as needed
 
 ### Layout props
@@ -527,8 +528,16 @@ The `From` header comes from `$CONTACT_FROM`. The `Reply-To` is set to the sende
 |---|---|---|---|
 | `title` | Yes | — | Page `<title>` and OG title |
 | `description` | No | Default CCL description | Meta description and OG description |
-| `image` | No | Screenshot of site | OG image (absolute path from public root) |
-| `noindex` | No | `false` | Set to `true` to add `<meta name="robots" content="noindex">` |
+| `image` | No | `/assets/images/ccl-og-image.png` | Open Graph and Twitter image (absolute path from public root) |
+| `imageAlt` | No | Full page title | Alt text for Open Graph and Twitter images |
+| `imageWidth`, `imageHeight` | No | 1200 x 630 for the default image | Supply dimensions for custom sharing images |
+| `canonicalURL` | No | Current path on `Astro.site` | Override the canonical and social page URL |
+| `extraSchema` | No | None | Additional JSON-LD object or array of objects; use the existing business `@id` for service providers |
+| `noindex` | No | `false` | Set to `true` to add `<meta name="robots" content="noindex,nofollow">` |
+
+The VoIP page is an example of static long-form service content with shared FAQ
+data and page-specific sharing metadata. See [VoIP content maintenance](voip-content.md)
+for sources, local image provenance, schema conventions and verification steps.
 
 ---
 

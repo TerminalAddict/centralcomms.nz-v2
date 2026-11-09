@@ -1,151 +1,411 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { voipFaqs, voipUseCases, yeastarFeatures } from '../data/voip';
+import { voipTestimonials } from '../data/voip-testimonials';
+
+const title = 'Business VoIP Hamilton | Yeastar & Linkus | Central Comms';
+const description = 'Cloud PBX subscriptions for Hamilton and Waikato businesses. Yeastar phone systems, Linkus at no extra charge, and local setup, training and support.';
+const canonical = new URL('/voip.html', Astro.site).href;
+const businessId = new URL('/#business', Astro.site).href;
+const image = '/assets/images/voip/central-comms-voip-og.png';
+const extraSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${canonical}#service`,
+    name: 'Business Cloud PBX subscriptions in Hamilton and Waikato',
+    serviceType: 'Business VoIP and Cloud PBX subscriptions',
+    description,
+    url: canonical,
+    image: new URL(image, Astro.site).href,
+    provider: { '@id': businessId },
+    areaServed: [
+      { '@type': 'City', name: 'Hamilton' },
+      { '@type': 'AdministrativeArea', name: 'Waikato' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    inLanguage: 'en-NZ',
+    about: { '@id': `${canonical}#service` },
+    publisher: { '@id': businessId },
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: new URL(image, Astro.site).href,
+      width: 1200,
+      height: 630,
+    },
+    breadcrumb: { '@id': `${canonical}#breadcrumb` },
+    hasPart: { '@id': `${canonical}#faqs` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': `${canonical}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'Business VoIP', item: canonical },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faqs`,
+    url: `${canonical}#faqs`,
+    inLanguage: 'en-NZ',
+    isPartOf: { '@id': `${canonical}#webpage` },
+    mainEntity: voipFaqs.map(({ question, answer }) => ({
+      '@type': 'Question',
+      name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  },
+];
+const sections = [
+  ['benefits', 'Benefits'], ['use-cases', 'Use cases'], ['yeastar', 'Yeastar PBX'],
+  ['linkus', 'Linkus app'], ['compare', 'Compare systems'], ['deployment', 'Making the move'],
+  ['testimonials', 'Customer stories'], ['faqs', 'FAQs'],
+];
 ---
-<Layout
-  title="Business VoIP & Cloud Phone Systems Hamilton | Central Comms"
-  description="Expert installation and support for cloud and onsite PBX and VoIP phone systems in Waikato. Yeastar, Fanvil, Asterisk and Yealink solutions for business."
->
-  <div class="page-hero">
-    <div class="container">
-      <span class="section-tag">Services — VoIP</span>
-      <h1 class="page-title">Voice over IP<br /><em>Phone Systems</em></h1>
-      <p class="page-sub">Cloud & onsite PBX solutions that unify your team, wherever they are.</p>
-    </div>
-  </div>
-
-  <section class="section">
-    <div class="container">
-      <div class="content-grid">
-        <div class="prose">
-          <h2>VoIP with Onsite &amp; Cloud Based PBX Options</h2>
-          <p>
-            Central Communications supply, install &amp; service only the highest quality phones and phone
-            systems. With Yeastar, Fanvil, Asterisk &amp; Mikrotik, all bases are covered. If you want
-            cutting-edge phone software then Central Communications can point you in the right direction
-            with feature-rich, user-friendly systems.
-          </p>
-          <p>
-            We can unify your cell phones, at-home remote workers, all your remote offices, and call centres.
-            Whether you need a simple desk phone or a complete enterprise communications platform, we'll use
-            the best technology for your business.
-          </p>
-
-          <h2>Our VoIP Brands</h2>
-          <div class="brands-grid">
-            <img src="/assets/images/yeastar.svg" alt="Yeastar" width="120" height="40" />
-            <img src="/assets/images/fanvil.svg" alt="Fanvil" width="120" height="40" />
-            <img src="/assets/images/asterisk.svg" alt="Asterisk" width="120" height="40" />
-            <img src="/assets/images/yealink.svg" alt="Yealink" width="120" height="40" />
-          </div>
-
-          <h2>What's included?</h2>
-          <ul class="feature-list">
-            <li>Onsite PBX hardware supply and installation</li>
-            <li>Cloud-based hosted PBX options</li>
-            <li>Mobile &amp; desktop softphone integration</li>
-            <li>Voicemail, auto-attendant &amp; call queues</li>
-            <li>Remote worker &amp; multi-site connectivity</li>
-            <li>Ongoing support &amp; maintenance</li>
-          </ul>
+<Layout title={title} description={description} canonicalURL={canonical}
+  image={image} imageWidth={1200} imageHeight={630}
+  imageAlt="Business VoIP in Hamilton and Waikato. Yeastar PBX and Linkus from Central Communications."
+  extraSchema={extraSchema}>
+  <div class="voip-page">
+    <header class="voip-hero">
+      <img class="hero-image" src="/assets/images/paul%20on%20the%20phone.webp" alt="Paul using a phone headset at Central Communications" width="3392" height="1908" fetchpriority="high" />
+      <div class="container hero-copy">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Business VoIP</span>
+        </nav>
+        <p class="eyebrow">Hamilton &amp; Waikato</p>
+        <h1>Business VoIP.<br />Your team, connected.</h1>
+        <p class="hero-intro">From the front desk to the next job. Yeastar Cloud PBX subscriptions, Linkus calling and local support from Central Communications.</p>
+        <div class="actions">
+          <a href="/support.html#contact" class="btn btn-primary">Talk to our team</a>
+          <a href="#linkus" class="hero-link">Meet Linkus <span aria-hidden="true">&darr;</span></a>
         </div>
+        <p class="hero-footnote">Cloud PBX subscriptions &middot; Setup &amp; training &middot; Ongoing support</p>
+      </div>
+    </header>
 
-        <div class="sidebar">
-          <div class="cta-box">
-            <h3>Ready to upgrade your phones?</h3>
-            <p>Call us or send a message and we'll get in touch to discuss the right solution for your business.</p>
-            <a href="tel:+6480084800038" class="btn btn-ember">0800 848 0038</a>
-            <a href="/#contact" class="btn btn-outline" style="margin-top:0.75rem;">Send a message</a>
-          </div>
-          <img src="/assets/images/posts/voip-graphic.jpg" alt="VoIP phone systems" class="sidebar-img" loading="lazy" />
+    <nav class="page-index" aria-label="VoIP topics">
+      <div class="container"><ul>{sections.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}</ul></div>
+    </nav>
+
+    <section id="benefits" class="band" aria-labelledby="benefits-title">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">A phone system that fits the working day</p>
+          <h2 id="benefits-title">Better call handling. Wherever work takes you.</h2>
+          <p>Central Communications Ltd supplies and supports business Cloud PBX subscriptions in Hamilton and across the Waikato. We bring your desk phones, mobile staff and branches together, with call flows designed around the people who actually answer.</p>
+          <p><strong>VoIP</strong> carries calls over an IP network. Your <strong>PBX</strong> manages extensions, transfers, queues and voicemail; a <strong>SIP trunk</strong> connects it to ordinary phone numbers. We help with the whole setup, including the network underneath it.</p>
+        </div>
+        <div class="three-columns benefits">
+          <div><h3>Give every enquiry a route</h3><p>Agree who answers first, who covers a busy team and where calls go after hours. A useful phone system should help a caller reach someone who can help, not leave them navigating a maze.</p></div>
+          <div><h3>Take the extension with you</h3><p>A desk is no longer the only place to answer. With a compatible setup and connection, Linkus gives staff access to their business extension from a computer or mobile phone.</p></div>
+          <div><h3>Make growth less disruptive</h3><p>Plan extensions, call capacity and branch connections together. Add people with a clear understanding of equipment and recurring costs, rather than discovering limitations after they start.</p></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section id="use-cases" class="band band-soft" aria-labelledby="use-cases-title">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">Real working days, practical solutions</p>
+          <h2 id="use-cases-title">How could VoIP work in your business?</h2>
+          <p>These are example configurations, not one-size-fits-all packages. We start with your callers, your busiest periods and the way your team works.</p>
+        </div>
+        <div class="use-case-grid">
+          {voipUseCases.map(({ title, problem, solution, benefit }) => (
+            <article class="use-case">
+              <h3>{title}</h3><p>{problem}</p><p>{solution}</p>
+              <p class="outcome"><strong>The benefit:</strong> {benefit}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="yeastar" class="band" aria-labelledby="yeastar-title">
+      <div class="container">
+        <div class="product-intro">
+          <div>
+            <p class="eyebrow">Yeastar P-Series PBX</p>
+            <h2 id="yeastar-title">A business phone system with room to adapt.</h2>
+            <p>Our focus is Yeastar Cloud PBX subscriptions: business call handling and Linkus apps without a PBX appliance to maintain at your premises. We match the subscription and call capacity to the way your team works.</p>
+            <p>Use supported SIP desk phones alongside Linkus on computers and mobiles. With CCL, Linkus is included at no extra charge with your Cloud PBX subscription, so staff can use their business extension away from the desk.</p>
+            <p>Those advantages only matter if the system is configured well. We focus on call routing, the reception workflow, usable handsets and the support arrangements behind them.</p>
+            <a class="text-link" href="https://www.yeastar.com/p-series-pbx-system/" target="_blank" rel="noopener noreferrer">Yeastar P-Series editions and features <span class="external-note">(opens in a new tab)</span></a>
+          </div>
+          <figure>
+            <img src="/assets/images/voip/p-series.webp" width="923" height="922" alt="Yeastar P-Series feature overview: voice, Linkus clients, presence, reporting, integrations and call centre tools" loading="lazy" decoding="async" />
+            <figcaption>Yeastar's P-Series platform. Feature availability varies by edition and plan.</figcaption>
+          </figure>
+        </div>
+        <h3 class="table-heading">Features worth evaluating, not just ticking off</h3>
+        <div class="table-scroll" role="region" aria-label="Yeastar feature comparison" tabindex="0">
+          <table>
+            <caption>What each capability means for your team, and what to confirm before buying</caption>
+            <thead><tr><th scope="col">Capability</th><th scope="col">Business benefit</th><th scope="col">What we check</th></tr></thead>
+            <tbody>{yeastarFeatures.map(({ feature, benefit, check }) => <tr><th scope="row">{feature}</th><td>{benefit}</td><td>{check}</td></tr>)}</tbody>
+          </table>
+        </div>
+        <p class="source-note">Advanced call centre features and integrations are not included in every plan. Check the <a href="https://www.yeastar.com/p-series-pbx-system/" target="_blank" rel="noopener noreferrer">current P-Series feature matrix</a>, <a href="https://www.yeastar.com/voip-phone-system-feature/auto-provisioning/" target="_blank" rel="noopener noreferrer">supported phone provisioning</a> and <a href="https://www.yeastar.com/solution/crm-integration/" target="_blank" rel="noopener noreferrer">CRM integrations</a> with us before committing.</p>
+        <div class="brands" role="group" aria-label="Phone system and handset brands">
+          <img src="/assets/images/yeastar.svg" alt="Yeastar" width="120" height="40" loading="lazy" />
+          <img src="/assets/images/yealink.svg" alt="Yealink" width="120" height="40" loading="lazy" />
+          <img src="/assets/images/fanvil.svg" alt="Fanvil" width="120" height="40" loading="lazy" />
+          <img src="/assets/images/asterisk.svg" alt="Asterisk" width="120" height="40" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <section id="linkus" class="band band-green" aria-labelledby="linkus-title">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">The Linkus advantage</p>
+          <h2 id="linkus-title">Your business extension.<br />Not just your desk phone.</h2>
+          <p>Linkus is Yeastar's softphone and unified communications client. With mobile, desktop and browser options, it makes the phone system useful to people who spend their day away from a fixed handset.</p>
+          <p>The real benefit is continuity: a customer can call the business, speak to the right colleague and be transferred within the team without needing everybody's personal mobile number.</p>
+          <p><strong>Linkus is free to use with a CCL Cloud PBX subscription.</strong> There is no extra app charge from Central Communications. Your usual subscription, calling plan and any internet or mobile data charges still apply.</p>
+        </div>
+        <figure class="linkus-image">
+          <img src="/assets/images/voip/linkus.webp" width="1100" height="387" alt="Linkus on a laptop and mobile phone, with the desktop extension directory and mobile calling controls" loading="lazy" decoding="async" />
+          <figcaption>Linkus clients from Yeastar. A compatible PBX, account and connection are required.</figcaption>
+        </figure>
+        <div class="linkus-benefits">
+          <div><h3>Keep a business identity</h3><p>Calls made through Linkus can present the business caller ID configured on your PBX and permitted by your provider. Staff do not need to hand out their personal number to every customer.</p></div>
+          <div><h3>Transfer with some context</h3><p>Presence and extension contacts help staff find a colleague. An attended transfer lets them introduce the caller before handing over, instead of asking the customer to start again.</p></div>
+          <div><h3>Move a live conversation</h3><p>On supported P-Series setups, Call Flip lets a user move an active call between their devices. Useful when a conversation starts at the desk and needs to continue on a mobile.</p></div>
+          <div><h3>Keep follow-up together</h3><p>Access call history, contacts and voicemail through the client. Staff can follow up through their business extension rather than piecing together messages across personal phones.</p></div>
+        </div>
+        <div class="practical-note">
+          <h3>Make mobile calling work in practice</h3>
+          <p>We check app permissions, headsets, mobile reception, WiFi and remote access during setup. Availability and opening hours still need deliberate configuration. Installing an app alone does not guarantee good audio or that every call will ring through.</p>
+        </div>
+        <p class="source-note">Explore Yeastar's <a href="https://www.yeastar.com/unified-communications/linkus-softphone/" target="_blank" rel="noopener noreferrer">Linkus clients</a>, <a href="https://www.yeastar.com/linkus-softphone/mobile/" target="_blank" rel="noopener noreferrer">mobile app</a>, <a href="https://www.yeastar.com/linkus-softphone/desktop" target="_blank" rel="noopener noreferrer">desktop app</a> and <a href="https://help.yeastar.com/en/p-series-cloud-edition/administrator-guide/call-flip-overview.html" target="_blank" rel="noopener noreferrer">Call Flip requirements</a>. Functions vary by client, PBX and subscription.</p>
+      </div>
+    </section>
+
+    <section id="compare" class="band" aria-labelledby="compare-title">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">Choosing with confidence</p>
+          <h2 id="compare-title">Why choose Yeastar over another phone system?</h2>
+          <p>For a business that wants cloud calling, desk phones and mobile extensions with local support, a CCL Yeastar Cloud PBX subscription belongs on the shortlist. It is not automatically the best choice for every organisation. Our assessment starts with the following trade-offs.</p>
+        </div>
+        <div class="comparison-list">
+          <article><h3>Compared with an older, desk-only PBX</h3><div><p><strong>Where Yeastar can win:</strong> a move to P-Series can bring app-based extensions, modern call handling and a clearer path for hybrid teams. It is particularly compelling when the old system makes even small changes difficult.</p><p><strong>What to weigh up:</strong> working equipment is not worthless. Check handset replacement, analogue devices, connectivity and migration costs before replacing a system that still meets your needs.</p></div></article>
+          <article><h3>Compared with 3CX</h3><div><p><strong>Where Yeastar can win:</strong> with CCL, a Yeastar Cloud PBX subscription brings business call handling, Linkus apps and local setup and support together, without an onsite PBX appliance to look after. Linkus is included at no extra charge, connecting office, mobile and remote staff to the same phone system.</p><p><strong>What to weigh up:</strong> 3CX also offers hosted options and its own apps. Compare reception workflows, integrations, support and renewal costs on equivalent requirements. 3CX prices its system around simultaneous calls, so a simplistic per-user comparison would be misleading.</p></div></article>
+          <article><h3>Compared with Microsoft Teams Phone</h3><div><p><strong>Where Yeastar can win:</strong> it can suit a phone-first business that wants a dedicated PBX workflow without making Teams the centre of every user's calling experience.</p><p><strong>What to weigh up:</strong> Teams Phone may be a better fit when staff already work in Teams and want calling there too. Check Teams Phone licensing and external calling connectivity; an existing Microsoft 365 subscription does not, by itself, establish that all required calling services are included.</p></div></article>
+          <article><h3>Compared with a basic hosted phone bundle</h3><div><p><strong>Where Yeastar can win:</strong> supported SIP phone choices, Linkus and tailored call handling can give you more flexibility when a basic bundle cannot accommodate the way you need to work.</p><p><strong>What to weigh up:</strong> a simple hosted service may be entirely adequate for a small team. Compare the actual contract: call capacity, queues, app access, number ownership, support and exit arrangements. More features only help if you use them.</p></div></article>
+        </div>
+        <p class="decision"><strong>Our recommendation:</strong> choose the system your team can use confidently, with a clearly scoped support service and a recurring cost you understand. We can assess your current setup before recommending a change.</p>
+      </div>
+    </section>
+
+    <section id="deployment" class="band band-soft" aria-labelledby="deployment-title">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">Cloud subscriptions and specialist enterprise deployments</p>
+          <h2 id="deployment-title">The right system starts with the right plan.</h2>
+          <p>Cloud PBX subscriptions are our main offering. For very large organisations or businesses with substantial in-house IT resources, we also scope onsite and software deployments around their specific requirements.</p>
+        </div>
+        <div class="three-columns deployment-options">
+          <div><h3>Cloud PBX subscriptions</h3><p>Our starting point for most businesses: a cloud subscription with business call handling, Linkus at no extra app charge, and local setup and support. Connect office, mobile and remote staff without maintaining an onsite PBX appliance. We agree the subscription, call capacity and connectivity plan with you.</p></div>
+          <div><h3>Onsite PBX for large organisations</h3><p>For very large organisations with more than 200 extensions, an onsite PBX can be worth considering where local infrastructure, capacity planning and hardware redundancy are priorities. We scope multi-site connectivity, redundant appliances, power protection and recovery arrangements around the organisation's requirements.</p></div>
+          <div><h3>Software PBX for in-house IT teams</h3><p>A software PBX can suit organisations with their own system administration team and extensive onsite server infrastructure. We work with your team on server capacity, network access and integrations, with clear responsibilities for patching, monitoring, backups and recovery within your existing IT environment.</p></div>
+        </div>
+        <article class="customer-example" id="jswap" aria-labelledby="jswap-title">
+          <p class="eyebrow">Onsite PBX business case</p>
+          <h3 id="jswap-title">J Swap: why they chose dedicated PBX hardware</h3>
+          <p><a href="https://jswap.nz/" target="_blank" rel="noopener noreferrer">J Swap</a>'s Central Communications phone system connects <strong>180 extensions across multiple sites</strong>. They chose dedicated hardware, with <strong>two redundant PBX appliances configured for failover</strong>.</p>
+          <p><strong>Why dedicated hardware?</strong> J Swap wanted phone-system hosting separate from their corporate IT and hypervisor hosting environment. The PBX runs on its own redundant appliances, keeping the telephony workload off the hosts used for other business applications.</p>
+          <p><strong>Onsite appliance or Software PBX?</strong> Dedicated appliances suit a requirement to keep PBX hosting independent of the corporate server environment. A Software PBX can suit an organisation that wants to use its existing server infrastructure and in-house system administration team. J Swap's decision was to keep that hosting separate, with dedicated hardware and redundancy for the phone system.</p>
+        </article>
+        <div class="migration">
+          <div><h3>A considered move, not a surprise cutover</h3><p>Keep your current phone service running until number porting is confirmed. We agree the transition and test the calling paths that matter to your business.</p><a href="/support.html#contact" class="text-link">Discuss an upgrade with our Hamilton team</a></div>
+          <ol class="steps">
+            <li><strong>Understand the working day</strong><span>Review numbers, staff, busy periods, reception, after-hours calls and any special devices.</span></li>
+            <li><strong>Check the network and quote</strong><span>Assess connectivity and equipment, then separate setup costs, recurring charges and optional features.</span></li>
+            <li><strong>Configure and test</strong><span>Prepare extensions, routing and apps. Agree number-porting timing and a contingency for the change.</span></li>
+            <li><strong>Train and support</strong><span>Show staff how to answer, transfer and manage availability, then agree ongoing support and administration.</span></li>
+          </ol>
+        </div>
+        <p class="network-note">Good calls need a good network. We can help with <a href="/networking--data.html">structured data cabling</a>, <a href="/wireless.html">business WiFi</a> and <a href="/ultra-fast-broadband.html">business broadband</a> as part of the wider installation.</p>
+      </div>
+    </section>
+
+    <section id="testimonials" class="band" aria-labelledby="testimonials-title">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">In our customers' words</p>
+          <h2 id="testimonials-title">Phone services backed by people who help.</h2>
+          <p>These customers describe their experience with Central Communications and our phone services, connectivity and support.</p>
+        </div>
+        <div class="testimonials">
+          {voipTestimonials.map(({ name, company, img, quote }) => (
+            <figure class="testimonial">
+              <blockquote><p>{quote}</p></blockquote>
+              <figcaption>
+                <picture>
+                  <source type="image/webp" srcset={`${img.replace('.jpg', '-160.webp')} 1x, ${img.replace('.jpg', '-320.webp')} 2x`} />
+                  <img src={img} alt={name} width="64" height="64" loading="lazy" decoding="async" />
+                </picture>
+                <span><strong>{name}</strong><span>{company}</span></span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section id="faqs" class="band band-soft" aria-labelledby="faqs-title">
+      <div class="container faq-layout">
+        <div><p class="eyebrow">Before you choose</p><h2 id="faqs-title">Business VoIP FAQs</h2><p>Numbers, apps, costs and connectivity. Start with the questions that matter to your team.</p><a href="/support.html#contact" class="text-link">Ask us about your setup</a></div>
+        <div class="faq-list">
+          {voipFaqs.map(({ question, answer }, index) => (
+            <details id={`voip-faq-${index + 1}`}><summary>{question}</summary><p>{answer}</p></details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="band contact-band" aria-labelledby="contact-title">
+      <div class="container contact-inner">
+        <div><p class="eyebrow">Your next phone system</p><h2 id="contact-title">Let's start with how you work.</h2><p>Tell us how many people need phones, where they work and what frustrates you about your current setup. We'll help scope a practical VoIP solution for your business.</p></div>
+        <a href="/support.html#contact" class="btn btn-primary">Talk to Central Communications</a>
+      </div>
+    </section>
+  </div>
 </Layout>
 
 <style>
-  .page-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    color: #e8f1ff;
-    margin: 0.5rem 0 1rem;
+  .voip-page { color: #263b40; background: #fff; line-height: 1.75; letter-spacing: 0; }
+  .voip-page :is(h1, h2, h3, p, figure, blockquote) { margin: 0; }
+  .voip-page :is(h1, h2, h3) { letter-spacing: 0; overflow-wrap: anywhere; }
+  .voip-page h2 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 1.4rem; }
+  .voip-page h3 { font-size: 1.3rem; line-height: 1.3; margin-bottom: 0.8rem; }
+  .voip-page p + p { margin-top: 1rem; }
+  .voip-page a:not(.btn) { text-decoration: underline; text-underline-offset: 4px; }
+  .voip-page a:hover { text-decoration-thickness: 2px; }
+  .voip-page :is(a, summary, [tabindex]):focus-visible { outline: 3px solid #007b63; outline-offset: 5px; }
+  .voip-page .btn { letter-spacing: 0; text-align: center; justify-content: center; border-radius: 6px; white-space: normal; }
+  .voip-page .btn-primary { background: #0369a1; color: #fff; }
+  .voip-page .btn-primary:hover { background: #075985; }
+  .voip-page .eyebrow { color: #006b55; font-family: 'Space Mono', monospace; font-size: 0.75rem; line-height: 1.6; margin-bottom: 1rem; }
+  .band { padding: 5rem 0; scroll-margin-top: 5rem; }
+  .band-soft { background: #f3f6f6; }
+  .band-green { background: #eaf5ef; }
+  .section-intro { max-width: 780px; margin-bottom: 3rem; }
+  .voip-hero { position: relative; isolation: isolate; overflow: hidden; background: #142c2c; padding: 6.5rem 0 3rem; }
+  .hero-image { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: right 20%; }
+  .voip-hero::after { content: ''; position: absolute; z-index: -1; inset: 0; background: rgba(6, 20, 23, 0.78); }
+  .hero-copy { color: #fff; }
+  .breadcrumbs { display: flex; gap: 0.75rem; font-size: 0.8rem; margin-bottom: 1.5rem; }
+  .voip-hero .eyebrow { color: #b3eddb; }
+  .voip-hero h1 { font-size: 3.5rem; color: #fff; max-width: 800px; margin-bottom: 1.2rem; }
+  .hero-intro { max-width: 610px; font-size: 1.125rem; line-height: 1.7; }
+  .actions { display: flex; flex-wrap: wrap; gap: 1.25rem 1.75rem; align-items: center; margin: 1.6rem 0 1.2rem; }
+  .hero-footnote { color: #dbede7; font-size: 0.8rem; }
+  .voip-hero :is(a, [tabindex]):focus-visible { outline-color: #b3eddb; }
+  .page-index { border-bottom: 1px solid #d6e3de; background: #fff; }
+  .page-index ul { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; padding: 1.25rem 0; margin: 0; list-style: none; }
+  .page-index a { display: inline-block; font-size: 0.875rem; padding: 0.25rem 0; color: #245f56; }
+  .three-columns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+  .benefits > div { border-top: 2px solid #c3e1d3; padding-top: 1.5rem; }
+  .use-case-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2.5rem; }
+  .use-case { border-top: 1px solid #b9cdc5; padding-top: 1.5rem; }
+  .outcome { color: #00634e; font-size: 0.95rem; }
+  .product-intro { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); align-items: center; gap: 3rem; margin-bottom: 3rem; }
+  .product-intro figure { text-align: center; }
+  .voip-page figcaption { font-size: 0.8rem; line-height: 1.6; color: #4e6463; }
+  .text-link { display: inline-block; margin-top: 1.25rem; font-weight: 600; color: #03658d; }
+  .external-note { font-size: 0.8rem; font-weight: 400; }
+  .voip-page .table-heading { margin-bottom: 0.25rem; }
+  .table-scroll { overflow-x: auto; margin-bottom: 1rem; border-bottom: 1px solid #bfd4cc; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left; }
+  caption { text-align: left; font-size: 0.875rem; color: #4e6463; padding: 0.5rem 0 1.25rem; }
+  th, td { padding: 1.2rem; vertical-align: top; border-bottom: 1px solid #dce6e2; }
+  thead th { background: #eaf5ef; color: #174b40; }
+  tbody th { width: 24%; color: #193b39; }
+  td { width: 38%; }
+  .source-note { font-size: 0.85rem; line-height: 1.7; color: #405956; }
+  .brands { display: flex; align-items: center; flex-wrap: wrap; gap: 2rem 3rem; padding-top: 2rem; }
+  .brands img { width: 120px; height: 40px; object-fit: contain; }
+  .linkus-image { margin-bottom: 3rem !important; }
+  .linkus-image img { width: 100%; height: auto; }
+  .linkus-image figcaption { margin-top: 1rem; }
+  .linkus-benefits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 4rem; }
+  .practical-note { border-left: 3px solid #00735c; padding-left: 1.5rem; margin: 3rem 0 1.5rem; max-width: 900px; }
+  .comparison-list article { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 3rem; padding: 2rem 0; border-top: 1px solid #cbdcd4; }
+  .decision { border-top: 2px solid #006b55; padding-top: 1.5rem; margin-top: 1rem !important; }
+  .deployment-options { margin-bottom: 3.5rem; }
+  .customer-example { border-top: 1px solid #b9cdc5; padding: 2.5rem 0; scroll-margin-top: 6rem; }
+  .customer-example p { max-width: 850px; }
+  .migration { border-top: 1px solid #b9cdc5; padding-top: 3rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); gap: 4rem; }
+  .steps { margin: 0; padding-left: 1.25rem; }
+  .steps li { padding-left: 0.5rem; margin-bottom: 1.5rem; }
+  .steps li::marker { color: #006b55; font-weight: 700; }
+  .steps strong, .steps span { display: block; }
+  .network-note { border-top: 1px solid #b9cdc5; padding-top: 1.5rem; margin-top: 2rem !important; }
+  .testimonials { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
+  .testimonial { display: flex; flex-direction: column; justify-content: space-between; border-top: 3px solid #006b55; padding-top: 1.5rem; }
+  .testimonial blockquote { font-size: 0.95rem; }
+  .testimonial figcaption { display: flex; align-items: center; gap: 1rem; margin-top: 1.75rem; }
+  .testimonial picture { flex: 0 0 64px; }
+  .testimonial img { width: 64px; height: 64px; object-fit: cover; border-radius: 4px; }
+  .testimonial figcaption strong, .testimonial figcaption span span { display: block; }
+  .testimonial figcaption strong { color: #183b36; font-size: 0.95rem; }
+  .faq-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 4rem; }
+  .faq-list { min-width: 0; }
+  details { border-top: 1px solid #bfd4cc; scroll-margin-top: 6rem; }
+  details:last-child { border-bottom: 1px solid #bfd4cc; }
+  summary { cursor: pointer; font-weight: 600; color: #193b39; padding: 1.2rem 0; line-height: 1.5; }
+  summary::marker { color: #00735c; }
+  details[open] summary { color: #00634e; }
+  details p { padding: 0 0 1.5rem; }
+  .contact-band { background: #deeee7; }
+  .contact-inner { display: flex; gap: 3rem; align-items: center; justify-content: space-between; }
+  .contact-inner > div { max-width: 650px; }
+  .contact-inner .btn { flex-shrink: 0; max-width: 100%; }
+  @media (max-width: 1000px) {
+    .use-case-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .testimonials { grid-template-columns: 1fr; }
+    .testimonial { max-width: 800px; }
+    .product-intro { gap: 1.5rem; }
+    .faq-layout, .migration { gap: 2rem; }
+    .contact-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
   }
-  .page-title em { font-style: normal; color: #0ea5e9; }
-  .page-sub { font-size: 1.1rem; color: #7ea3c8; max-width: 520px; }
-
-  .content-grid {
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 4rem;
-    align-items: start;
+  @media (max-width: 700px) {
+    .band { padding: 3.5rem 0; }
+    .voip-page h2 { font-size: 2rem; }
+    .voip-hero { padding: 6rem 0 2.25rem; }
+    .voip-hero h1 { font-size: 2.25rem; }
+    .hero-intro { font-size: 1rem; }
+    .hero-footnote { max-width: 330px; }
+    .page-index ul { gap: 0.4rem 1rem; }
+    .section-intro { margin-bottom: 2rem; }
+    .three-columns, .use-case-grid, .product-intro, .linkus-benefits, .comparison-list article, .migration, .faq-layout { grid-template-columns: 1fr; }
+    .comparison-list article { gap: 0.5rem; }
+    .product-intro figure { max-width: 400px; margin: 0 auto; }
+    table { min-width: 640px; }
+    th, td { padding: 1rem; }
+    .brands { gap: 1.5rem 2rem; }
   }
-
-  .brands-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    align-items: center;
-    padding: 1.5rem;
-    margin: 1.5rem 0;
-  }
-  .brands-grid img {
-    height: 32px;
-    width: auto;
-    filter: brightness(0) invert(0.6);
-    transition: filter 0.2s;
-  }
-  .brands-grid img:hover { filter: none; }
-
-  .feature-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-  .feature-list li {
-    padding-left: 1.5rem;
-    position: relative;
-    color: #1e3a5f;
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
-  .feature-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.6rem;
-    width: 6px;
-    height: 6px;
-    background: #0ea5e9;
-    border-radius: 50%;
-  }
-
-  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 6rem; }
-
-  .cta-box {
-    background: #0c1d35;
-    border: 1px solid rgba(14, 165, 233, 0.15);
-    border-radius: 1rem;
-    padding: 1.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .cta-box h3 { font-size: 1.1rem; color: #e8f1ff; margin: 0; }
-  .cta-box p { font-size: 0.875rem; color: #7ea3c8; margin: 0; line-height: 1.6; }
-  .cta-box .btn-outline { color: #e8f1ff; border-color: rgba(232, 241, 255, 0.35); }
-  .cta-box .btn-outline:hover { color: #38bdf8; border-color: #38bdf8; }
-
-  .sidebar-img {
-    border-radius: 1rem;
-    border: 1px solid rgba(14, 165, 233, 0.12);
-    width: 100%;
-    height: auto;
-  }
-
-  @media (max-width: 900px) {
-    .content-grid { grid-template-columns: 1fr; }
-    .sidebar { position: static; }
+  @media (max-width: 360px) {
+    .voip-hero h1 { font-size: 1.875rem; }
+    .voip-hero { padding: 5.5rem 0 1rem; }
+    .voip-hero h1 { margin-bottom: 0.8rem; }
+    .voip-hero .eyebrow, .breadcrumbs { margin-bottom: 0.75rem; }
+    .actions { gap: 0.75rem; margin: 1.2rem 0 0.8rem; }
+    .hero-intro { line-height: 1.6; }
+    .voip-page .btn { padding: 0.75rem 1rem; }
   }
 </style>

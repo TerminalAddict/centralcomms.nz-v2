@@ -8,6 +8,15 @@ All notable changes to centralcomms.nz v2.
 
 ### SEO and structured data
 
+- Expanded `/voip.html` with Hamilton/Waikato service content, six business use cases, Yeastar P-Series feature analysis, Linkus benefits, qualified competitor comparisons, deployment/migration guidance and 14 FAQs.
+- Added matching `Service`, `WebPage`, `BreadcrumbList` and `FAQPage` JSON-LD, with visible FAQ answers and schema generated from one data source. Added crawl-friendly `robots.txt` pointing to the existing sitemap.
+- Corrected sitemap generation to use the same `.html` URLs as the built pages' canonicals, retaining the origin for the home page.
+- Reused Sophia, Aaron and Ross's existing testimonials unchanged through shared data consumed by the home and VoIP pages, without fabricated ratings or product endorsements.
+- Downloaded and optimised Yeastar illustrations for local hosting; added a dedicated 1200 x 630 VoIP social image and its reproducible source. External VoIP reference links open safely in a new tab.
+- Replaced the VoIP hero's supplier image with Paul's supplied local WebP photo and adjusted its crop for desktop and mobile.
+- Removed decorative VoIP benefit/use-case numbers; refocused the offering on Cloud PBX subscriptions and removed public 3CX/Teams links. Added the owner-supplied J Swap deployment example (180 extensions across sites and two redundant failover PBX appliances), enterprise onsite/software guidance, and explicit free Linkus use with CCL Cloud PBX subscriptions in both the copy and FAQ schema.
+- Reworked J Swap into a short business case explaining its choice of redundant dedicated PBX hardware, separate from corporate IT and hypervisor hosting, and the alternative fit for a Software PBX.
+- Added optional `imageAlt` metadata to the shared layout and documented content sources, image provenance and verification in `docs/voip-content.md`.
 - `Layout.astro`: expanded the default JSON-LD from a basic local business object to a `ProfessionalService` schema with logo, default social image, opening hours, service catalog, and canonical `@id`.
 - `Layout.astro`: added optional `canonicalURL`, `meta name="title"`, `twitter:url`, smarter title suffixing to avoid duplicate brand names, and switched the default Open Graph image to `ccl-og-image.png`.
 - Service pages: refined title and description metadata for VoIP, CCTV, networking/data cabling, and IT support pages using search-focused Hamilton/Waikato service terms.
