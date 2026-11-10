@@ -8,7 +8,8 @@ All notable changes to centralcomms.nz v2.
 
 ### Content updates
 
-- Updated Support, Notifications, About, the Updates index and all update articles to share the service-page hero/header styling: full-bleed local photography, readable white headings, breadcrumbs and green accents. The four main-page images are interim choices in `src/data/page-heroes.ts`, ready for the owner's replacements.
+- Replaced the Notifications, About and main Updates page hero placeholders with the owner's supplied photographs, optimised as local 2048-pixel-wide WebP images. Support and individual update-post heroes are unchanged; original uploads are preserved.
+- Updated Support, Notifications, About, the Updates index and all update articles to share the service-page hero/header styling: full-bleed local photography, readable white headings, breadcrumbs and green accents. Main-page images are configured in `src/data/page-heroes.ts`; Support still uses an interim photo.
 - Update articles now use their featured image in the hero instead of a separate framed cover. CMS saves refresh the hero image and visible metadata, including image removal/addition; staff controls retain their existing workflows. Added responsive heading styles, narrow-screen licence-image/video fixes, documentation and a build-output regression check.
 - The broadband customer Speedtest image now opens in a responsive native modal, with keyboard/backdrop dismissal, scroll locking, focus restoration and a direct-image fallback without JavaScript.
 - Removed visible new-tab annotations from VoIP and CCTV links while preserving their new-tab behaviour and security attributes.
