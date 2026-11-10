@@ -13,6 +13,9 @@ All notable changes to centralcomms.nz v2.
 
 ### SEO and structured data
 
+- Expanded `/it-support.html` with six business use cases, practical benefits, Paul Willard's technical/management background, eight owner-supplied qualifications and training records, support options, server/private-cloud guidance, three existing testimonials, two project links and 18 FAQs.
+- Added matching IT support service, person/credentials, webpage, breadcrumb and FAQ JSON-LD, plus dedicated social metadata and locally optimised hero/portrait/share images. Credentials and FAQs share their visible and structured-data sources; personal PSPLA approval is distinct from the company licence and older vendor certifications are dated records.
+- Shared Ian and Jason's existing testimonials with the home page without changing their wording. Documented IT support content provenance, credential boundaries, local image sources and maintenance checks in `docs/it-support-content.md`.
 - Expanded `/networking--data.html` with six customer use cases, benefits, owner-confirmed Safety 'n Action height certification for all staff and Legrand cabling qualifications, copper/fibre/PoE/10GbE guidance, existing project examples, Aaron's unchanged testimonial and 18 FAQs.
 - Added matching data-cabling service, webpage, breadcrumb, FAQ and descriptive video JSON-LD, dedicated social metadata and local WebP photography. The owner's short installation clip opens in a keyboard-accessible native modal, with a silent 1080p MP4, visible media description and direct-link fallback. Original uploads remain unchanged.
 - Documented data-cabling claim boundaries, research, asset provenance, owner-confirmed original video publication date (14 September 2022) and maintenance checks in `docs/data-cabling-content.md`.
