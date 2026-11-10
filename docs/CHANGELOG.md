@@ -8,6 +8,8 @@ All notable changes to centralcomms.nz v2.
 
 ### Content updates
 
+- Updated Support, Notifications, About, the Updates index and all update articles to share the service-page hero/header styling: full-bleed local photography, readable white headings, breadcrumbs and green accents. The four main-page images are interim choices in `src/data/page-heroes.ts`, ready for the owner's replacements.
+- Update articles now use their featured image in the hero instead of a separate framed cover. CMS saves refresh the hero image and visible metadata, including image removal/addition; staff controls retain their existing workflows. Added responsive heading styles, narrow-screen licence-image/video fixes, documentation and a build-output regression check.
 - The broadband customer Speedtest image now opens in a responsive native modal, with keyboard/backdrop dismissal, scroll locking, focus restoration and a direct-image fallback without JavaScript.
 - Removed visible new-tab annotations from VoIP and CCTV links while preserving their new-tab behaviour and security attributes.
 - Updated the shared CST Group testimonial and the Pharmacy 547 testimonial to refer to Paul individually, using the business owner's supplied wording. The CST Group change applies to both the home and VoIP pages.

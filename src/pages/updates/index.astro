@@ -1,5 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import { pageHeroImages } from '../../data/page-heroes';
+import '../../styles/content-pages.css';
 import updatesData from '../../../public/assets/data/updates.json';
 
 const posts = updatesData.updates;
@@ -18,14 +21,15 @@ const categoryColors: Record<string, string> = {
   title="Updates & Portfolio — Central Communications Ltd"
   description="Latest project updates and portfolio work from Central Communications Ltd — CCTV, networking, VoIP and more."
 >
-  <div class="page-hero">
-    <div class="container hero-inner">
-      <div>
-        <span class="section-tag">Updates & Portfolio</span>
-        <h1 class="page-title">Project<br /><em>Updates</em></h1>
-        <p class="page-sub">A look at some of the work we've done for clients across the Waikato and beyond.</p>
-      </div>
-      <div class="staff-area">
+  <div class="content-page">
+  <PageHero title={'Project\nupdates'} eyebrow="Our work around the Waikato"
+    description="A look at some of the work we've done for clients across the Waikato and beyond."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Updates' }]}
+    image={pageHeroImages.updates} />
+
+  <section class="section">
+    <div class="container">
+      <div class="staff-area" role="group" aria-label="Staff controls">
         <button id="staff-login-btn" class="staff-link" style="display:none;">Staff Login</button>
         <div id="staff-controls" style="display:none;">
           <button id="new-update-btn" class="btn btn-primary" style="font-size:0.85rem;padding:0.6rem 1.25rem;">
@@ -34,11 +38,6 @@ const categoryColors: Record<string, string> = {
           <button id="staff-logout-btn" class="staff-link">Logout</button>
         </div>
       </div>
-    </div>
-  </div>
-
-  <section class="section">
-    <div class="container">
       <div class="posts-grid" id="posts-grid">
         {posts.map((post, i) => {
           const cats = post.categories ?? [];
@@ -79,6 +78,7 @@ const categoryColors: Record<string, string> = {
       </div>
     </div>
   </section>
+  </div>
 
   <!-- Staff login modal -->
   <div id="login-modal" class="modal-backdrop" style="display:none;" role="dialog" aria-modal="true" aria-label="Staff login">
@@ -405,20 +405,16 @@ const categoryColors: Record<string, string> = {
 </Layout>
 
 <style>
-  .page-title { font-size: clamp(2rem, 5vw, 3.5rem); color: #e8f1ff; margin: 0.5rem 0 1rem; }
-  .page-title em { font-style: normal; color: #0ea5e9; }
-  .page-sub { font-size: 1.1rem; color: #7ea3c8; max-width: 520px; }
-
-  .hero-inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; }
-  .staff-area { display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem; padding-top: 5rem; }
-  #staff-controls { display: flex; align-items: center; gap: 1rem; }
+  .staff-area { display: flex; justify-content: flex-end; align-items: center; min-height: 44px; margin-bottom: 1.5rem; }
+  #staff-controls { display: flex; align-items: center; gap: 1rem; min-height: 44px; }
 
   .staff-link {
     background: none; border: none; cursor: pointer; font-family: "Space Mono", monospace;
-    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #4a6a9a;
-    padding: 0; transition: color 0.2s;
+    font-size: 0.75rem; letter-spacing: 0; color: #245f56;
+    padding: 0.5rem 0; min-height: 44px; text-decoration: underline; text-underline-offset: 4px; transition: color 0.2s;
   }
-  .staff-link:hover { color: #0ea5e9; }
+  .staff-link:hover { color: #0369a1; }
+  .staff-link:focus-visible { outline: 3px solid #007b63; outline-offset: 4px; }
 
   .posts-grid {
     display: grid;
@@ -426,7 +422,7 @@ const categoryColors: Record<string, string> = {
     gap: 1.25rem;
   }
   .post-card { display: flex; flex-direction: column; overflow: hidden; padding: 0; }
-  .post-img-wrap { overflow: hidden; border-radius: 0.875rem 0.875rem 0 0; aspect-ratio: 16/9; }
+  .post-img-wrap { overflow: hidden; aspect-ratio: 16/9; }
   .post-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
   .post-card:hover .post-img { transform: scale(1.05); }
   .post-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
@@ -436,7 +432,7 @@ const categoryColors: Record<string, string> = {
     text-transform: uppercase; padding: 0.2rem 0.6rem; border: 1px solid; border-radius: 9999px;
   }
   .post-date { font-size: 0.75rem; color: #486581; margin-left: auto; }
-  .post-title { font-size: 1.05rem; color: #1e3a5f; margin: 0 0 0.5rem; transition: color 0.2s; line-height: 1.4; }
+  .post-title { font-size: 1.3rem; color: #0c1a2e; letter-spacing: 0; margin: 0 0 0.8rem; transition: color 0.2s; line-height: 1.35; }
   .post-card:hover .post-title { color: #0369a1; }
   .post-excerpt { font-size: 0.85rem; color: #334e68; line-height: 1.6; flex: 1; margin: 0 0 1rem; }
   .post-read-more {
@@ -541,5 +537,5 @@ const categoryColors: Record<string, string> = {
   .form-error { color: #f87171; font-size: 0.85rem; margin: 0.5rem 0 0; }
 
   @media (max-width: 900px) { .posts-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 560px) { .posts-grid { grid-template-columns: 1fr; } .overlay-body { grid-template-columns: 1fr; } .hero-inner { flex-direction: column; } }
+  @media (max-width: 560px) { .posts-grid { grid-template-columns: 1fr; } .overlay-body { grid-template-columns: 1fr; } }
 </style>

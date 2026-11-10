@@ -33,6 +33,7 @@ Complete reference for developing, building, deploying, and managing the Central
 23. [Enterprise WiFi content and SEO maintenance](wireless-content.md)
 24. [Business broadband content and SEO maintenance](broadband-content.md)
 25. [Websites and hosting content and SEO maintenance](websites-hosting-content.md)
+26. [Content-page heroes and image replacement](content-page-heroes.md)
 
 ---
 

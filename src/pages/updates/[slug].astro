@@ -1,5 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import '../../styles/content-pages.css';
 import updatesData from '../../../public/assets/data/updates.json';
 
 export async function getStaticPaths() {
@@ -20,58 +22,26 @@ const formattedDate = new Date(post.date + 'T00:00:00').toLocaleDateString('en-N
   year: 'numeric', month: 'long', day: 'numeric'
 });
 
-const categoryColors: Record<string, string> = {
-  'CCTV':           '#0ea5e9',
-  'Infrastructure': '#38bdf8',
-  'VoIP':           '#60a5fa',
-  'Wireless':       '#7dd3fc',
-  'Broadband':      '#93c5fd',
-  'Websites':       '#a78bfa',
-  'Hosting':        '#34d399',
-};
+const featuredImage = post.image ? `/assets/images/posts/${encodeURIComponent(post.image)}` : undefined;
 ---
 <Layout
   title={post.title}
   description={post.excerpt ?? `${post.title} — a project update from Central Communications Ltd.`}
-  image={post.image ? `/assets/images/posts/${post.image}` : undefined}
+  image={featuredImage}
   ogType="article"
   articleDate={post.date}
 >
-  <!-- Post hero -->
-  <div class="post-hero">
-    <div class="container">
-      <a href="/updates.html" class="back-link">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M13 8H3M7 4l-4 4 4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        All updates
-      </a>
-
-      <div class="post-meta" id="post-meta-display">
-        {(post.categories ?? []).map(c => (
-          <span class="section-tag" style={`margin-bottom:0;border-color:${categoryColors[c] ?? '#0ea5e9'};color:${categoryColors[c] ?? '#0ea5e9'};`}>{c}</span>
-        ))}
-        <span class="post-date">{formattedDate}</span>
-      </div>
-
-      <h1 class="post-title" id="post-title-display">{post.title}</h1>
-      <p class="post-author">By {post.author}</p>
+  <div class="content-page">
+  <PageHero id="post-hero" title={post.title} titleId="post-title-display" eyebrow="Project update"
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'All updates', href: '/updates.html' }, { label: 'Project update' }]}
+    image={featuredImage ? { src: featuredImage } : undefined}>
+    <div slot="details" class="post-meta" id="post-meta-display">
+      <ul class="post-categories" id="post-categories" aria-label="Categories" hidden={!post.categories?.length}>
+        {(post.categories ?? []).map(category => <li>{category}</li>)}
+      </ul>
+      <p class="post-byline"><time id="post-date-display" datetime={post.date}>{formattedDate}</time><span>By <span id="post-author-display">{post.author}</span></span></p>
     </div>
-  </div>
-
-  {post.image && (
-    <div class="post-cover" id="post-cover-display">
-      <div class="container">
-        <img
-          src={`/assets/images/posts/${post.image}`}
-          alt={post.title}
-          class="cover-img"
-          loading="eager"
-          id="post-cover-img"
-        />
-      </div>
-    </div>
-  )}
+  </PageHero>
 
   <!-- Content -->
   <div class="section">
@@ -104,6 +74,7 @@ const categoryColors: Record<string, string> = {
         )}
       </nav>
     </div>
+  </div>
   </div>
 
   <!-- Staff toolbar (shown when logged in) -->
@@ -407,9 +378,29 @@ const categoryColors: Record<string, string> = {
       // Update visible page content
       document.getElementById('post-content')!.innerHTML = r.update.content_html;
       document.getElementById('post-title-display')!.textContent = r.update.title;
+      document.getElementById('post-author-display')!.textContent = r.update.author;
+      const dateDisplay = document.getElementById('post-date-display') as HTMLTimeElement;
+      dateDisplay.dateTime = r.update.date;
+      dateDisplay.textContent = new Date(`${r.update.date}T00:00:00`).toLocaleDateString('en-NZ', { year: 'numeric', month: 'long', day: 'numeric' });
+      const categoryList = document.getElementById('post-categories')!;
+      categoryList.replaceChildren(...(r.update.categories ?? []).map((category: string) => {
+        const item = document.createElement('li');
+        item.textContent = category;
+        return item;
+      }));
+      categoryList.hidden = !categoryList.childElementCount;
+
+      const heroMedia = document.querySelector<HTMLElement>('#post-hero [data-hero-media]')!;
       if (r.update.image) {
-        const coverImg = document.getElementById('post-cover-img') as HTMLImageElement | null;
-        if (coverImg) coverImg.src = `/assets/images/posts/${r.update.image}`;
+        const heroImage = document.createElement('img');
+        heroImage.src = `/assets/images/posts/${encodeURIComponent(r.update.image)}`;
+        heroImage.alt = '';
+        heroImage.fetchPriority = 'high';
+        heroMedia.replaceChildren(heroImage);
+        heroMedia.hidden = false;
+      } else {
+        heroMedia.replaceChildren();
+        heroMedia.hidden = true;
       }
       alert('Saved. Run "make deploy" to publish changes.');
     } else {
@@ -421,32 +412,19 @@ const categoryColors: Record<string, string> = {
 </Layout>
 
 <style>
-  .post-hero {
-    padding: 7rem 0 2rem;
-    background: linear-gradient(to bottom, #071525, #030b18);
-    border-bottom: 1px solid rgba(14, 165, 233, 0.08);
-  }
-  .back-link {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    font-family: "Space Mono", monospace; font-size: 0.7rem; letter-spacing: 0.1em;
-    text-transform: uppercase; color: #7ea3c8; margin-bottom: 1.5rem; transition: color 0.2s;
-  }
-  .back-link:hover { color: #0ea5e9; }
-  .post-meta { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
-  .post-date { font-size: 0.8rem; color: #7ea3c8; }
-  .post-title { font-size: clamp(1.8rem, 4vw, 3rem); color: #e8f1ff; margin: 0 0 0.5rem; line-height: 1.15; max-width: 720px; }
-  .post-author { font-size: 0.85rem; color: #7ea3c8; margin: 0; }
-
-  .post-cover { padding: 2rem 0; }
-  .cover-img { width: 100%; max-height: 480px; object-fit: cover; border-radius: 1.25rem; border: 1px solid rgba(14, 165, 233, 0.12); display: block; }
+  .post-meta { display: flex; flex-direction: column; gap: 0.75rem; }
+  .post-categories { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; padding: 0; margin: 0; list-style: none; color: #b3eddb; font-family: 'Space Mono', monospace; font-size: 0.75rem; line-height: 1.6; overflow-wrap: anywhere; }
+  .post-categories[hidden] { display: none; }
+  .post-byline { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; color: #dbede7; font-size: 0.85rem; line-height: 1.6; margin: 0; }
 
   .post-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(14, 165, 233, 0.1); }
-  .post-nav-item { display: flex; flex-direction: column; gap: 0.4rem; padding: 1.25rem; background: #071525; border: 1px solid rgba(14, 165, 233, 0.1); border-radius: 0.875rem; transition: border-color 0.2s; }
-  .post-nav-item:hover { border-color: rgba(14, 165, 233, 0.3); }
+  .post-nav-item { display: flex; flex-direction: column; gap: 0.4rem; padding: 1.25rem; background: #f3f6f6; border: 1px solid #bfd4cc; border-radius: 6px; transition: border-color 0.2s; }
+  .post-nav-item:hover { border-color: #00735c; }
+  .post-nav-item:focus-visible { outline: 3px solid #007b63; outline-offset: 4px; }
   .post-nav-next { text-align: right; }
-  .post-nav-label { display: flex; align-items: center; gap: 0.4rem; font-family: "Space Mono", monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: #0ea5e9; }
+  .post-nav-label { display: flex; align-items: center; gap: 0.4rem; font-family: "Space Mono", monospace; font-size: 0.75rem; letter-spacing: 0; color: #006b55; }
   .post-nav-next .post-nav-label { justify-content: flex-end; }
-  .post-nav-title { font-family: "Syne", sans-serif; font-size: 0.9rem; font-weight: 600; color: #e8f1ff; line-height: 1.3; }
+  .post-nav-title { font-family: "Syne", sans-serif; font-size: 1rem; font-weight: 600; color: #193b39; letter-spacing: 0; line-height: 1.35; }
 
   /* Staff bar */
   #staff-bar {

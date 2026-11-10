@@ -1,18 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { pageHeroImages } from '../data/page-heroes';
+import '../styles/content-pages.css';
 ---
 <Layout
   title="Service Notifications — Central Communications Ltd"
   description="Current service status and network outage notifications for Central Communications Ltd customers."
   noindex={false}
 >
-  <div class="page-hero">
-    <div class="container">
-      <span class="section-tag">Support — Notifications</span>
-      <h1 class="page-title">Service<br /><em>Notifications</em></h1>
-      <p class="page-sub">Current status of Central Communications services and any known outages.</p>
-    </div>
-  </div>
+  <div class="content-page">
+  <PageHero title={'Service\nnotifications'} eyebrow="Network status & service updates"
+    description="Current status of Central Communications services and any known outages."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Support', href: '/support.html' }, { label: 'Notifications' }]}
+    image={pageHeroImages.notifications} />
 
   <section class="section">
     <div class="container notif-container">
@@ -159,6 +160,7 @@ import Layout from '../layouts/Layout.astro';
 
     </div>
   </section>
+  </div>
 <script>
   const API = '/assets/php/notifications-api.php';
   const RESOLVED_PER_LOAD = 5;
@@ -737,10 +739,6 @@ import Layout from '../layouts/Layout.astro';
 
 <style is:global>
   .notif-container { max-width: 820px; }
-
-  .page-title { font-size: clamp(2rem, 5vw, 3.5rem); color: #e8f1ff; margin: 0.5rem 0 1rem; }
-  .page-title em { font-style: normal; color: #0ea5e9; }
-  .page-sub { font-size: 1.1rem; color: #7ea3c8; max-width: 520px; }
 
   /* Status loader */
   .status-loader {

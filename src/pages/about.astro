@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { pageHeroImages } from '../data/page-heroes';
+import '../styles/content-pages.css';
 
 const team = [
   {
@@ -50,13 +53,11 @@ const team = [
   title="About Central Communications Ltd"
   description="Central Communications Ltd was established in 1989 and provides smart telecommunications solutions to businesses throughout the Waikato. Meet our team."
 >
-  <div class="page-hero">
-    <div class="container">
-      <span class="section-tag">About us</span>
-      <h1 class="page-title">Building Better Business<br /><em>Since 1989</em></h1>
-      <p class="page-sub">A privately owned New Zealand company, trusted by businesses across the Waikato for over 35 years.</p>
-    </div>
-  </div>
+  <div class="content-page">
+  <PageHero title={'Building better business.\nSince 1989.'} eyebrow="About Central Communications"
+    description="A privately owned New Zealand company, trusted by businesses across the Waikato for over 35 years."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'About us' }]}
+    image={pageHeroImages.about} />
 
   <!-- Mission -->
   <section class="section">
@@ -142,7 +143,7 @@ const team = [
             <img
               src="/assets/images/pspla-license-2026.png"
               alt="PSPLA License 2026 — click to view full size"
-              style="max-width:360px;border-radius:0.75rem;border:1px solid rgba(14,165,233,0.15);cursor:zoom-in;"
+              style="width:100%;max-width:360px;border-radius:6px;border:1px solid rgba(14,165,233,0.15);cursor:zoom-in;"
               loading="lazy"
             />
           </a>
@@ -150,16 +151,13 @@ const team = [
       </div>
     </div>
   </section>
+  </div>
 </Layout>
 
 <style>
-  .page-title { font-size: clamp(2rem, 5vw, 3.5rem); color: #e8f1ff; margin: 0.5rem 0 1rem; }
-  .page-title em { font-style: normal; color: #0ea5e9; }
-  .page-sub { font-size: 1.1rem; color: #7ea3c8; max-width: 520px; }
-
   .about-grid, .info-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 4rem;
     align-items: start;
   }
@@ -170,8 +168,7 @@ const team = [
     height: auto;
   }
 
-  .section-header { text-align: center; margin-bottom: 3rem; }
-  .section-heading { font-size: clamp(1.8rem, 4vw, 2.4rem); color: #1e3a5f; margin: 0.5rem 0 1rem; }
+  .section-header { margin-bottom: 3rem; }
 
   .body-text {
     color: #334e68;
@@ -223,7 +220,7 @@ const team = [
   .info-list { display: flex; flex-direction: column; gap: 0; }
   .info-row {
     display: grid;
-    grid-template-columns: 160px 1fr;
+    grid-template-columns: 160px minmax(0, 1fr);
     gap: 1rem;
     padding: 0.75rem 0;
     border-bottom: 1px solid rgba(14, 165, 233, 0.15);
@@ -242,7 +239,7 @@ const team = [
   }
 
   @media (max-width: 900px) {
-    .about-grid, .info-grid { grid-template-columns: 1fr; }
+    .about-grid, .info-grid { grid-template-columns: minmax(0, 1fr); }
     .team-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 560px) {

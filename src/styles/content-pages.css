@@ -1,0 +1,27 @@
+.content-page { color: #263b40; background: #fff; line-height: 1.75; letter-spacing: 0; overflow-wrap: break-word; }
+.content-page > .section { background: #fff; }
+.content-page > .section-alt { background: #eaf5ef; }
+.content-page > :is(.section, .section-alt) { scroll-margin-top: 5rem; }
+.content-page :is(.section-heading, .content-h2) { font-size: 2.5rem; line-height: 1.15; color: #0c1a2e; margin: 0 0 1.4rem; letter-spacing: 0; overflow-wrap: anywhere; }
+.content-page .section-tag { border: 0; border-radius: 0; padding: 0; background: none; color: #006b55; font-size: 0.75rem; line-height: 1.6; letter-spacing: 0; text-transform: none; margin-bottom: 1rem; }
+.content-page .btn { letter-spacing: 0; border-radius: 6px; white-space: normal; text-align: center; }
+.content-page .btn-primary:hover { background: #075985; transform: none; box-shadow: none; }
+.content-page .card { border-radius: 8px; }
+/* Reading the page must not depend on the reveal-animation script. */
+.content-page .reveal { opacity: 1; transform: none; }
+.content-page #contact { scroll-margin-top: 6rem; }
+.content-page .prose { color: #263b40; }
+.content-page .prose :is(h2, h3, h4) { letter-spacing: 0; overflow-wrap: anywhere; }
+.content-page .prose h2 { font-size: 2rem; }
+.content-page .prose h3 { font-size: 1.3rem; }
+.content-page .prose h4 { font-size: 1.125rem; }
+.content-page .prose iframe { width: 100%; max-width: 100%; height: auto; aspect-ratio: 16 / 9; }
+.content-page .prose .video-wrapper iframe { height: 100%; }
+@media (max-width: 700px) {
+  .content-page > :is(.section, .section-alt) { padding: 3.5rem 0; }
+  .content-page :is(.section-heading, .content-h2) { font-size: 2rem; }
+  .content-page .prose h2 { font-size: 1.75rem; }
+}
+@media (max-height: 500px) and (min-width: 701px) {
+  .content-page > :is(.section, .section-alt) { padding-top: 2rem; }
+}
