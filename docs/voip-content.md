@@ -32,7 +32,9 @@ mobile data are free, or extending the offer to other providers' services.
   JSON-LD. Edit answers there, not in a second schema copy.
 - `src/data/voip-testimonials.ts` contains the existing Sophia Donnelly, Aaron
   Keppler and Ross Brewer quotes. The home and VoIP pages share those objects,
-  preserving their wording. These are testimonials about Central Communications,
+  keeping their wording in sync. At the business owner's request, the CST Group
+  quote now begins "We have been using Paul from Central Communications".
+  These are testimonials about Central Communications,
   not claims that the customers use or endorse a particular Yeastar product.
 - Page-specific `Service`, `WebPage`, `BreadcrumbList` and `FAQPage` schemas are
   supplied through the existing layout's `extraSchema` prop. The service refers

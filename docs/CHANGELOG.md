@@ -6,6 +6,11 @@ All notable changes to centralcomms.nz v2.
 
 ## [Unreleased]
 
+### Content updates
+
+- Removed visible new-tab annotations from VoIP and CCTV links while preserving their new-tab behaviour and security attributes.
+- Updated the shared CST Group testimonial and the Pharmacy 547 testimonial to refer to Paul individually, using the business owner's supplied wording. The CST Group change applies to both the home and VoIP pages.
+
 ### SEO and structured data
 
 - Replaced the CCTV stock hero with a WebP montage based on the owner's school/work-vehicle and camera-installation photographs. Updated the matching sharing image, added an installation-focused mobile crop, and documented the AI-assisted composition and source photos. Original uploads remain unchanged.

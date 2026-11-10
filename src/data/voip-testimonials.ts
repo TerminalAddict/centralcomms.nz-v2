@@ -1,4 +1,4 @@
-// Existing customer quotes, shared with the home page without editing their wording.
+// Customer testimonials shared by the home and VoIP pages.
 export const sophiaTestimonial = {
   name: 'Sophia Donnelly',
   company: 'Matamata Veterinary Services',
@@ -17,7 +17,7 @@ export const rossTestimonial = {
   name: 'Ross Brewer',
   company: 'CST Group',
   img: '/assets/images/testimonials/Ross%20Brewer.jpg',
-  quote: 'We have been using Paul and Aleks from Central Communications for over 3 years now, and the experience has been great. The reliability and clarity of their service have ensured that our team stays connected and productive, even during peak times. The customer support team is always responsive, knowledgeable, and ready to assist with any queries. We highly recommend Central Comms.',
+  quote: 'We have been using Paul from Central Communications for over 3 years now, and the experience has been great. The reliability and clarity of their service have ensured that our team stays connected and productive, even during peak times. The customer support team is always responsive, knowledgeable, and ready to assist with any queries. We highly recommend Central Comms.',
 };
 
 export const voipTestimonials = [sophiaTestimonial, aaronTestimonial, rossTestimonial];
