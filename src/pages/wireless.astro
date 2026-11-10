@@ -1,95 +1,294 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { connectionOptions, surveySteps, wirelessCredentials, wirelessFaqs, wirelessFaults, wirelessUseCases } from '../data/wireless';
+import { aaronTestimonial } from '../data/voip-testimonials';
+
+const title = 'Enterprise WiFi Hamilton & Waikato | Central Comms';
+const description = 'Enterprise WiFi design, site surveys and wireless links for Hamilton and Waikato businesses. Local installation and management backed by Paul Willard\'s experience.';
+const canonical = new URL('/wireless.html', Astro.site).href;
+const businessId = new URL('/#business', Astro.site).href;
+const personId = new URL('/it-support.html#paul-willard', Astro.site).href;
+const image = '/assets/images/wireless/central-comms-enterprise-wifi-og.png';
+const portrait = '/assets/images/it-support/paul-willard.webp';
+const extraSchema = [
+  {
+    '@context': 'https://schema.org', '@type': 'Service', '@id': `${canonical}#service`,
+    name: 'Enterprise WiFi and wireless networking in Hamilton and Waikato',
+    serviceType: 'Wireless site surveys, enterprise WiFi design and installation, coverage troubleshooting, point-to-point links and managed wireless networks',
+    description, url: canonical, image: new URL(image, Astro.site).href,
+    provider: { '@id': businessId },
+    areaServed: [{ '@type': 'City', name: 'Hamilton' }, { '@type': 'AdministrativeArea', name: 'Waikato' }],
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'Person', '@id': personId,
+    name: 'Paul Willard', jobTitle: 'Owner & IT Manager', url: personId,
+    image: new URL(portrait, Astro.site).href, worksFor: { '@id': businessId },
+    description: 'Paul Willard brings around three decades of telecommunications experience across systems administration, senior network engineering, network operations management and general management. His networking training includes Legrand, MikroTik MTCNA, Ubiquiti UEWA and Ubiquiti UBWA.',
+    knowsAbout: ['Enterprise wireless networking', 'Broadband wireless networking', 'Network engineering', 'ISP operations', 'Structured network installation', 'Systems administration'],
+    hasCredential: wirelessCredentials.map(({ name, category, record, benefit, recognizedBy }) => ({
+      '@type': 'EducationalOccupationalCredential', name, credentialCategory: category,
+      description: `${record} ${benefit}`, ...(recognizedBy ? { recognizedBy } : {}),
+    })),
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${canonical}#webpage`,
+    name: title, description, url: canonical, inLanguage: 'en-NZ',
+    about: { '@id': `${canonical}#service` }, mentions: { '@id': personId },
+    publisher: { '@id': businessId },
+    primaryImageOfPage: { '@type': 'ImageObject', url: new URL(image, Astro.site).href, width: 1200, height: 630 },
+    breadcrumb: { '@id': `${canonical}#breadcrumb` }, hasPart: { '@id': `${canonical}#faqs` },
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList', '@id': `${canonical}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'Enterprise WiFi', item: canonical },
+    ],
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'FAQPage', '@id': `${canonical}#faqs`,
+    url: `${canonical}#faqs`, inLanguage: 'en-NZ', isPartOf: { '@id': `${canonical}#webpage` },
+    mainEntity: wirelessFaqs.map(({ question, answer }) => ({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer } })),
+  },
+];
+const sections = [
+  ['benefits', 'Benefits'], ['use-cases', 'Use cases'], ['site-surveys', 'Site surveys'],
+  ['design', 'Design & diagnosis'], ['wireless-links', 'Between buildings'], ['paul', 'Paul\'s expertise'],
+  ['management', 'Ongoing management'], ['nz-regulations', 'NZ requirements'], ['faqs', 'FAQs'],
+];
 ---
-<Layout
-  title="Enterprise Wifi for Business — Hamilton &amp; Waikato"
-  description="Enterprise WiFi design, site surveys, point-to-point wireless links and full management for businesses in Hamilton and the Waikato. Legally qualified wireless operators."
->
-  <div class="page-hero">
-    <div class="container">
-      <span class="section-tag">Services — Wireless</span>
-      <h1 class="page-title">Enterprise<br /><em>Wifi</em></h1>
-      <p class="page-sub">Enterprise WiFi, site surveys, point-to-point links and full ongoing management.</p>
-    </div>
-  </div>
+<Layout title={title} description={description} canonicalURL={canonical}
+  image={image} imageWidth={1200} imageHeight={630}
+  imageAlt="Enterprise WiFi, site surveys and wireless links in Hamilton and Waikato from Central Communications, with a rooftop antenna installation photograph."
+  extraSchema={extraSchema}>
+  <div class="wireless-page">
+    <header class="wireless-hero">
+      <img class="hero-image" src="/assets/images/wireless/enterprise-wifi-installation-hero.webp"
+        srcset="/assets/images/wireless/enterprise-wifi-installation-hero-960.webp 960w, /assets/images/wireless/enterprise-wifi-installation-hero.webp 2048w"
+        sizes="100vw" alt="Technician positioning a directional wireless antenna on a rooftop"
+        width="2048" height="946" fetchpriority="high" />
+      <div class="container hero-copy">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Enterprise WiFi</span></nav>
+        <p class="eyebrow">Hamilton &amp; Waikato</p>
+        <h1>Enterprise Wi-Fi.<br />Built around your business.</h1>
+        <p class="hero-intro">Wireless design, installation and management for busy workplaces and buildings across your property.</p>
+        <div class="actions"><a href="/#contact" class="btn btn-primary">Discuss Wi-Fi</a><a href="#site-surveys">Site surveys <span aria-hidden="true">&darr;</span></a></div>
+        <p class="hero-footnote">Site surveys &middot; Business Wi-Fi &middot; Building links &middot; Management</p>
+      </div>
+    </header>
 
-  <section class="section">
-    <div class="container">
-      <div class="content-grid">
-        <div class="prose">
-          <h2>Experience Counts for Everything in Tech</h2>
-          <p>
-            We've got decades of experience looking after IT environments. It is quite likely that we
-            have already encountered that wireless task you need taking care of.
-          </p>
-          <p>
-            Central Comms can completely design and manage your wireless network. We intimately
-            understand the complexities of wireless networking — we can solve coverage issues, extend
-            coverage to remote buildings, and deploy point-to-point wireless links across your property.
-          </p>
-          <p>
-            We have the skills and qualifications to do it, and to do it legally within New Zealand's
-            wireless broadcasting regulations.
-          </p>
+    <nav class="page-index" aria-label="Enterprise WiFi topics"><div class="container"><ul>{sections.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}</ul></div></nav>
 
-          <h2>Beyond Just WiFi</h2>
-          <p>
-            It's not just wireless that Central Comms can help with. We can remotely manage your local
-            servers, store your backups offline, manage your cloud email service — there are heaps of
-            things we can help with across your broader IT environment.
-          </p>
-
-          <h2>Our Wireless Brands</h2>
-          <div class="brands-grid">
-            <img src="/assets/images/unifi.svg"       alt="Unifi"       width="120" height="40" />
-            <img src="/assets/images/mikrotik.svg"    alt="MikroTik"    width="120" height="40" />
-            <img src="/assets/images/grandstream.svg" alt="Grandstream" width="120" height="40" />
-          </div>
-
-          <h2>What's included?</h2>
-          <ul class="feature-list">
-            <li>Full wireless site survey</li>
-            <li>Enterprise WiFi design &amp; installation</li>
-            <li>Coverage issue diagnosis &amp; resolution</li>
-            <li>Point-to-point wireless links</li>
-            <li>Remote building coverage extension</li>
-            <li>Ongoing monitoring &amp; management</li>
-            <li>Regulatory-compliant installations (NZ wireless laws)</li>
-            <li>Remote server management &amp; cloud services</li>
-          </ul>
-        </div>
-
-        <div class="sidebar">
-          <div class="cta-box">
-            <h3>Wireless coverage issues?</h3>
-            <p>We'll come on site, survey your space and design a solution that works.</p>
-            <a href="tel:+6480084800038" class="btn btn-ember">0800 848 0038</a>
-            <a href="/#contact" class="btn btn-outline" style="margin-top:0.75rem;">Send a message</a>
-          </div>
-          <img src="/assets/images/posts/wireless-graphic.jpg" alt="Managed wireless networking" class="sidebar-img" loading="lazy" />
+    <section id="benefits" class="band" aria-labelledby="benefits-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">A connection people can work with</p><h2 id="benefits-title">Enterprise WiFi for Hamilton and Waikato businesses.</h2><p>Central Communications Ltd designs, installs and manages business wireless networks: full site surveys, coverage troubleshooting, enterprise Wi-Fi and point-to-point links. We connect the wireless design to the cabling, switching, internet and systems behind it.</p><p>Enterprise does not have to mean enormous. It means choosing a network around the work you do, the devices you depend on and the people who will maintain it. A small business with a busy shop floor deserves the same careful planning as a multi-building organisation.</p></div>
+        <div class="three-columns benefits">
+          <div><h3>Coverage where work happens</h3><p>Meeting rooms, stock aisles and workshops have different demands. Plan for the places people actually use, including movement and busy periods, rather than judge the whole site from a speed test beside the router.</p></div>
+          <div><h3>Capacity, not just signal bars</h3><p>A room full of connected devices is different from one laptop on an empty floor. We consider simultaneous use, applications and the network behind each access point when sizing the design.</p></div>
+          <div><h3>A network you can manage</h3><p>Clear configuration, access ownership and support arrangements make the next change easier. Guest access, new staff and another building can be planned into the system instead of added as one-off workarounds.</p></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section id="use-cases" class="band band-soft" aria-labelledby="use-cases-title">
+      <div class="container"><div class="section-intro"><p class="eyebrow">Different sites. Different demands.</p><h2 id="use-cases-title">When does a business need enterprise Wi-Fi?</h2><p>These are common situations where a planned wireless network can make a practical difference. The right answer starts with the site and the way it is used.</p></div><div class="use-case-grid">{wirelessUseCases.map(({ title, need, approach, benefit }) => <article class="use-case"><h3>{title}</h3><p>{need}</p><p>{approach}</p><p class="outcome"><strong>The benefit:</strong> {benefit}</p></article>)}</div></div>
+    </section>
+
+    <section id="site-surveys" class="band" aria-labelledby="survey-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">Measure before you commit</p><h2 id="survey-title">A full wireless site survey, with a purpose.</h2><p>A survey gives the design something solid to work from. We establish what people need, inspect the site and investigate the radio conditions instead of choosing access-point locations from a floor-area estimate.</p><p>For an existing network, the priority may be a troublesome area or a recurring fault. For a new installation, it may be planning coverage and capacity before cabling starts. We agree the survey area, methods, deliverables and any post-installation validation in the scope.</p></div>
+        <dl class="survey-steps">{surveySteps.map(({ name, detail }) => <div><dt>{name}</dt><dd>{detail}</dd></div>)}</dl>
+        <p class="practical-note">A predictive coverage plan is useful for design, but it is not a measurement of a working building. Stock, people, neighbouring networks and the devices themselves can change the result. On-site checks and agreed acceptance tests connect the plan to real use.</p>
+      </div>
+    </section>
+
+    <section id="design" class="band band-soft" aria-labelledby="design-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">The whole network matters</p><h2 id="design-title">Enterprise WiFi design and installation.</h2><p>A capable access point is only one part of a working network. We plan its position, mounting, cable connection and power alongside the services it needs to reach, then configure and test the agreed design.</p></div>
+        <div class="two-columns design-grid">
+          <div><h3>Position, channels and capacity</h3><p>Coordinate the access-point layout, radio settings and expected demand. Extra transmit power is not a substitute for good placement: a phone or scanner must be able to send traffic back as well as hear the access point.</p></div>
+          <div><h3>Roaming with real devices</h3><p>Test the phones, laptops or scanners that move around your site. Supported roaming features can help with transitions, but the client makes the roaming decision and older devices may need a different approach.</p></div>
+          <div><h3>Access that fits each group</h3><p>Staff, visitors, cameras and other devices may need different permissions. We coordinate wireless networks, VLANs and firewall rules, then test what each group can actually reach. Separate Wi-Fi names alone do not provide that separation.</p></div>
+          <div><h3>A sound wired foundation</h3><p>Check access-point uplinks, switch capacity, Power over Ethernet and the cable installation. A fast radio cannot compensate for an unsuitable uplink, insufficient power or a damaged cable.</p><a class="text-link" href="/networking--data.html">Structured data cabling and fibre</a></div>
+        </div>
+        <div class="diagnosis-intro"><h3>Coverage issue diagnosis and resolution</h3><p>Tell us where the problem happens, what is affected and when it gets worse. We follow those symptoms through the network, then recommend a targeted change and check its effect.</p></div>
+        <dl class="diagnosis-list">{wirelessFaults.map(({ symptom, investigation }) => <div><dt>{symptom}</dt><dd>{investigation}</dd></div>)}</dl>
+        <p class="source-note">Technical background: <a href="https://help.ui.com/hc/en-us/articles/32064585817495-WiFi-Troubleshooting-Guide" target="_blank" rel="noopener noreferrer">Ubiquiti's Wi-Fi troubleshooting guide</a> and <a href="https://support.apple.com/en-gb/guide/deployment/dep98f116c0f/web" target="_blank" rel="noopener noreferrer">Apple's guidance on client roaming</a>.</p>
+      </div>
+    </section>
+
+    <section id="wireless-links" class="band" aria-labelledby="links-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">Beyond the main building</p><h2 id="links-title">Point-to-point wireless links and remote building coverage.</h2><p>A workshop across a yard or an office elsewhere on the property may need access to the same business network. Where a cable route is difficult, a well-designed directional wireless link can be worth considering.</p><p>We assess the path between buildings, clearance around it, suitable mounting, local interference, required capacity and power at each end. Trees, future growth and nearby structures matter. A clear view is a starting point, not a guarantee of usable throughput.</p></div>
+        <div class="three-columns link-planning">
+          <div><h3>Choose the connection</h3><p>Compare fibre, an appropriate radio link or a separate service against distance, permissions, disruption and operating requirements. Include how the business will cope if that connection is unavailable.</p></div>
+          <div><h3>Commission the link</h3><p>Specify suitable radios and antennas, then plan mounting, cable entry, outdoor protection and alignment. Test the installed link against agreed requirements rather than rely only on its advertised radio rate.</p></div>
+          <div><h3>Serve the destination</h3><p>The bridge delivers connectivity between locations. Local switches, cabling and access points distribute it inside the receiving building. A roof-mounted directional radio does not automatically provide Wi-Fi to every room below it.</p></div>
+        </div>
+        <h3 class="comparison-title">Wired access points, mesh or a dedicated bridge?</h3>
+        <dl class="connection-options">{connectionOptions.map(({ name, fit, detail }) => <div><dt>{name}</dt><dd><strong>{fit}</strong><p>{detail}</p></dd></div>)}</dl>
+        <p class="source-note">Further reading: Ubiquiti's <a href="https://help.ui.com/hc/en-us/articles/115002262328-Considerations-for-Optimal-Wireless-Mesh-Networks" target="_blank" rel="noopener noreferrer">mesh network considerations</a> and <a href="https://help.uisp.com/hc/en-us/articles/22590760854935-ISP-Wireless-Antenna-Alignment-for-Outdoor-Wireless-Links" target="_blank" rel="noopener noreferrer">outdoor antenna alignment guidance</a>.</p>
+      </div>
+    </section>
+
+    <section id="paul" class="band band-green" aria-labelledby="paul-title">
+      <div class="container">
+        <div class="profile-intro"><div><p class="eyebrow">Paul Willard &middot; Owner &amp; IT Manager</p><h2 id="paul-title">Wireless expertise.<br />A much wider network perspective.</h2><p><strong>Paul is a highly qualified, hands-on technology professional with around three decades of telecommunications experience.</strong> His career spans systems administration, senior network engineering, network operations management and general management at internet and telecommunications companies.</p><p>That is valuable when a Wi-Fi problem turns out to involve a server, a routed network or an upstream provider. Paul understands the individual connection and the larger service it belongs to, as well as the operational cost of getting a change wrong.</p><p>His enterprise and broadband wireless training covers both the network inside a building and the links connecting locations. Legrand training adds the physical cabling foundation, while MikroTik training supports the networking knowledge around the radios.</p><a class="text-link" href="/it-support.html#paul-willard">Paul's wider IT experience and qualifications</a></div><figure><img src={portrait} alt="Paul Willard, Owner and IT Manager at Central Communications" width="640" height="640" loading="lazy" decoding="async" /><figcaption>Paul Willard, Owner &amp; IT Manager.</figcaption></figure></div>
+        <div class="credential-labels" aria-hidden="true"><span>Qualification</span><span>Record</span><span>Practical relevance</span></div>
+        <dl class="credential-list" aria-label="Paul Willard's networking qualifications">{wirelessCredentials.map(({ name, record, benefit }) => <div><dt>{name}</dt><dd class="credential-record">{record}</dd><dd class="credential-benefit">{benefit}</dd></div>)}</dl>
+        <p class="source-note">These dates record Paul's achievements, not a blanket claim of current vendor certification. Confirm renewal status where a tender requires it. Vendor qualifications do not replace the radio rules that apply to an installation.</p>
+        <p class="source-note">Training references: <a href="https://www.legrand.co.nz/" target="_blank" rel="noopener noreferrer">Legrand New Zealand</a>, <a href="https://mikrotik.com/training/about" target="_blank" rel="noopener noreferrer">MikroTik certification</a>, <a href="https://dl.ui.com/guides/training/courses/UEWA_Training_Guide_V2.1.pdf" target="_blank" rel="noopener noreferrer">Ubiquiti UEWA guide (PDF)</a> and <a href="https://dl.ui.com/guides/training/courses/UBWA_Training_Guide.pdf" target="_blank" rel="noopener noreferrer">Ubiquiti UBWA guide (PDF)</a>.</p>
+      </div>
+    </section>
+
+    <section id="management" class="band" aria-labelledby="management-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">After installation</p><h2 id="management-title">Ongoing monitoring and management.</h2><p>A network keeps changing: more devices arrive, software needs maintenance and neighbouring wireless networks appear. An agreed management service gives those changes an owner and a process.</p></div>
+        <div class="two-columns management-grid">
+          <div><h3>Keep visibility and configuration under control</h3><p>We can monitor supported equipment and review alerts, availability and capacity trends. Configuration backups, documented access and planned firmware changes help make maintenance more deliberate.</p><p>Agree who receives alerts, when they are reviewed and what action is included. Remote management is useful, but it is not by itself a 24-hour staffed response service or a substitute for testing user experience on site.</p></div>
+          <div><h3>Remote server management and cloud services</h3><p>Wireless is part of the wider IT environment. Central Communications can also help manage local servers remotely, cloud email services, private-cloud projects and backup arrangements.</p><p>We define secure administrative access, supported systems, maintenance windows and recovery responsibilities for that work. Network management, server support and cloud subscriptions should each have a clear scope.</p><a class="text-link" href="/it-support.html">Business IT support and cloud planning</a></div>
+        </div>
+        <div class="brands"><div><h3>Equipment chosen for the job</h3><p>Our wireless work includes UniFi, MikroTik and Grandstream. We consider existing infrastructure, device support and management requirements before recommending equipment.</p></div><div class="brand-logos"><img src="/assets/images/unifi.svg" alt="UniFi" width="120" height="40" loading="lazy" /><img src="/assets/images/mikrotik.svg" alt="MikroTik" width="120" height="40" loading="lazy" /><img src="/assets/images/grandstream.svg" alt="Grandstream" width="120" height="40" loading="lazy" /></div></div>
+      </div>
+    </section>
+
+    <section id="nz-regulations" class="band band-soft" aria-labelledby="regulations-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">New Zealand radio requirements</p><h2 id="regulations-title">Compliance belongs in the design.</h2><p>We plan installations against the applicable New Zealand Radio Spectrum Management requirements. The equipment, operating band, location and configuration matter, not just the country setting in a menu.</p><p>Many Wi-Fi and fixed-link installations can operate under an appropriate General User Radio Licence when all its conditions are met. That does not mean unrestricted use of the spectrum. Separately licensed designs require the appropriate licensing process and, where required, an Approved Radio Engineer or Approved Radio Certifier.</p></div>
+        <div class="three-columns regulation-checks">
+          <div><h3>Suitable equipment and configuration</h3><p>Check New Zealand equipment compliance, allowed frequencies and the conditions for the intended installation. Requirements can differ for indoor access points and outdoor links.</p></div>
+          <div><h3>The complete radio installation</h3><p>Consider the transmitter and antenna together, including applicable radiated-power limits and required interference-avoidance features. A higher-gain antenna is not permission to exceed the allowed limits.</p></div>
+          <div><h3>Shared spectrum has conditions</h3><p>General-user operation shares spectrum with other users and does not give an exclusive channel or guaranteed protection from interference. Design and support need to allow for that environment.</p></div>
+        </div>
+        <p class="source-note regulation-sources">Current requirements: RSM's <a href="https://www.rsm.govt.nz/licensing/frequencies-for-anyone/short-range-devices-gurl" target="_blank" rel="noopener noreferrer">Short Range Devices GURL</a>, <a href="https://www.rsm.govt.nz/licensing/frequencies-for-anyone/fixed-radio-link-devices-gurl" target="_blank" rel="noopener noreferrer">Fixed Radio Link Devices GURL</a> and <a href="https://www.rsm.govt.nz/licensing/licences-you-must-pay-for/fixed-location-licences/fixed-link-licence" target="_blank" rel="noopener noreferrer">licensed fixed-link guidance</a>. Site-specific design must use the current conditions; vendor training is not a claim of RSM-approved engineer status.</p>
+      </div>
+    </section>
+
+    <section id="customer-experience" class="band" aria-labelledby="customer-title">
+      <div class="container customer-layout"><div><p class="eyebrow">Managed Wi-Fi in the wider business</p><h2 id="customer-title">One customer's experience.</h2><p>Aaron at Keppler describes a relationship that grew from IT support to phones, internet, managed Wi-Fi and structured cabling in a new building. It is the kind of joined-up planning that matters when several services depend on the same network.</p><p>We also provide <a href="/voip.html">business phone systems</a>, <a href="/networking--data.html">data cabling</a> and <a href="/cctv.html">CCTV networking and installation</a>.</p></div><figure class="customer-quote"><blockquote><p>{aaronTestimonial.quote}</p></blockquote><figcaption><picture><source type="image/webp" srcset="/assets/images/testimonials/Aaron%20Keppler-160.webp 1x, /assets/images/testimonials/Aaron%20Keppler-320.webp 2x" /><img src={aaronTestimonial.img} alt={aaronTestimonial.name} width="64" height="64" loading="lazy" decoding="async" /></picture><span><strong>{aaronTestimonial.name}</strong><span>{aaronTestimonial.company}</span></span></figcaption></figure></div>
+    </section>
+
+    <section id="faqs" class="band band-soft" aria-labelledby="faqs-title">
+      <div class="container faq-layout"><div><p class="eyebrow">Before your next network decision</p><h2 id="faqs-title">Enterprise WiFi questions, answered.</h2><p>Surveys, coverage, building links, qualifications and what it takes to keep a business network working.</p><a class="text-link" href="/#contact">Ask about your site</a></div><div class="faq-list">{wirelessFaqs.map(({ question, answer }, index) => <details id={`wifi-faq-${index + 1}`}><summary>{question}</summary><p>{answer}</p></details>)}</div></div>
+    </section>
+
+    <section class="band contact-band" aria-labelledby="contact-title"><div class="container contact-inner"><div><p class="eyebrow">From a dead spot to a new site</p><h2 id="contact-title">Where does your network need to reach?</h2><p>Tell us about your buildings, devices and the work that depends on them. We can scope a survey, investigate a recurring problem or plan a new wireless network.</p><a class="text-link" href="tel:+648008480038">Call 0800 848 0038</a></div><a href="/#contact" class="btn btn-primary">Talk to Central Communications</a></div></section>
+  </div>
 </Layout>
 
 <style>
-  .page-title { font-size: clamp(2rem, 5vw, 3.5rem); color: #e8f1ff; margin: 0.5rem 0 1rem; }
-  .page-title em { font-style: normal; color: #0ea5e9; }
-  .page-sub { font-size: 1.1rem; color: #7ea3c8; max-width: 520px; }
-  .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 4rem; align-items: start; }
-  .brands-grid { display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; margin: 1.5rem 0; }
-  .brands-grid img { height: 32px; width: auto; filter: brightness(0) invert(0.6); transition: filter 0.2s; }
-  .brands-grid img:hover { filter: none; }
-  .feature-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
-  .feature-list li { padding-left: 1.5rem; position: relative; color: #1e3a5f; font-size: 0.95rem; line-height: 1.6; }
-  .feature-list li::before { content: ''; position: absolute; left: 0; top: 0.6rem; width: 6px; height: 6px; background: #0ea5e9; border-radius: 50%; }
-  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 6rem; }
-  .cta-box { background: #0c1d35; border: 1px solid rgba(14,165,233,0.15); border-radius: 1rem; padding: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; }
-  .cta-box h3 { font-size: 1.1rem; color: #e8f1ff; margin: 0; }
-  .cta-box p { font-size: 0.875rem; color: #7ea3c8; margin: 0; line-height: 1.6; }
-  .cta-box .btn-outline { color: #e8f1ff; border-color: rgba(232, 241, 255, 0.35); }
-  .cta-box .btn-outline:hover { color: #38bdf8; border-color: #38bdf8; }
-  .sidebar-img { border-radius: 1rem; border: 1px solid rgba(14,165,233,0.12); width: 100%; height: auto; }
-  @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } .sidebar { position: static; } }
+  .wireless-page { color: #263b40; background: #fff; line-height: 1.75; letter-spacing: 0; overflow-wrap: break-word; }
+  .wireless-page :is(h1, h2, h3, p, figure, blockquote, dl, dd) { margin: 0; }
+  .wireless-page :is(h1, h2, h3) { letter-spacing: 0; overflow-wrap: anywhere; }
+  .wireless-page h2 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 1.4rem; }
+  .wireless-page h3 { font-size: 1.3rem; line-height: 1.35; margin-bottom: 0.8rem; }
+  .wireless-page p + p { margin-top: 1rem; }
+  .wireless-page a:not(.btn) { text-decoration: underline; text-underline-offset: 4px; }
+  .wireless-page a:hover { text-decoration-thickness: 2px; }
+  .wireless-page :is(a, summary):focus-visible { outline: 3px solid #007b63; outline-offset: 5px; }
+  .wireless-page .btn { letter-spacing: 0; text-align: center; justify-content: center; border-radius: 6px; white-space: normal; }
+  .wireless-page .btn-primary { background: #0369a1; color: #fff; }
+  .wireless-page .btn-primary:hover { background: #075985; }
+  .wireless-page .eyebrow { color: #006b55; font-family: 'Space Mono', monospace; font-size: 0.75rem; line-height: 1.6; margin-bottom: 1rem; letter-spacing: 0; }
+  .band { padding: 5rem 0; scroll-margin-top: 5rem; }
+  .band-soft { background: #f3f6f6; }
+  .band-green { background: #eaf5ef; }
+  .section-intro { max-width: 800px; margin-bottom: 3rem; }
+  .wireless-hero { position: relative; isolation: isolate; overflow: hidden; background: #28312d; padding: 6.5rem 0 3rem; }
+  .hero-image { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+  .wireless-hero::after { content: ''; position: absolute; z-index: -1; inset: 0; background: rgba(9, 24, 21, 0.74); }
+  .hero-copy { color: #fff; }
+  .breadcrumbs { display: flex; gap: 0.75rem; font-size: 0.8rem; margin-bottom: 1.5rem; }
+  .wireless-hero .eyebrow { color: #b3eddb; }
+  .wireless-hero h1 { font-size: 3.25rem; color: #fff; max-width: 1050px; margin-bottom: 1.2rem; }
+  .hero-intro { max-width: 630px; font-size: 1.125rem; line-height: 1.7; }
+  .actions { display: flex; flex-wrap: wrap; gap: 1.25rem 1.75rem; align-items: center; margin: 1.6rem 0 1.2rem; }
+  .hero-footnote { color: #dbede7; font-size: 0.8rem; }
+  .wireless-hero a:focus-visible { outline-color: #b3eddb; }
+  .page-index { border-bottom: 1px solid #d6e3de; background: #fff; }
+  .page-index ul { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; padding: 1.25rem 0; margin: 0; list-style: none; }
+  .page-index a { display: inline-block; font-size: 0.875rem; padding: 0.25rem 0; color: #245f56; }
+  .two-columns, .three-columns, .use-case-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
+  .three-columns, .use-case-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .benefits > div, .link-planning > div { border-top: 2px solid #c3e1d3; padding-top: 1.5rem; }
+  .use-case, .design-grid > div { border-top: 1px solid #b9cdc5; padding-top: 1.5rem; }
+  .outcome { color: #00634e; font-size: 0.95rem; }
+  .text-link { display: inline-block; margin-top: 1.25rem; font-weight: 600; color: #03658d; }
+  .survey-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 3rem; }
+  .survey-steps > div { border-top: 1px solid #b9cdc5; padding-top: 1.5rem; }
+  .survey-steps dt { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.6rem; color: #193b39; }
+  .wireless-page .practical-note { border-left: 3px solid #00735c; padding-left: 1.5rem; margin-top: 3rem; max-width: 900px; }
+  .diagnosis-intro { margin: 3.5rem 0 2rem; max-width: 800px; }
+  .diagnosis-list > div, .connection-options > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 3rem; padding: 1.5rem 0; border-top: 1px solid #bfd4cc; }
+  .diagnosis-list dt, .connection-options dt { font-weight: 700; color: #193b39; }
+  .connection-options p { margin-top: 0.75rem; }
+  .wireless-page .comparison-title { margin: 3rem 0 1.5rem; }
+  .wireless-page .source-note { font-size: 0.85rem; line-height: 1.7; color: #405956; margin-top: 1.25rem; max-width: 1000px; }
+  .profile-intro { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 4rem; align-items: center; margin-bottom: 3rem; }
+  .profile-intro figure { max-width: 360px; justify-self: end; }
+  .profile-intro img { width: 100%; height: auto; }
+  .profile-intro figcaption { margin-top: 0.75rem; }
+  .wireless-page figcaption { font-size: 0.875rem; line-height: 1.6; color: #4e6463; }
+  .credential-labels, .credential-list > div { display: grid; grid-template-columns: minmax(0, 28fr) minmax(0, 25fr) minmax(0, 47fr); font-size: 0.95rem; }
+  .credential-labels { background: #d8ebe0; color: #174b40; font-weight: 700; }
+  .credential-labels > span, .credential-list :is(dt, dd) { padding: 1.2rem; }
+  .credential-list > div { border-bottom: 1px solid #c6dbd1; }
+  .credential-list dt { color: #193b39; font-weight: 700; }
+  .brands { display: flex; flex-wrap: wrap; align-items: center; gap: 2.5rem; padding-top: 2.5rem; margin-top: 3rem; border-top: 1px solid #bfd4cc; }
+  .brands > div:first-child { max-width: 570px; }
+  .brand-logos { display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; }
+  .brand-logos img { width: 120px; height: 40px; object-fit: contain; }
+  .wireless-page .regulation-sources { margin-top: 2.5rem; }
+  .customer-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4rem; }
+  .customer-quote { border-top: 3px solid #006b55; padding-top: 1.5rem; }
+  .customer-quote blockquote { font-size: 1.1rem; }
+  .customer-quote figcaption { display: flex; align-items: center; gap: 1rem; margin-top: 1.75rem; }
+  .customer-quote picture { flex: 0 0 64px; }
+  .customer-quote img { width: 64px; height: 64px; object-fit: cover; border-radius: 4px; }
+  .customer-quote figcaption strong, .customer-quote figcaption span span { display: block; }
+  .customer-quote figcaption strong { color: #183b36; font-size: 0.95rem; }
+  .faq-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 4rem; }
+  .faq-list { min-width: 0; }
+  details { border-top: 1px solid #bfd4cc; scroll-margin-top: 6rem; }
+  details:last-child { border-bottom: 1px solid #bfd4cc; }
+  summary { cursor: pointer; font-weight: 600; color: #193b39; padding: 1.2rem 0; line-height: 1.5; }
+  summary::marker { color: #00735c; }
+  details[open] summary { color: #00634e; }
+  details p { padding: 0 0 1.5rem; }
+  .contact-band { background: #deeee7; }
+  .contact-inner { display: flex; gap: 3rem; align-items: center; justify-content: space-between; }
+  .contact-inner > div { max-width: 650px; }
+  .contact-inner .btn { flex-shrink: 0; max-width: 100%; }
+  @media (max-width: 1000px) {
+    .use-case-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .profile-intro, .faq-layout, .customer-layout { gap: 2rem; }
+    .contact-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  }
+  @media (max-width: 700px) {
+    .band { padding: 3.5rem 0; }
+    .wireless-page h2 { font-size: 2rem; }
+    .wireless-hero { padding: 6rem 0 2.25rem; }
+    .wireless-hero h1 { font-size: 2.25rem; }
+    .hero-intro { font-size: 1rem; }
+    .hero-image { object-position: 64% center; }
+    .page-index ul { gap: 0.4rem 1rem; }
+    .section-intro { margin-bottom: 2rem; }
+    .two-columns, .three-columns, .use-case-grid, .survey-steps, .profile-intro, .diagnosis-list > div, .connection-options > div, .customer-layout, .faq-layout { grid-template-columns: 1fr; }
+    .profile-intro figure { justify-self: start; max-width: 280px; }
+    .diagnosis-list > div, .connection-options > div { gap: 0.75rem; }
+    .credential-labels { display: none; }
+    .credential-list { border-top: 1px solid #bfd4cc; }
+    .credential-list > div { grid-template-columns: 1fr; gap: 0.65rem; padding: 1.5rem 0; }
+    .credential-list :is(dt, dd) { padding: 0; }
+    .credential-list dt { font-size: 1.1rem; }
+  }
+  @media (max-width: 360px) {
+    .wireless-hero h1 { font-size: 1.75rem; margin-bottom: 0.8rem; }
+    .wireless-hero { padding: 5rem 0 1rem; }
+    .wireless-hero .eyebrow, .breadcrumbs { margin-bottom: 0.75rem; }
+    .actions { gap: 0.75rem; margin: 1.2rem 0 0.8rem; }
+    .hero-intro { line-height: 1.6; }
+    .hero-footnote { font-size: 0.75rem; line-height: 1.5; }
+    .wireless-page .btn { padding: 0.75rem 1rem; }
+  }
 </style>

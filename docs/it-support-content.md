@@ -13,6 +13,9 @@ project examples and 18 FAQs.
   `FAQPage` JSON-LD. The same credential array generates the visible list and
   Paul's `Person.hasCredential` records. Change those sources, not the generated
   HTML in `dist/`.
+- The four Legrand, MikroTik and Ubiquiti records are also consumed by
+  `src/data/wireless.ts` for the Enterprise WiFi page's qualification list,
+  qualification FAQ and Person schema. Check both pages after credential edits.
 - Paul's career progression, approximately three decades of telecommunications
   experience and April 2022 management start come from the existing About page.
   The company was established in 1989; that is not Paul's start date.

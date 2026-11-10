@@ -13,6 +13,9 @@ All notable changes to centralcomms.nz v2.
 
 ### SEO and structured data
 
+- Expanded `/wireless.html` with six enterprise WiFi use cases, benefits, full site survey guidance, design/coverage diagnosis, point-to-point and remote building connectivity, monitoring, server/cloud services, RSM-based NZ compliance guidance and 20 FAQs.
+- Added Paul's wireless profile and four qualifications shared with the IT support data, Aaron's unchanged managed WiFi testimonial, matching service/person/webpage/breadcrumb/FAQ JSON-LD, and local WebP hero/share imagery from the owner's rooftop installation photo. Preserved the existing URL and added no client-side dependency.
+- Documented wireless content sources, certification and regulatory boundaries, local media provenance and maintenance checks in `docs/wireless-content.md`. Corrected the wireless page's phone link to `+648008480038`.
 - Expanded `/it-support.html` with six business use cases, practical benefits, Paul Willard's technical/management background, eight owner-supplied qualifications and training records, support options, server/private-cloud guidance, three existing testimonials, two project links and 18 FAQs.
 - Added matching IT support service, person/credentials, webpage, breadcrumb and FAQ JSON-LD, plus dedicated social metadata and locally optimised hero/portrait/share images. Credentials and FAQs share their visible and structured-data sources; personal PSPLA approval is distinct from the company licence and older vendor certifications are dated records.
 - Shared Ian and Jason's existing testimonials with the home page without changing their wording. Documented IT support content provenance, credential boundaries, local image sources and maintenance checks in `docs/it-support-content.md`.
