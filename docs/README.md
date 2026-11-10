@@ -31,6 +31,7 @@ Complete reference for developing, building, deploying, and managing the Central
 21. [Data cabling content and SEO maintenance](data-cabling-content.md)
 22. [IT support content and SEO maintenance](it-support-content.md)
 23. [Enterprise WiFi content and SEO maintenance](wireless-content.md)
+24. [Business broadband content and SEO maintenance](broadband-content.md)
 
 ---
 

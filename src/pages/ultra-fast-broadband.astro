@@ -1,80 +1,351 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { backbone, broadbandFaqs, broadbandUseCases, connectionSteps, customerSpeedtest, speedtestMetrics, speedtestSummary } from '../data/broadband';
+import { aaronTestimonial } from '../data/voip-testimonials';
+import { jasonTestimonial } from '../data/it-support-testimonials';
+
+const title = 'Business Fibre Broadband Hamilton & Waikato | Central Comms';
+const description = 'Business UFB and Hyperfibre in Hamilton and Waikato. Local ISP expertise, managed routers, static IP options and 24/7 emergency support from Central Comms.';
+const canonical = new URL('/ultra-fast-broadband.html', Astro.site).href;
+const businessId = new URL('/#business', Astro.site).href;
+const personId = new URL('/it-support.html#paul-willard', Astro.site).href;
+const backboneId = `${canonical}#net-enterprises`;
+const image = '/assets/images/broadband/central-comms-business-broadband-og.png';
+const portrait = '/assets/images/it-support/paul-willard.webp';
+const testimonials = [aaronTestimonial, jasonTestimonial];
+const extraSchema = [
+  {
+    '@context': 'https://schema.org', '@type': 'Service', '@id': `${canonical}#service`,
+    name: 'Business fibre broadband in Hamilton and Waikato',
+    serviceType: 'Business UFB and Hyperfibre, router configuration and management, static IP options and broadband support',
+    description, url: canonical, image: new URL(image, Astro.site).href,
+    provider: { '@id': businessId },
+    areaServed: [{ '@type': 'City', name: 'Hamilton' }, { '@type': 'AdministrativeArea', name: 'Waikato' }],
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'Person', '@id': personId,
+    name: 'Paul Willard', jobTitle: 'Owner & IT Manager', url: personId,
+    image: new URL(portrait, Astro.site).href, worksFor: { '@id': businessId },
+    description: `Paul Willard brings around three decades of telecommunications experience across systems administration, senior network engineering, network operations management and general management. ${backbone.description}`,
+    knowsAbout: ['ISP operations', 'Network engineering', 'Business broadband', 'Systems administration', 'Business telecommunications'],
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'Organization', '@id': backboneId,
+    name: backbone.name, description: backbone.description,
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${canonical}#webpage`,
+    name: title, description, url: canonical, inLanguage: 'en-NZ',
+    about: { '@id': `${canonical}#service` },
+    mentions: [{ '@id': personId }, { '@id': backboneId }], publisher: { '@id': businessId },
+    primaryImageOfPage: { '@type': 'ImageObject', url: new URL(image, Astro.site).href, width: 1200, height: 630 },
+    breadcrumb: { '@id': `${canonical}#breadcrumb` }, hasPart: { '@id': `${canonical}#faqs` },
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList', '@id': `${canonical}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'Business broadband', item: canonical },
+    ],
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'FAQPage', '@id': `${canonical}#faqs`,
+    url: `${canonical}#faqs`, inLanguage: 'en-NZ', isPartOf: { '@id': `${canonical}#webpage` },
+    mainEntity: broadbandFaqs.map(({ question, answer }) => ({ '@type': 'Question', name: question, acceptedAnswer: { '@type': 'Answer', text: answer } })),
+  },
+];
+const sections = [
+  ['benefits', 'Benefits'], ['use-cases', 'Use cases'], ['isp-experience', 'ISP experience'],
+  ['packages', 'Fibre packages'], ['hyperfibre', 'Customer speed test'], ['managed-network', 'Routers & systems'],
+  ['support', 'Support & resilience'], ['faqs', 'FAQs'],
+];
 ---
-<Layout
-  title="Ultra Fast Broadband for Business — Hamilton & Waikato"
-  description="Business-grade UFB fibre broadband packages with full installation and ongoing support from Central Communications Ltd in Hamilton and the Waikato."
->
-  <div class="page-hero">
-    <div class="container">
-      <span class="section-tag">Services — Broadband</span>
-      <h1 class="page-title">Ultra Fast<br /><em>Broadband</em></h1>
-      <p class="page-sub">Business-grade fibre internet with local support you can actually reach.</p>
-    </div>
-  </div>
+<Layout title={title} description={description} canonicalURL={canonical}
+  image={image} imageWidth={1200} imageHeight={630}
+  imageAlt="Business fibre broadband in Hamilton and Waikato from Central Communications, with a customer Hyperfibre speed-test result in the background."
+  extraSchema={extraSchema}>
+  <div class="broadband-page">
+    <header class="broadband-hero">
+      <img class="hero-image" src={customerSpeedtest.image}
+        alt="" width="1373" height="596" fetchpriority="high" />
+      <div class="container hero-copy">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Business broadband</span></nav>
+        <p class="eyebrow">Hamilton &amp; Waikato</p>
+        <h1>Business fibre.<br />Real ISP experience.</h1>
+        <p class="hero-intro">Business-grade UFB, a local Hamilton team and a network backed by real ISP experience.</p>
+        <div class="actions"><a href="/#contact" class="btn btn-primary">Get a quote</a><a href="#hyperfibre">View speed test <span aria-hidden="true">&darr;</span></a></div>
+        <p class="hero-footnote">Customer Hyperfibre result pictured. Individual speeds vary.</p>
+      </div>
+    </header>
 
-  <section class="section">
-    <div class="container">
-      <div class="content-grid">
-        <div class="prose">
-          <h2>Broadband Built for Business</h2>
-          <p>
-            Slow or unreliable internet costs your business money. Central Communications provides
-            business-grade Ultra Fast Broadband (UFB) packages with full installation and dedicated
-            local support — not an overseas call centre.
-          </p>
-          <p>
-            As your internet provider, we take care of everything from the initial connection and
-            router setup through to troubleshooting and ongoing support. And because we're also your
-            data cabling specialists, we can make sure the connection gets to every part of your
-            premises perfectly.
-          </p>
+    <nav class="page-index" aria-label="Business broadband topics"><div class="container"><ul>{sections.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}</ul></div></nav>
 
-          <h2>Why Choose Central Comms for Internet?</h2>
-          <ul class="feature-list">
-            <li>Business-grade UFB fibre packages</li>
-            <li>Local Hamilton support team</li>
-            <li>Router &amp; equipment supply and configuration</li>
-            <li>Integration with your phone system and CCTV</li>
-            <li>Static IP options for businesses that need it</li>
-            <li>24/7 emergency support</li>
-            <li>Competitive pricing — ask for a quote</li>
-          </ul>
-
-          <h2>Bundled Solutions</h2>
-          <p>
-            Many of our clients choose to bundle their internet with their phone system and/or CCTV.
-            This simplifies billing, means a single point of contact for support, and often results
-            in better overall pricing.
-          </p>
-        </div>
-
-        <div class="sidebar">
-          <div class="cta-box">
-            <h3>Get a broadband quote</h3>
-            <p>Tell us your address and requirements and we'll find the best package for you.</p>
-            <a href="tel:+6480084800038" class="btn btn-ember">0800 848 0038</a>
-            <a href="/#contact" class="btn btn-outline" style="margin-top:0.75rem;">Send a message</a>
-          </div>
+    <section id="benefits" class="band" aria-labelledby="benefits-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">Internet for the way you work</p><h2 id="benefits-title">Business broadband in Hamilton and Waikato.</h2><p>Central Communications Ltd supplies business-grade UFB fibre broadband, with Hyperfibre options at eligible addresses, router configuration and a local Hamilton support team. We connect the internet service to the work happening inside your business: cloud applications, phones, CCTV, remote access and everyday communication.</p><p>A good connection is more than a headline download speed. It needs enough upload capacity, equipment that can handle the workload and people who can follow a fault from the internet connection through to the device on your desk.</p></div>
+        <div class="three-columns benefits">
+          <div><h3>Local people, technical depth</h3><p>Speak with a Hamilton team that works on business networks and understands the systems using the connection. Our ISP background brings another layer of experience to diagnosis and planning.</p></div>
+          <div><h3>The connection and the network</h3><p>Broadband, routing, switching, Wi-Fi and cabling need to work together. We can coordinate the complete setup, with a clear scope for installation and ongoing management.</p></div>
+          <div><h3>Support when it matters</h3><p>CCL provides 24/7 emergency support, alongside help with routine changes and troubleshooting. Agree the support arrangements for your business before an urgent fault occurs.</p><a class="text-link" href="#support">Emergency support and backup planning</a></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section id="use-cases" class="band band-soft" aria-labelledby="use-cases-title">
+      <div class="container"><div class="section-intro"><p class="eyebrow">Start with the business need</p><h2 id="use-cases-title">When does your broadband need a rethink?</h2><p>A new fibre package is sometimes the answer. Other times, the router, wireless coverage or changeover plan needs attention first. These are common situations where we can help.</p></div><div class="use-case-grid">{broadbandUseCases.map(({ title, need, approach, benefit }) => <article class="use-case"><h3>{title}</h3><p>{need}</p><p>{approach}</p><p class="outcome"><strong>The benefit:</strong> {benefit}</p></article>)}</div></div>
+    </section>
+
+    <section id="isp-experience" class="band band-green" aria-labelledby="experience-title">
+      <div class="container">
+        <div class="profile-intro">
+          <div><p class="eyebrow">Experience on both sides of the connection</p><h2 id="experience-title">An ISP background, not just a router installation.</h2><p>Paul Willard, CCL's owner and IT manager, brings around three decades of telecommunications experience. His career spans systems administration, senior network engineering, network operations management and general management across internet and telecommunications companies.</p><p id="net-enterprises"><strong>{backbone.description}</strong> That relationship connects the local service you receive from CCL with practical experience of operating internet services.</p><p>It is a useful combination when a problem crosses boundaries: the access connection, router, local network and business applications all need someone who understands how they fit together.</p><a class="text-link" href="/it-support.html#paul-willard">Paul's experience and qualifications</a></div>
+          <figure><img src={portrait} alt="Paul Willard, owner and IT manager at Central Communications" width="640" height="640" loading="lazy" decoding="async" /><figcaption>Paul Willard &middot; Central Communications and Net Enterprises</figcaption></figure>
+        </div>
+        <div class="two-columns experience-notes">
+          <div><h3>Work inside the ISP business</h3><p>Our published Wanna Internet project describes work linking a website to customer records and RADIUS user systems, with customer-account, signup and network-status functions. It is an example of the technical systems behind an internet provider, not just the connection at a customer's premises.</p><a class="text-link" href="/updates/wanna-internet.html">Read the Wanna Internet project</a></div>
+          <div><h3>A long-established local business</h3><p>Central Communications was established in 1989. Paul took over its management in April 2022, bringing his own ISP and telecommunications background to an established Waikato business.</p><p>Today, broadband can sit alongside your <a href="/voip.html">phone system</a>, <a href="/wireless.html">business Wi-Fi</a>, <a href="/cctv.html">CCTV</a> and <a href="/it-support.html">IT support</a>, with the same team coordinating the work.</p><a class="text-link" href="/about.html">Meet Central Communications</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="packages" class="band" aria-labelledby="packages-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">Choose capacity with a purpose</p><h2 id="packages-title">Business-grade UFB fibre packages.</h2><p>Tell us what the connection has to do and we will recommend a package around the address, workload and budget. We explain the broadband service, equipment, setup and support together, so you can compare the whole proposal.</p></div>
+        <div class="two-columns package-options">
+          <div><h3>UFB for everyday business</h3><p>For many offices, shops and workshops, a suitably sized fibre package supports cloud applications, calls, meetings and file sharing without needing the fastest available tier.</p><p>We look at concurrent users, upload requirements and the network inside the building. Good configuration and appropriate equipment can matter more than buying capacity that the workplace cannot use.</p></div>
+          <div><h3>Hyperfibre for heavier demand</h3><p>At eligible addresses, multi-gigabit Hyperfibre can suit large shared workloads, frequent large-file transfers and businesses with substantial upload demand.</p><p>The route through the fibre box, router, firewall, switches, cabling and workstations needs to support the intended throughput. A faster service cannot remove a slower port or an application limit further along the path.</p><a class="text-link" href="#hyperfibre">See a customer Hyperfibre result</a></div>
+        </div>
+        <dl class="package-checks">
+          <div><dt>Connection and availability</dt><dd>The address, available service options, upload and download needs, installation requirements and intended start date.</dd></div>
+          <div><dt>Equipment and management</dt><dd>Router performance, existing hardware, Wi-Fi, network upgrades and who will maintain the configuration after installation.</dd></div>
+          <div><dt>Options and total cost</dt><dd>Monthly service, setup, equipment, static IP availability, backup connectivity, contract terms and agreed support inclusions.</dd></div>
+        </dl>
+        <p class="practical-note">A business UFB package is not automatically a dedicated leased line or a guaranteed repair-time service. Tell us about any required service-level agreement, critical application or availability target so we can assess the right option and confirm the terms.</p>
+        <p class="source-note">Local fibre guidance: <a href="https://www.tuatahifibre.co.nz/where-to-start" target="_blank" rel="noopener noreferrer">Tuatahi First Fibre's availability and connection guide</a>. We confirm service availability for your address.</p>
+      </div>
+    </section>
+
+    <section id="hyperfibre" class="band band-soft" aria-labelledby="hyperfibre-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">A customer connection, measured</p><h2 id="hyperfibre-title">Hyperfibre in use.</h2><p>{speedtestSummary}</p><p>The network is identified as <strong>{customerSpeedtest.network}</strong>, the business Paul also owns and which provides the internet backbone for CCL customer connections. The selected test server was {customerSpeedtest.server}.</p></div>
+        <dl class="speed-metrics" aria-label="Customer Hyperfibre test results">{speedtestMetrics.map(({ label, value, unit }) => <div><dt>{label}</dt><dd><strong>{value}</strong> <span>{unit}</span></dd></div>)}</dl>
+        <figure class="speedtest-figure"><a href={customerSpeedtest.image} data-speedtest-image aria-label="View the full-size customer Hyperfibre Speedtest image"><img src={customerSpeedtest.image} width="1373" height="596" loading="lazy" decoding="async" alt={`Customer Hyperfibre Speedtest on Net Enterprises Ltd. ${speedtestSummary}`} /></a><figcaption>This is one customer measurement, not a typical-speed claim or a guarantee. Results vary with the subscribed service, equipment, local network, destination, competing traffic and test conditions. Select the image to view it at full size.</figcaption></figure>
+        <div class="two-columns speed-context">
+          <div><h3>Upload matters too</h3><p>Sending project files, backing up off site and viewing cameras remotely all depend on the upload side. Capacity in both directions is worth considering when the business regularly moves large amounts of data.</p></div>
+          <div><h3>Prepare the network behind the result</h3><p>Multi-gigabit internet needs a suitable local network. Check router and firewall throughput with the required features enabled, port speeds, switching, cabling and the actual devices doing the work.</p><a class="text-link" href="/updates/is-10gb-networking-worth-it-for-your-business.html">When is 10Gb networking worth it?</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="managed-network" class="band" aria-labelledby="network-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">One connection. Several business systems.</p><h2 id="network-title">Managed routers, phones and CCTV that work together.</h2><p>We can supply and configure the router, coordinate the connected systems and agree who looks after them. A clear network design makes it easier to add staff, investigate a problem or change services later.</p></div>
+        <div class="two-columns network-grid">
+          <div><h3>Router and equipment management</h3><p>Choose supported equipment that can handle the required traffic and security features. We can look after configuration, firmware maintenance, backups of settings and remote troubleshooting within the agreed management scope.</p><p>Administrative access should be controlled, with a documented owner and a maintenance plan. Remote management is not a reason to leave an unrestricted management screen open to the internet.</p></div>
+          <div><h3>Broadband and business phones</h3><p>We can coordinate your connection with a CCL Cloud PBX, desk phones and Linkus. Consider concurrent calls, upload demand and traffic management where appropriate, then test calls alongside normal business activity.</p><p>Combine the planning and support, with phone subscriptions, calling charges and porting arrangements clearly included in the proposal.</p><a class="text-link" href="/voip.html">Cloud PBX and Linkus for your team</a></div>
+          <div><h3>CCTV without guesswork</h3><p>A local recorder and a cloud-recording service have different internet demands. We consider remote viewers, upload capacity and the chosen recording arrangement instead of assuming every camera continually uploads its footage.</p><p>Keep access to camera systems controlled and separate it from guest devices where appropriate. We plan remote viewing without making exposed camera or recorder administration the default.</p><a class="text-link" href="/cctv.html">CCTV design, installation and support</a></div>
+          <div><h3>Static IP options when they solve a need</h3><p>A stable public IP can help with certain VPN designs, supplier allowlists or other services that require a consistent address. Many cloud applications do not need one, so we start with the requirement.</p><p>We confirm availability, any cost and the access design. A static IP is not a speed upgrade or a security control; authentication and firewall permissions still matter.</p></div>
+        </div>
+        <p class="practical-note">Poor Wi-Fi does not necessarily mean poor fibre. We can diagnose the wired connection and local wireless coverage separately, then address the bottleneck. Explore <a href="/wireless.html">enterprise Wi-Fi</a> and <a href="/networking--data.html">structured data cabling</a> for the network inside your premises.</p>
+        <p class="source-note">Security background: NCSC guidance on <a href="https://www.ncsc.govt.nz/protect-your-organisation/network-separation-and-segmentation/" target="_blank" rel="noopener noreferrer">network separation</a> and <a href="https://www.ncsc.govt.nz/protect-your-organisation/joint-guidance-security-for-edge-devices/" target="_blank" rel="noopener noreferrer">protecting routers and other edge devices</a>.</p>
+      </div>
+    </section>
+
+    <section id="getting-connected" class="band band-soft" aria-labelledby="connection-title">
+      <div class="container"><div class="section-intro"><p class="eyebrow">A planned start</p><h2 id="connection-title">New connection, provider change or premises move.</h2><p>Start early, particularly when construction, shared access or a phone-number transfer is involved. We establish the sequence and responsibilities before switching services.</p></div><dl class="connection-steps">{connectionSteps.map(({ name, detail }) => <div><dt>{name}</dt><dd>{detail}</dd></div>)}</dl><p class="source-note">Shared properties and tenancies may need permissions before work proceeds. See <a href="https://www.tuatahifibre.co.nz/consents" target="_blank" rel="noopener noreferrer">Tuatahi First Fibre's consent guidance</a> and let us know about your premises arrangements.</p></div>
+    </section>
+
+    <section id="support" class="band band-green" aria-labelledby="support-title">
+      <div class="container">
+        <div class="support-intro"><div><p class="eyebrow">Local support. A plan for interruptions.</p><h2 id="support-title">Hamilton support, including 24/7 emergencies.</h2><p>CCL provides <strong>24/7 emergency support</strong>. For an urgent broadband service problem, call us. For routine requests, use our support form so the team has the details needed to help.</p><p>Tell us what has stopped working, when it started and which sites or devices are affected. We can investigate the connection and the equipment we support, then coordinate the next steps.</p></div><div class="support-actions"><a class="btn btn-primary" href="tel:+648008480038">Call 0800 848 0038</a><a class="text-link" href="/support.html#contact">Routine support request</a><a class="text-link" href="/notifications.html">Service notifications</a></div></div>
+        <p class="support-note">Emergency support availability is not a promise of instant restoration, a fixed repair deadline or free on-site attendance. We agree response arrangements, charges and any service-level commitments for your service.</p>
+        <div class="three-columns resilience">
+          <div><h3>Plan a backup path</h3><p>If an outage would stop trading, assess a secondary connection and failover-capable router. Coverage, capacity, data allowances and physical independence matter. Test the services that must continue working.</p></div>
+          <div><h3>Allow for power loss</h3><p>The fibre box, router, switches and access points need power. A suitably sized UPS can support selected equipment for a limited time, but does not guarantee the upstream network. Keep an independent way to make emergency calls.</p></div>
+          <div><h3>Test before you depend on it</h3><p>A backup path may change the public IP, interrupt sessions or offer less capacity. Check phone calls, payment terminals, VPNs and remote access on that path, and review the plan as the business changes.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="customer-experience" class="band" aria-labelledby="customers-title">
+      <div class="container"><div class="section-intro"><p class="eyebrow">From the people we work with</p><h2 id="customers-title">Business connectivity and ISP systems experience.</h2><p>Aaron describes CCL's work across internet, phones, Wi-Fi and cabling at Keppler. Jason's feedback relates to Paul's technical systems work for Wanna Internet. They speak to different parts of our experience, not a promise of a particular broadband speed.</p></div><div class="two-columns testimonials">{testimonials.map((testimonial) => <figure class="customer-quote"><blockquote><p>{testimonial.quote}</p></blockquote><figcaption><picture><source type="image/webp" srcset={`${testimonial.img.replace('.jpg', '-160.webp')} 1x, ${testimonial.img.replace('.jpg', '-320.webp')} 2x`} /><img src={testimonial.img} alt={testimonial.name} width="64" height="64" loading="lazy" decoding="async" /></picture><span><strong>{testimonial.name}</strong><span>{testimonial.company}</span></span></figcaption></figure>)}</div></div>
+    </section>
+
+    <section id="faqs" class="band band-soft" aria-labelledby="faqs-title">
+      <div class="container faq-layout"><div><p class="eyebrow">Before you choose a connection</p><h2 id="faqs-title">Business broadband questions, answered.</h2><p>UFB, Hyperfibre, static IPs, routers, changeovers and support for the business behind the connection.</p><a class="text-link" href="/#contact">Ask about your address</a></div><div class="faq-list">{broadbandFaqs.map(({ question, answer }, index) => <details id={`broadband-faq-${index + 1}`}><summary>{question}</summary><p>{answer}</p></details>)}</div></div>
+    </section>
+
+    <section class="band contact-band" aria-labelledby="contact-title"><div class="container contact-inner"><div><p class="eyebrow">Start with your address and your workload</p><h2 id="contact-title">Find the right connection for your business.</h2><p>Tell us where you are, what you need to run and when the connection is needed. We will check availability and explain the fibre, equipment and support options.</p><a class="text-link" href="tel:+648008480038">Call 0800 848 0038</a></div><a href="/#contact" class="btn btn-primary">Get a broadband quote</a></div></section>
+    <dialog id="speedtest-image-dialog" aria-labelledby="speedtest-dialog-title" aria-describedby="speedtest-dialog-description">
+      <div class="dialog-heading"><h2 id="speedtest-dialog-title">Customer Hyperfibre speed test</h2><form method="dialog"><button class="image-close" type="submit" autofocus>Close image <span aria-hidden="true">&times;</span></button></form></div>
+      <img src={customerSpeedtest.image} width="1373" height="596" loading="lazy" decoding="async" alt={speedtestSummary} />
+      <p id="speedtest-dialog-description">{customerSpeedtest.network}. Test server: {customerSpeedtest.server}. One customer measurement, not a typical-speed claim or a guarantee. Individual results vary.</p>
+    </dialog>
+  </div>
+
+  <script>
+    const dialog = document.querySelector<HTMLDialogElement>('#speedtest-image-dialog');
+    const trigger = document.querySelector<HTMLAnchorElement>('[data-speedtest-image]');
+
+    if (dialog && trigger && typeof dialog.showModal === 'function') {
+      trigger.setAttribute('aria-haspopup', 'dialog');
+      trigger.setAttribute('aria-controls', dialog.id);
+      trigger.addEventListener('click', (event) => {
+        // Modified clicks retain the image link's normal browser behaviour.
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        if (dialog.open) return;
+        const viewportWidth = document.documentElement.clientWidth;
+        dialog.showModal();
+        // WebKit can drop the reserved gutter when background scrolling is locked.
+        const gutterLoss = Math.max(0, document.documentElement.clientWidth - viewportWidth);
+        document.documentElement.style.setProperty('--broadband-modal-gutter', `${gutterLoss}px`);
+      });
+      dialog.addEventListener('close', () => {
+        if (dialog.open) return;
+        document.documentElement.style.removeProperty('--broadband-modal-gutter');
+        trigger.focus({ preventScroll: true });
+      });
+
+      let backdropPointer = false;
+      const outsideDialog = (event: MouseEvent) => {
+        const rect = dialog.getBoundingClientRect();
+        return event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom;
+      };
+      dialog.addEventListener('pointerdown', (event) => { backdropPointer = event.target === dialog && outsideDialog(event); });
+      dialog.addEventListener('click', (event) => {
+        if (backdropPointer && event.target === dialog && outsideDialog(event)) dialog.close();
+        backdropPointer = false;
+      });
+    }
+  </script>
 </Layout>
 
 <style>
-  .page-title { font-size: clamp(2rem, 5vw, 3.5rem); color: #e8f1ff; margin: 0.5rem 0 1rem; }
-  .page-title em { font-style: normal; color: #0ea5e9; }
-  .page-sub { font-size: 1.1rem; color: #7ea3c8; max-width: 520px; }
-  .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 4rem; align-items: start; }
-  .feature-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
-  .feature-list li { padding-left: 1.5rem; position: relative; color: #1e3a5f; font-size: 0.95rem; line-height: 1.6; }
-  .feature-list li::before { content: ''; position: absolute; left: 0; top: 0.6rem; width: 6px; height: 6px; background: #0ea5e9; border-radius: 50%; }
-  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 6rem; }
-  .cta-box { background: #0c1d35; border: 1px solid rgba(14,165,233,0.15); border-radius: 1rem; padding: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; }
-  .cta-box h3 { font-size: 1.1rem; color: #e8f1ff; margin: 0; }
-  .cta-box p { font-size: 0.875rem; color: #7ea3c8; margin: 0; line-height: 1.6; }
-  .cta-box .btn-outline { color: #e8f1ff; border-color: rgba(232, 241, 255, 0.35); }
-  .cta-box .btn-outline:hover { color: #38bdf8; border-color: #38bdf8; }
-  @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } .sidebar { position: static; } }
+  :global(html:has(.broadband-page)) { scrollbar-gutter: stable; }
+  :global(html:has(#speedtest-image-dialog[open])) { overflow: hidden; padding-right: var(--broadband-modal-gutter, 0px); }
+  .broadband-page { color: #263b40; background: #fff; line-height: 1.75; letter-spacing: 0; overflow-wrap: break-word; }
+  .broadband-page :is(h1, h2, h3, p, figure, blockquote, dl, dd) { margin: 0; }
+  .broadband-page :is(h1, h2, h3) { letter-spacing: 0; overflow-wrap: anywhere; }
+  .broadband-page h2 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 1.4rem; }
+  .broadband-page h3 { font-size: 1.3rem; line-height: 1.35; margin-bottom: 0.8rem; }
+  .broadband-page p + p { margin-top: 1rem; }
+  .broadband-page a:not(.btn) { text-decoration: underline; text-underline-offset: 4px; }
+  .broadband-page a:hover { text-decoration-thickness: 2px; }
+  .broadband-page :is(a, summary, button):focus-visible { outline: 3px solid #007b63; outline-offset: 5px; }
+  .broadband-page .btn { letter-spacing: 0; text-align: center; justify-content: center; border-radius: 6px; white-space: normal; }
+  .broadband-page .btn-primary { background: #0369a1; color: #fff; }
+  .broadband-page .btn-primary:hover { background: #075985; }
+  .broadband-page .eyebrow { color: #006b55; font-family: 'Space Mono', monospace; font-size: 0.75rem; line-height: 1.6; margin-bottom: 1rem; letter-spacing: 0; }
+  .band { padding: 5rem 0; scroll-margin-top: 5rem; }
+  .band-soft { background: #f3f6f6; }
+  .band-green { background: #eaf5ef; }
+  .section-intro { max-width: 800px; margin-bottom: 3rem; }
+  .broadband-hero { position: relative; isolation: isolate; overflow: hidden; background: #28312d; padding: 6.5rem 0 3rem; }
+  .hero-image { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .broadband-hero::after { content: ''; position: absolute; z-index: -1; inset: 0; background: rgba(9, 24, 21, 0.82); }
+  .hero-copy { color: #fff; }
+  .breadcrumbs { display: flex; flex-wrap: wrap; gap: 0.75rem; font-size: 0.8rem; margin-bottom: 1.5rem; }
+  .broadband-hero .eyebrow { color: #b3eddb; }
+  .broadband-hero h1 { font-size: 3.25rem; color: #fff; max-width: 1000px; margin-bottom: 1.2rem; }
+  .hero-intro { max-width: 600px; font-size: 1.125rem; line-height: 1.7; }
+  .actions { display: flex; flex-wrap: wrap; gap: 1.25rem 1.75rem; align-items: center; margin: 1.6rem 0 1.2rem; }
+  .hero-footnote { color: #dbede7; font-size: 0.8rem; }
+  .broadband-hero a:focus-visible { outline-color: #b3eddb; }
+  .page-index { border-bottom: 1px solid #d6e3de; background: #fff; }
+  .page-index ul { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; padding: 1.25rem 0; margin: 0; list-style: none; }
+  .page-index a { display: inline-block; font-size: 0.875rem; padding: 0.25rem 0; color: #245f56; }
+  .two-columns, .three-columns, .use-case-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
+  .three-columns, .use-case-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .benefits > div, .resilience > div { border-top: 2px solid #c3e1d3; padding-top: 1.5rem; }
+  .use-case, .experience-notes > div, .package-options > div, .network-grid > div { border-top: 1px solid #b9cdc5; padding-top: 1.5rem; }
+  .outcome { color: #00634e; font-size: 0.95rem; }
+  .text-link { display: inline-block; margin-top: 1.25rem; font-weight: 600; color: #03658d; }
+  .profile-intro { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 4rem; align-items: center; margin-bottom: 3rem; }
+  .profile-intro figure { max-width: 360px; justify-self: end; }
+  .profile-intro img { width: 100%; height: auto; }
+  .profile-intro figcaption { margin-top: 0.75rem; }
+  .broadband-page figcaption { font-size: 0.875rem; line-height: 1.6; color: #4e6463; }
+  .broadband-page .package-checks { margin-top: 3rem; }
+  .package-checks > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 3rem; padding: 1.5rem 0; border-top: 1px solid #bfd4cc; }
+  .package-checks dt { font-weight: 700; color: #193b39; }
+  .broadband-page .practical-note { border-left: 3px solid #00735c; padding-left: 1.5rem; margin-top: 3rem; max-width: 900px; }
+  .broadband-page .source-note { font-size: 0.85rem; line-height: 1.7; color: #405956; margin-top: 1.25rem; max-width: 1000px; }
+  .speed-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; border-top: 2px solid #00735c; padding: 1.5rem 0 2.5rem; }
+  .speed-metrics dt { color: #285a50; font-weight: 600; }
+  .speed-metrics dd { color: #124e41; }
+  .speed-metrics strong { font-family: 'Syne', sans-serif; font-size: 2.75rem; line-height: 1.3; font-weight: 700; white-space: nowrap; }
+  .speed-metrics span { font-size: 0.9rem; }
+  .speedtest-figure img { display: block; width: 100%; height: auto; }
+  .speedtest-figure a { display: block; cursor: zoom-in; }
+  .speedtest-figure figcaption { margin-top: 1rem; max-width: 950px; }
+  .speed-context { margin-top: 3rem; }
+  .connection-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 3rem; }
+  .connection-steps > div { border-top: 1px solid #b9cdc5; padding-top: 1.5rem; }
+  .connection-steps dt { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.6rem; color: #193b39; }
+  .support-intro { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 4rem; align-items: center; }
+  .support-actions { display: flex; flex-direction: column; align-items: flex-start; }
+  .support-actions .btn { max-width: 100%; }
+  .broadband-page .support-note { margin: 2rem 0 3rem; max-width: 900px; font-size: 0.875rem; color: #405956; }
+  .customer-quote { border-top: 3px solid #006b55; padding-top: 1.5rem; }
+  .customer-quote blockquote { font-size: 1.1rem; }
+  .customer-quote figcaption { display: flex; align-items: center; gap: 1rem; margin-top: 1.75rem; }
+  .customer-quote picture { flex: 0 0 64px; }
+  .customer-quote img { width: 64px; height: 64px; object-fit: cover; border-radius: 4px; }
+  .customer-quote figcaption strong, .customer-quote figcaption span span { display: block; }
+  .customer-quote figcaption strong { color: #183b36; font-size: 0.95rem; }
+  .faq-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 4rem; }
+  .faq-list { min-width: 0; }
+  details { border-top: 1px solid #bfd4cc; scroll-margin-top: 6rem; }
+  details:last-child { border-bottom: 1px solid #bfd4cc; }
+  summary { cursor: pointer; font-weight: 600; color: #193b39; padding: 1.2rem 0; line-height: 1.5; }
+  summary::marker { color: #00735c; }
+  details[open] summary { color: #00634e; }
+  details p { padding: 0 0 1.5rem; }
+  .contact-band { background: #deeee7; }
+  .contact-inner { display: flex; gap: 3rem; align-items: center; justify-content: space-between; }
+  .contact-inner > div { max-width: 650px; }
+  .contact-inner .btn { flex-shrink: 0; max-width: 100%; }
+  dialog { width: min(1420px, calc(100% - 2rem)); max-width: none; max-height: calc(100dvh - 2rem); padding: 1.25rem; margin: auto; border: 1px solid #bfd4cc; border-radius: 6px; color: #263b40; background: #fff; overflow: auto; overscroll-behavior: contain; }
+  dialog::backdrop { background: rgba(0, 0, 0, 0.8); }
+  .dialog-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+  .broadband-page .dialog-heading h2 { font-size: 1.25rem; margin: 0; }
+  .image-close { display: flex; align-items: center; gap: 0.5rem; padding: 0.65rem 0.9rem; min-height: 44px; white-space: nowrap; background: #0369a1; color: #fff; border: 0; border-radius: 6px; cursor: pointer; font: inherit; font-size: 0.9rem; }
+  .image-close:hover { background: #075985; }
+  dialog img { display: block; width: 100%; height: auto; }
+  .broadband-page dialog p { font-size: 0.875rem; line-height: 1.6; margin-top: 1rem; }
+  @media (max-width: 1000px) {
+    .use-case-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .profile-intro, .faq-layout, .support-intro { gap: 2rem; }
+    .speed-metrics strong { font-size: 2rem; }
+    .contact-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  }
+  @media (max-width: 700px) {
+    .band { padding: 3.5rem 0; }
+    .broadband-page h2 { font-size: 2rem; }
+    .broadband-hero { padding: 6rem 0 2.25rem; }
+    .broadband-hero h1 { font-size: 2.25rem; }
+    .hero-intro { font-size: 1rem; }
+    .page-index ul { gap: 0.4rem 1rem; }
+    .section-intro { margin-bottom: 2rem; }
+    .two-columns, .three-columns, .use-case-grid, .profile-intro, .package-checks > div, .connection-steps, .support-intro, .faq-layout { grid-template-columns: 1fr; }
+    .profile-intro figure { justify-self: start; max-width: 280px; }
+    .package-checks > div { gap: 0.75rem; }
+    .speed-metrics { grid-template-columns: 1fr; gap: 1rem; }
+    .speed-metrics > div { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; }
+    .speed-metrics dd { text-align: right; }
+    .dialog-heading { align-items: flex-start; flex-direction: column-reverse; gap: 0.75rem; }
+    .dialog-heading form { align-self: flex-end; }
+    dialog { padding: 1rem; }
+  }
+  @media (max-width: 360px) {
+    .broadband-hero h1 { font-size: 1.75rem; margin-bottom: 0.8rem; }
+    .broadband-hero { padding: 5rem 0 1rem; }
+    .broadband-hero .eyebrow, .breadcrumbs { margin-bottom: 0.75rem; }
+    .actions { gap: 0.75rem; margin: 1.2rem 0 0.8rem; }
+    .hero-intro { line-height: 1.6; }
+    .hero-footnote { font-size: 0.75rem; line-height: 1.5; }
+    .broadband-page .btn { padding: 0.75rem 1rem; }
+    .speed-metrics strong { font-size: 1.75rem; }
+  }
 </style>

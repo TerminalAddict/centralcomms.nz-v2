@@ -94,8 +94,10 @@ remote server/cloud services, Aaron Keppler's existing testimonial and 20 FAQs.
 ## Local media
 
 The owner supplied `public/assets/images/tmp/20261009_124237.jpg` (4000 x 1848).
-It is unchanged. Sharp auto-orientation and proportional resize with WebP
-quality 86 produced these durable published assets:
+Sharp auto-orientation and proportional resize with WebP quality 86 produced
+the durable published assets below. The owner later removed the temporary
+upload while supplying the broadband screenshot; the wireless page and social
+image source use only the retained assets in `public/assets/images/wireless/`.
 
 | File under `public/assets/images/wireless/` | Dimensions | Use |
 | --- | --- | --- |
