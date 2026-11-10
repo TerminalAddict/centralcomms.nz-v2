@@ -28,6 +28,7 @@ Complete reference for developing, building, deploying, and managing the Central
 18. [Performance and PageSpeed](#webp-images)
 19. [VoIP content and SEO maintenance](voip-content.md)
 20. [CCTV content and SEO maintenance](cctv-content.md)
+21. [Data cabling content and SEO maintenance](data-cabling-content.md)
 
 ---
 

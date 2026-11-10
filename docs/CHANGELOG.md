@@ -13,6 +13,9 @@ All notable changes to centralcomms.nz v2.
 
 ### SEO and structured data
 
+- Expanded `/networking--data.html` with six customer use cases, benefits, owner-confirmed Safety 'n Action height certification for all staff and Legrand cabling qualifications, copper/fibre/PoE/10GbE guidance, existing project examples, Aaron's unchanged testimonial and 18 FAQs.
+- Added matching data-cabling service, webpage, breadcrumb, FAQ and descriptive video JSON-LD, dedicated social metadata and local WebP photography. The owner's short installation clip opens in a keyboard-accessible native modal, with a silent 1080p MP4, visible media description and direct-link fallback. Original uploads remain unchanged.
+- Documented data-cabling claim boundaries, research, asset provenance, owner-confirmed original video publication date (14 September 2022) and maintenance checks in `docs/data-cabling-content.md`.
 - Replaced the CCTV stock hero with a WebP montage based on the owner's school/work-vehicle and camera-installation photographs. Updated the matching sharing image, added an installation-focused mobile crop, and documented the AI-assisted composition and source photos. Original uploads remain unchanged.
 - Expanded `/cctv.html` with six example use cases, Nx Witness feature analysis and qualified comparisons, SADPTools and NX Camera Info benefits, installation/maintenance guidance, an existing freezer project example and 16 FAQs.
 - Added CCTV `Service`, `WebPage`, `BreadcrumbList` and matching `FAQPage` metadata, software mentions and credentials linked to the existing business entity. All new content is build-time HTML, with keyboard-accessible native FAQ disclosures and no new client-side dependency.

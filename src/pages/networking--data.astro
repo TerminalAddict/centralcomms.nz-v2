@@ -1,94 +1,390 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { cablingFaqs, cablingOptions, cablingUseCases, cablingVideo } from '../data/data-cabling';
+import { aaronTestimonial } from '../data/voip-testimonials';
+
+const title = 'Data Cabling Hamilton | Copper & Fibre | Central Comms';
+const description = "Structured data cabling and fibre splicing in Hamilton and Waikato. Qualified Legrand cablers. All staff height certified with Safety 'n Action.";
+const canonical = new URL('/networking--data.html', Astro.site).href;
+const businessId = new URL('/#business', Astro.site).href;
+const image = '/assets/images/data-cabling/central-comms-data-cabling-og.png';
+const videoPublicationDate = new Intl.DateTimeFormat('en-NZ', { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(cablingVideo.uploadDate));
+const extraSchema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${canonical}#service`,
+    name: 'Structured data cabling in Hamilton and Waikato',
+    serviceType: 'Structured copper cabling, fibre installation and splicing, network cabinets and upgrades',
+    description,
+    url: canonical,
+    image: new URL(image, Astro.site).href,
+    provider: { '@id': businessId },
+    areaServed: [
+      { '@type': 'City', name: 'Hamilton' },
+      { '@type': 'AdministrativeArea', name: 'Waikato' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: title,
+    description,
+    inLanguage: 'en-NZ',
+    about: { '@id': `${canonical}#service` },
+    publisher: { '@id': businessId },
+    primaryImageOfPage: { '@type': 'ImageObject', url: new URL(image, Astro.site).href, width: 1200, height: 630 },
+    breadcrumb: { '@id': `${canonical}#breadcrumb` },
+    hasPart: { '@id': `${canonical}#faqs` },
+    video: { '@id': `${canonical}#installation-video` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': `${canonical}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
+      { '@type': 'ListItem', position: 2, name: 'Data cabling', item: canonical },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faqs`,
+    url: `${canonical}#faqs`,
+    inLanguage: 'en-NZ',
+    isPartOf: { '@id': `${canonical}#webpage` },
+    mainEntity: cablingFaqs.map(({ question, answer }) => ({
+      '@type': 'Question', name: question,
+      acceptedAnswer: { '@type': 'Answer', text: answer },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    '@id': `${canonical}#installation-video`,
+    name: cablingVideo.name,
+    description: cablingVideo.description,
+    contentUrl: new URL(cablingVideo.src, Astro.site).href,
+    thumbnailUrl: new URL(cablingVideo.poster, Astro.site).href,
+    duration: cablingVideo.duration,
+    uploadDate: cablingVideo.uploadDate,
+    encodingFormat: 'video/mp4',
+    isPartOf: { '@id': `${canonical}#webpage` },
+    publisher: { '@id': businessId },
+  },
+];
+const sections = [
+  ['benefits', 'Benefits'], ['qualifications', 'Our qualifications'], ['use-cases', 'Use cases'],
+  ['copper-and-fibre', 'Copper & fibre'], ['on-site', 'On site'], ['installation', 'Installation'],
+  ['projects', 'Our work'], ['faqs', 'FAQs'],
+];
 ---
-<Layout
-  title="Structured Data Cabling & Fibre Splicing Hamilton"
-  description="Professional network infrastructure, 10GbE copper and fibre optic installations. Site Safe certified data cabling experts for Hamilton and Waikato businesses."
->
-  <div class="page-hero">
-    <div class="container">
-      <span class="section-tag">Services — Networking & Data</span>
-      <h1 class="page-title">Networking &amp;<br /><em>Data Cabling</em></h1>
-      <p class="page-sub">Structured cabling, fibre optics and 10GbE installations built to last.</p>
-    </div>
-  </div>
-
-  <section class="section">
-    <div class="container">
-      <div class="content-grid">
-        <div class="prose">
-          <h2>Infrastructure Built the Right Way</h2>
-          <p>
-            Whether you're running cable for a new commercial build, upgrading to 10 Gigabit Ethernet,
-            or extending your CCTV system, Central Communications has the skills and qualifications
-            to get it done — on time, and to spec.
-          </p>
-          <p>
-            We are certified for at-heights work, elevated work platforms, and hold Site Safe accreditation.
-            It is quite likely we've already tackled the specific cabling challenge you're facing.
-          </p>
-
-          <h2>10 Gigabit Ethernet</h2>
-          <p>
-            10 Gigabit Ethernet (10GbE) is here, and it makes your network rocket. We're experts in
-            fibre splicing and copper structured data cabling. Be it cabling for your CCTV system,
-            phone system, or general network — we've got the cabling solution for you.
-          </p>
-          <p>
-            Our 10GbE installations typically combine SFP+ fibre uplinks for inter-cabinet connections
-            with Cat6 copper for desktop/device distribution — giving you the best performance at every
-            point in the network.
-          </p>
-
-          <h2>Our Networking Brands</h2>
-          <div class="brands-grid">
-            <img src="/assets/images/mikrotik.svg"  alt="MikroTik" width="120" height="40" />
-            <img src="/assets/images/unifi.svg"     alt="Unifi"    width="120" height="40" />
-            <img src="/assets/images/grandstream.svg" alt="Grandstream" width="120" height="40" />
-            <img src="/assets/images/legrand.svg"   alt="Legrand"  width="120" height="40" />
-          </div>
-
-          <h2>What's included?</h2>
-          <ul class="feature-list">
-            <li>Structured Cat5e / Cat6 / Cat6A copper cabling</li>
-            <li>Fibre optic installation and splicing</li>
-            <li>10 Gigabit Ethernet (10GbE) infrastructure</li>
-            <li>Patch panel &amp; cabinet installation</li>
-            <li>Commercial builds — at-heights &amp; Site Safe certified</li>
-            <li>CCTV and phone system cabling</li>
-            <li>Cable testing &amp; certification</li>
-          </ul>
+<Layout title={title} description={description} canonicalURL={canonical}
+  image={image} imageWidth={1200} imageHeight={630}
+  imageAlt="Structured data cabling in Hamilton and Waikato by Central Communications. Qualified Legrand data cablers."
+  extraSchema={extraSchema}>
+  <div class="cabling-page">
+    <header class="cabling-hero">
+      <img class="hero-image" src="/assets/images/data-cabling/data-cabling-installation-hero.webp"
+        srcset="/assets/images/data-cabling/data-cabling-installation-hero-960.webp 960w, /assets/images/data-cabling/data-cabling-installation-hero.webp 2048w"
+        sizes="100vw" alt="Central Communications technician on a scissor lift beneath overhead data cabling in a commercial building"
+        width="2048" height="922" fetchpriority="high" />
+      <div class="container hero-copy">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Data cabling</span></nav>
+        <p class="eyebrow">Hamilton &amp; Waikato</p>
+        <h1>Data cabling.<br />A stronger connection.</h1>
+        <p class="hero-intro">Copper, fibre and network upgrades for offices, warehouses and growing businesses.</p>
+        <div class="actions">
+          <a href="/support.html#contact" class="btn btn-primary">Plan your cabling project</a>
+          <a href="#on-site">See us on site <span aria-hidden="true">&darr;</span></a>
         </div>
+        <p class="hero-footnote">Legrand-qualified cablers &middot; All staff height certified</p>
+      </div>
+    </header>
 
-        <div class="sidebar">
-          <div class="cta-box">
-            <h3>Planning a cabling project?</h3>
-            <p>We'd love to hear about your project. Call us or send a message for a quote.</p>
-            <a href="tel:+6480084800038" class="btn btn-ember">0800 848 0038</a>
-            <a href="/#contact" class="btn btn-outline" style="margin-top:0.75rem;">Send a message</a>
-          </div>
+    <nav class="page-index" aria-label="Data cabling topics"><div class="container"><ul>{sections.map(([id, label]) => <li><a href={`#${id}`}>{label}</a></li>)}</ul></div></nav>
+
+    <section id="benefits" class="band" aria-labelledby="benefits-title">
+      <div class="container">
+        <div class="section-intro">
+          <p class="eyebrow">Start with the infrastructure</p>
+          <h2 id="benefits-title">Structured data cabling for Hamilton businesses.</h2>
+          <p>Central Communications Ltd installs structured data cabling in Hamilton and across Waikato. We bring copper cabling, fibre installation and splicing, patch panels, cabinets and network upgrades together for commercial builds, relocations and existing premises.</p>
+          <p><strong>Structured cabling is the organised physical network behind your business.</strong> Outlets connect back to patch panels and switches, with a plan for where equipment belongs. Computers, phones, Wi-Fi access points and CCTV can then use a consistent foundation instead of a collection of improvised connections.</p>
+        </div>
+        <div class="three-columns benefits">
+          <div><h3>Keep everyday work connected</h3><p>Give fixed equipment a dependable wired connection and give wireless access points the backhaul they need. Suitable cabling and switching help keep calls, files and camera traffic moving without relying on Wi-Fi for every link.</p></div>
+          <div><h3>Make changes less disruptive</h3><p>Labelled outlets, sensible patching and useful records make a new desk or a faulty connection easier to deal with. A cabinet that can be understood is an operational benefit, not just a tidier photograph.</p></div>
+          <div><h3>Leave room for the next step</h3><p>Plan spare outlets, cabinet space and pathways while access is available. You can prepare for more staff, cameras or faster uplinks without buying the highest specification for every device today.</p></div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section id="qualifications" class="band band-green" aria-labelledby="qualifications-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">Qualified people on your site</p><h2 id="qualifications-title">Legrand-qualified cablers.<br />Height-certified staff.</h2><p>A commercial cabling job involves more than cable and connectors. The people installing it need to understand the system and the working environment.</p></div>
+        <div class="two-columns qualifications">
+          <div><h3>All staff height certified with Safety 'n Action</h3><p><strong>All Central Communications staff are certified for working at height through Safety 'n Action.</strong> That matters when the route is above a warehouse floor or the equipment belongs high on a wall.</p><p>We plan access, the work area and site-specific hazards before the job. Training supports that planning; it does not replace the right equipment, controls or coordination with your site team.</p><a class="text-link" href="https://www.safetynaction.co.nz/en/our-courses/height-safety-courses/" target="_blank" rel="noopener noreferrer">Safety 'n Action height safety training</a></div>
+          <div><img class="legrand-logo" src="/assets/images/legrand.svg" alt="Legrand" width="150" height="44" loading="lazy" /><h3>Qualified Legrand data cablers</h3><p><strong>We are qualified Legrand data cablers.</strong> We can help you specify the cabling, outlets and patching as a complete system, with installation and testing requirements agreed from the start.</p><p>Ask us about the documentation and any manufacturer-backed warranty available for your proposed installation. Eligibility and terms need to be confirmed for the actual system, not assumed from a brand name.</p><a class="text-link" href="https://www.legrand.co.nz/" target="_blank" rel="noopener noreferrer">Legrand New Zealand</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases" class="band" aria-labelledby="use-cases-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">When the building needs to do more</p><h2 id="use-cases-title">When does a business need structured cabling?</h2><p>A new building is the obvious starting point, but growth, unreliable connections and new equipment can be just as good a reason to review what is in the walls and cabinets.</p></div>
+        <div class="use-case-grid">{cablingUseCases.map(({ title, need, approach, benefit }) => <article class="use-case"><h3>{title}</h3><p>{need}</p><p>{approach}</p><p class="outcome"><strong>The benefit:</strong> {benefit}</p></article>)}</div>
+      </div>
+    </section>
+
+    <section id="copper-and-fibre" class="band band-soft" aria-labelledby="cabling-options-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">Match the cable to the job</p><h2 id="cabling-options-title">Cat6, Cat6A or fibre?</h2><p>Most business networks need a mix. Copper connects many everyday devices and can carry Power over Ethernet. Fibre is useful for backbone links, distance and connections between buildings. We work backwards from the required performance, routes and equipment.</p></div>
+        <div class="table-scroll" role="region" aria-label="Copper and fibre cabling options" tabindex="0">
+          <table><caption>Common choices for a commercial network</caption><thead><tr><th scope="col">Cabling option</th><th scope="col">Where it fits</th><th scope="col">What to check</th></tr></thead><tbody>{cablingOptions.map(({ name, use, check }) => <tr><th scope="row">{name}</th><td>{use}</td><td>{check}</td></tr>)}</tbody></table>
+        </div>
+        <p class="source-note">Legrand's <a href="https://www.legrand.com/datacenter/sites/g/files/ocwmcr716/files/2023-03/Structured%20Cabling%20solutions.pdf" target="_blank" rel="noopener noreferrer">structured cabling guide (PDF)</a> sets out application distances and the assessment needed for existing links. Performance depends on the installed system, not just the wording printed on a cable.</p>
+        <div class="two-columns technical-notes">
+          <div><h3>10GbE where it makes a difference</h3><p>A busy server, shared storage or uplink between switches may benefit before an ordinary desk does. We assess switches, network cards, storage and the traffic pattern alongside the cabling. A 10GbE connection cannot make a slow disk or a limited internet service run ten times faster.</p><p>For a new copper installation intended for 10GbE, Cat6A is worth planning for. For cabinet links, suitable fibre and SFP+ optics may be the better fit. The right answer can be a mixed-speed network.</p><a class="text-link" href="/updates/is-10gb-networking-worth-it-for-your-business.html">When is 10Gb networking worth it?</a></div>
+          <div><h3>PoE: plan the power as well as the data</h3><p>Cameras, access points and IP phones often use PoE, receiving power and data over one copper connection. We check the device requirement, compatible switch or injector, total power budget and cabling installation together.</p><p>A spare socket does not guarantee enough switch power, and fibre does not deliver PoE to an endpoint. Planning these details early helps put equipment in the right position instead of the nearest convenient one.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="on-site" class="band" aria-labelledby="on-site-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">Before the walls close</p><h2 id="on-site-title">Commercial cabling, in progress.</h2><p>Good infrastructure starts before the finished office or shop floor is ready. Planning the routes and bringing cables to the right locations is the groundwork for the outlets, patching and equipment that follow.</p></div>
+        <figure class="installation-film">
+          <a class="video-trigger" href={cablingVideo.src} data-cabling-video aria-label="Play commercial data cabling installation video, 6 seconds, silent">
+            <img src={cablingVideo.poster} alt="Blue data cables hanging through exposed steel framing during a commercial fit-out" width="1600" height="900" loading="lazy" decoding="async" />
+            <span class="play-label"><span aria-hidden="true">&#9654;</span> Play installation video <span class="video-length">6 seconds &middot; Silent</span></span>
+          </a>
+          <figcaption>{cablingVideo.description}</figcaption>
+        </figure>
+        <p class="video-fallback">First published <time datetime={cablingVideo.uploadDate}>{videoPublicationDate}</time>. <a href={cablingVideo.src}>Open the MP4 directly</a></p>
+      </div>
+    </section>
+
+    <section id="installation" class="band band-soft" aria-labelledby="installation-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">From the first plan to the handover</p><h2 id="installation-title">A cabling job should end with clarity.</h2><p>We can work with your builder, electrician, facilities team and IT provider. Agreeing the scope early helps everyone understand what is being installed, what needs testing and who is responsible for bringing the network into service.</p></div>
+        <div class="three-columns workflow">
+          <div><h3>Scope the site</h3><p>Start with the floor plan, equipment locations and expected growth. Check the cabinet position, cable routes, access constraints and any operational areas that must stay available. Agree the cable specification and test requirements.</p></div>
+          <div><h3>Install around the operation</h3><p>Coordinate access and pathways with other trades. Run, terminate and label the agreed links, fit the patching and cabinet equipment, and plan the cutover before touching live connections. Identify any electrical or civil work separately.</p></div>
+          <div><h3>Test and hand over</h3><p>Complete the agreed testing and relate the results to identifiable outlets. Confirm the patching, documentation and any warranty requirements. Your team should know what has been installed and what remains the responsibility of its network administrator.</p></div>
+        </div>
+        <div class="practical-note"><h3>A link light is not a certification report</h3><p>A basic continuity check, a test of supported application speed and certification against a cabling standard answer different questions. For a specified commercial installation, agree the relevant standard, test level and recorded results before work begins.</p><p>We can scope cable testing and certification to suit the project. Read <a href="https://www.flukenetworks.com/knowledge-base/cableiq/verification-qualification-and-certification" target="_blank" rel="noopener noreferrer">Fluke Networks' explanation of verification, qualification and certification</a> for the distinction.</p></div>
+        <div class="scope"><h3>What can be included?</h3><ul><li>Cat6 and Cat6A outlets, cable runs and patch panels</li><li>Existing copper network tracing, testing and repairs</li><li>Fibre installation, splicing and termination</li><li>Network cabinets, cable management and labelling</li><li>Cabling for CCTV, Wi-Fi access points and IP phones</li><li>Switching, uplinks and network upgrades by agreement</li></ul><p>We specify inclusions in your quote. Active equipment, electrical power, civil works, configuration and ongoing support should be agreed explicitly rather than assumed.</p></div>
+        <div class="brands" role="group" aria-label="Networking equipment brands"><img src="/assets/images/mikrotik.svg" alt="MikroTik" width="120" height="40" loading="lazy" /><img src="/assets/images/unifi.svg" alt="UniFi" width="120" height="40" loading="lazy" /><img src="/assets/images/grandstream.svg" alt="Grandstream" width="120" height="40" loading="lazy" /></div>
+      </div>
+    </section>
+
+    <section id="projects" class="band" aria-labelledby="projects-title">
+      <div class="container">
+        <div class="section-intro"><p class="eyebrow">Experience in working buildings</p><h2 id="projects-title">From new premises to difficult cable routes.</h2><p>Our work covers commercial construction, existing workplaces and the network equipment behind them. These are examples from our project updates.</p></div>
+        <div class="two-columns project-list">
+          <article><h3>Additional workstations in a freezing works</h3><p>At a local freezing works, we ran cables for additional workstations through challenging roof and underfloor spaces. It is a useful example of why the building, the route and access matter as much as the number of outlets.</p><a class="text-link" href="/updates/meatworks-structured-data-cabling.html">Read about the structured cabling work</a></article>
+          <article><h3>A network with faster cabinet connections</h3><p>One of our documented installations combined SFP+ fibre uplinks, 10GBASE-T device connections and gigabit PoE and non-PoE distribution. Different links had different jobs, rather than every connection receiving the same equipment.</p><a class="text-link" href="/updates/10-gigabit-ethernet.html">See the 10GbE installation</a></article>
+        </div>
+        <figure class="customer-quote">
+          <blockquote><p>{aaronTestimonial.quote}</p></blockquote>
+          <figcaption><picture><source type="image/webp" srcset="/assets/images/testimonials/Aaron%20Keppler-160.webp 1x, /assets/images/testimonials/Aaron%20Keppler-320.webp 2x" /><img src={aaronTestimonial.img} alt={aaronTestimonial.name} width="64" height="64" loading="lazy" /></picture><span><strong>{aaronTestimonial.name}</strong><span>{aaronTestimonial.company}</span></span></figcaption>
+        </figure>
+        <p class="related-services">Planning the equipment too? Talk to us about <a href="/wireless.html">business Wi-Fi</a>, <a href="/cctv.html">CCTV installation</a> and <a href="/voip.html">cloud phone systems</a>.</p>
+      </div>
+    </section>
+
+    <section id="faqs" class="band band-soft" aria-labelledby="faqs-title">
+      <div class="container faq-layout">
+        <div><p class="eyebrow">Before the first cable run</p><h2 id="faqs-title">Data cabling questions, answered.</h2><p>Specifications, qualifications, costs and the practical details of working in your building.</p><a class="text-link" href="/support.html#contact">Ask us about your project</a></div>
+        <div class="faq-list">{cablingFaqs.map(({ question, answer }, index) => <details id={`cabling-faq-${index + 1}`}><summary>{question}</summary><p>{answer}</p></details>)}</div>
+      </div>
+    </section>
+
+    <section class="band contact-band" aria-labelledby="contact-title"><div class="container contact-inner"><div><p class="eyebrow">Build the right foundation</p><h2 id="contact-title">What needs connecting?</h2><p>Send us your floor plan, site photos or a list of the connections you need. Tell us where the building is, when it needs to be ready and what your business has planned next.</p><a class="text-link" href="tel:+648008480038">Call 0800 848 0038</a></div><a href="/support.html#contact" class="btn btn-primary">Talk to Central Communications</a></div></section>
+
+    <dialog id="cabling-video-dialog" aria-labelledby="video-dialog-title" aria-describedby="video-dialog-description">
+      <div class="dialog-heading"><h2 id="video-dialog-title">Commercial data cabling on site</h2><form method="dialog"><button class="video-close" type="submit" autofocus>Close video <span aria-hidden="true">&times;</span></button></form></div>
+      <video id="cabling-installation-video" controls playsinline preload="none" poster={cablingVideo.poster} width="1920" height="1080" aria-label={cablingVideo.name} aria-describedby="video-dialog-description">
+        <source src={cablingVideo.src} type="video/mp4" />
+        <p><a href={cablingVideo.src}>Open the installation video</a></p>
+      </video>
+      <p id="video-dialog-description">{cablingVideo.description}</p>
+      <p class="dialog-fallback"><a href={cablingVideo.src}>Open the MP4 directly</a></p>
+    </dialog>
+  </div>
+
+  <script>
+    const dialog = document.querySelector<HTMLDialogElement>('#cabling-video-dialog');
+    const video = document.querySelector<HTMLVideoElement>('#cabling-installation-video');
+    const trigger = document.querySelector<HTMLAnchorElement>('[data-cabling-video]');
+
+    if (dialog && video && trigger && typeof dialog.showModal === 'function') {
+      trigger.setAttribute('aria-haspopup', 'dialog');
+      trigger.setAttribute('aria-controls', dialog.id);
+      const stopVideo = () => {
+        video.pause();
+        if (video.readyState > 0) video.currentTime = 0;
+      };
+      trigger.addEventListener('click', (event) => {
+        // Modified clicks retain the direct MP4 link's normal browser behaviour.
+        if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        if (dialog.open) return;
+        dialog.showModal();
+        void video.play().catch(() => { /* Native controls remain available if playback is blocked. */ });
+      });
+
+      // A pending play request must not restart playback after the modal closes.
+      video.addEventListener('play', () => { if (!dialog.open) stopVideo(); });
+      dialog.addEventListener('close', () => {
+        if (dialog.open) return;
+        stopVideo();
+        trigger.focus({ preventScroll: true });
+      });
+      dialog.addEventListener('cancel', stopVideo);
+      let backdropPointer = false;
+      const outsideDialog = (event: MouseEvent) => {
+        const rect = dialog.getBoundingClientRect();
+        return event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom;
+      };
+      dialog.addEventListener('pointerdown', (event) => { backdropPointer = event.target === dialog && outsideDialog(event); });
+      dialog.addEventListener('click', (event) => {
+        if (backdropPointer && event.target === dialog && outsideDialog(event)) dialog.close();
+        backdropPointer = false;
+      });
+    }
+  </script>
 </Layout>
 
 <style>
-  .page-title { font-size: clamp(2rem, 5vw, 3.5rem); color: #e8f1ff; margin: 0.5rem 0 1rem; }
-  .page-title em { font-style: normal; color: #0ea5e9; }
-  .page-sub { font-size: 1.1rem; color: #7ea3c8; max-width: 520px; }
-  .content-grid { display: grid; grid-template-columns: 1fr 340px; gap: 4rem; align-items: start; }
-  .brands-grid { display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; margin: 1.5rem 0; }
-  .brands-grid img { height: 32px; width: auto; filter: brightness(0) invert(0.6); transition: filter 0.2s; }
-  .brands-grid img:hover { filter: none; }
-  .feature-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
-  .feature-list li { padding-left: 1.5rem; position: relative; color: #1e3a5f; font-size: 0.95rem; line-height: 1.6; }
-  .feature-list li::before { content: ''; position: absolute; left: 0; top: 0.6rem; width: 6px; height: 6px; background: #0ea5e9; border-radius: 50%; }
-  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; position: sticky; top: 6rem; }
-  .cta-box { background: #0c1d35; border: 1px solid rgba(14,165,233,0.15); border-radius: 1rem; padding: 1.75rem; display: flex; flex-direction: column; gap: 0.75rem; }
-  .cta-box h3 { font-size: 1.1rem; color: #e8f1ff; margin: 0; }
-  .cta-box p { font-size: 0.875rem; color: #7ea3c8; margin: 0; line-height: 1.6; }
-  .cta-box .btn-outline { color: #e8f1ff; border-color: rgba(232, 241, 255, 0.35); }
-  .cta-box .btn-outline:hover { color: #38bdf8; border-color: #38bdf8; }
-  @media (max-width: 900px) { .content-grid { grid-template-columns: 1fr; } .sidebar { position: static; } }
+  :global(html:has(.cabling-page)) { scrollbar-gutter: stable; }
+  :global(html:has(#cabling-video-dialog[open])) { overflow: hidden; }
+  .cabling-page { color: #263b40; background: #fff; line-height: 1.75; letter-spacing: 0; overflow-wrap: break-word; }
+  .cabling-page :is(h1, h2, h3, p, figure, blockquote) { margin: 0; }
+  .cabling-page :is(h1, h2, h3) { letter-spacing: 0; overflow-wrap: anywhere; }
+  .cabling-page h2 { font-size: 2.5rem; line-height: 1.15; margin-bottom: 1.4rem; }
+  .cabling-page h3 { font-size: 1.3rem; line-height: 1.35; margin-bottom: 0.8rem; }
+  .cabling-page p + p { margin-top: 1rem; }
+  .cabling-page a:not(.btn) { text-decoration: underline; text-underline-offset: 4px; }
+  .cabling-page a:hover { text-decoration-thickness: 2px; }
+  .cabling-page :is(a, button, summary, [tabindex], video):focus-visible { outline: 3px solid #007b63; outline-offset: 5px; }
+  .cabling-page .btn { letter-spacing: 0; text-align: center; justify-content: center; border-radius: 6px; white-space: normal; }
+  .cabling-page .btn-primary { background: #0369a1; color: #fff; }
+  .cabling-page .btn-primary:hover { background: #075985; }
+  .cabling-page .eyebrow { color: #006b55; font-family: 'Space Mono', monospace; font-size: 0.75rem; line-height: 1.6; margin-bottom: 1rem; }
+  .band { padding: 5rem 0; scroll-margin-top: 5rem; }
+  .band-soft { background: #f3f6f6; }
+  .band-green { background: #eaf5ef; }
+  .section-intro { max-width: 800px; margin-bottom: 3rem; }
+  .cabling-hero { position: relative; isolation: isolate; overflow: hidden; background: #252e2a; padding: 6.5rem 0 3rem; }
+  .hero-image { position: absolute; z-index: -2; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+  .cabling-hero::after { content: ''; position: absolute; z-index: -1; inset: 0; background: rgba(10, 25, 21, 0.68); }
+  .hero-copy { color: #fff; }
+  .breadcrumbs { display: flex; gap: 0.75rem; font-size: 0.8rem; margin-bottom: 1.5rem; }
+  .cabling-hero .eyebrow { color: #b3eddb; }
+  .cabling-hero h1 { font-size: 3.5rem; color: #fff; max-width: 850px; margin-bottom: 1.2rem; }
+  .hero-intro { max-width: 610px; font-size: 1.125rem; line-height: 1.7; }
+  .actions { display: flex; flex-wrap: wrap; gap: 1.25rem 1.75rem; align-items: center; margin: 1.6rem 0 1.2rem; }
+  .hero-footnote { color: #dbede7; font-size: 0.8rem; }
+  .cabling-hero a:focus-visible { outline-color: #b3eddb; }
+  .page-index { border-bottom: 1px solid #d6e3de; background: #fff; }
+  .page-index ul { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; padding: 1.25rem 0; margin: 0; list-style: none; }
+  .page-index a { display: inline-block; font-size: 0.875rem; padding: 0.25rem 0; color: #245f56; }
+  .two-columns, .three-columns, .use-case-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
+  .three-columns, .use-case-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .benefits > div { border-top: 2px solid #c3e1d3; padding-top: 1.5rem; }
+  .qualifications > div { border-top: 1px solid #b9cdc5; padding-top: 1.5rem; }
+  .legrand-logo { width: 150px; height: 44px; object-fit: contain; object-position: left; margin-bottom: 1.2rem; }
+  .use-case { border-top: 1px solid #b9cdc5; padding-top: 1.5rem; }
+  .outcome { color: #00634e; font-size: 0.95rem; }
+  .text-link { display: inline-block; margin-top: 1.25rem; font-weight: 600; color: #03658d; }
+  .table-scroll { overflow-x: auto; margin-bottom: 1rem; border-bottom: 1px solid #bfd4cc; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.95rem; text-align: left; }
+  caption { text-align: left; font-size: 0.875rem; color: #4e6463; padding: 0.5rem 0 1.25rem; }
+  th, td { padding: 1.2rem; vertical-align: top; border-bottom: 1px solid #dce6e2; }
+  thead th { background: #eaf5ef; color: #174b40; }
+  tbody th { width: 22%; color: #193b39; }
+  td { width: 39%; }
+  .source-note { font-size: 0.85rem; line-height: 1.7; color: #405956; }
+  .technical-notes { margin-top: 3rem; }
+  .installation-film { max-width: 1000px; }
+  .video-trigger { display: block; position: relative; background: #172421; aspect-ratio: 16 / 9; }
+  .video-trigger img { width: 100%; height: 100%; object-fit: cover; }
+  .play-label { position: absolute; left: 1.5rem; bottom: 1.5rem; padding: 0.8rem 1.2rem; border-radius: 6px; background: #fff; color: #173b35; font-weight: 600; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.8rem; max-width: calc(100% - 3rem); line-height: 1.5; }
+  .video-trigger:hover .play-label { background: #eaf5ef; }
+  .video-length { font-size: 0.8rem; font-weight: 400; }
+  .cabling-page figcaption { font-size: 0.875rem; line-height: 1.6; color: #4e6463; }
+  .installation-film figcaption { margin-top: 1rem; max-width: 850px; }
+  .video-fallback { margin-top: 0.75rem !important; font-size: 0.875rem; }
+  .practical-note { border-left: 3px solid #00735c; padding-left: 1.5rem; margin: 3rem 0; max-width: 900px; }
+  .scope { border-top: 1px solid #b9cdc5; padding-top: 2rem; }
+  .scope ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 3rem; row-gap: 0.5rem; padding-left: 1.25rem; margin: 0 0 1.5rem; list-style: disc; }
+  .scope p { max-width: 850px; }
+  .brands { display: flex; align-items: center; flex-wrap: wrap; gap: 2rem 3rem; margin-top: 2.5rem; }
+  .brands img { width: 120px; height: 40px; object-fit: contain; }
+  .project-list article { border-top: 1px solid #b9cdc5; padding-top: 1.5rem; }
+  .customer-quote { border-left: 3px solid #00735c; padding: 0 0 0 1.5rem; margin: 3.5rem 0 2rem !important; max-width: 900px; }
+  .customer-quote blockquote { font-size: 1.125rem; }
+  .customer-quote figcaption { display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem; }
+  .customer-quote picture { flex: 0 0 64px; }
+  .customer-quote img { width: 64px; height: 64px; object-fit: cover; border-radius: 4px; }
+  .customer-quote figcaption strong, .customer-quote figcaption span span { display: block; }
+  .customer-quote figcaption strong { color: #183b36; font-size: 0.95rem; }
+  .faq-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 4rem; }
+  .faq-list { min-width: 0; }
+  details { border-top: 1px solid #bfd4cc; scroll-margin-top: 6rem; }
+  details:last-child { border-bottom: 1px solid #bfd4cc; }
+  summary { cursor: pointer; font-weight: 600; color: #193b39; padding: 1.2rem 0; line-height: 1.5; }
+  summary::marker { color: #00735c; }
+  details[open] summary { color: #00634e; }
+  details p { padding: 0 0 1.5rem; }
+  .contact-band { background: #deeee7; }
+  .contact-inner { display: flex; gap: 3rem; align-items: center; justify-content: space-between; }
+  .contact-inner > div { max-width: 650px; }
+  .contact-inner .btn { flex-shrink: 0; max-width: 100%; }
+  dialog { width: min(1000px, calc(100% - 2rem)); max-width: none; max-height: calc(100dvh - 2rem); padding: 1.25rem; margin: auto; border: 1px solid #bfd4cc; border-radius: 6px; color: #263b40; background: #fff; overflow: auto; overscroll-behavior: contain; }
+  dialog::backdrop { background: rgba(0, 0, 0, 0.8); }
+  .dialog-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+  .cabling-page .dialog-heading h2 { font-size: 1.25rem; margin: 0; }
+  .video-close { display: flex; align-items: center; gap: 0.5rem; padding: 0.65rem 0.9rem; min-height: 44px; white-space: nowrap; background: #0369a1; color: #fff; border-radius: 6px; cursor: pointer; font: inherit; font-size: 0.9rem; }
+  .video-close:hover { background: #075985; }
+  dialog video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #111; }
+  dialog p { font-size: 0.875rem; line-height: 1.6; margin-top: 1rem !important; }
+  @media (max-width: 1000px) {
+    .use-case-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .faq-layout { gap: 2rem; }
+    .contact-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  }
+  @media (max-width: 700px) {
+    .band { padding: 3.5rem 0; }
+    .cabling-page h2 { font-size: 2rem; }
+    .cabling-hero { padding: 6rem 0 2.25rem; }
+    .cabling-hero h1 { font-size: 2.25rem; }
+    .hero-intro { font-size: 1rem; }
+    .hero-image { object-position: 58% center; }
+    .page-index ul { gap: 0.4rem 1rem; }
+    .section-intro { margin-bottom: 2rem; }
+    .two-columns, .three-columns, .use-case-grid, .faq-layout, .scope ul { grid-template-columns: 1fr; }
+    table { min-width: 640px; }
+    th, td { padding: 1rem; }
+    .play-label { left: 0.75rem; bottom: 0.75rem; max-width: calc(100% - 1.5rem); padding: 0.5rem 0.75rem; font-size: 0.875rem; gap: 0.15rem 0.5rem; }
+    .video-length { flex-basis: 100%; }
+    .dialog-heading { align-items: flex-start; flex-direction: column-reverse; gap: 0.75rem; }
+    .dialog-heading form { align-self: flex-end; }
+    dialog { padding: 1rem; }
+    .customer-quote blockquote { font-size: 1rem; }
+  }
+  @media (max-width: 360px) {
+    .cabling-hero h1 { font-size: 1.75rem; margin-bottom: 0.8rem; }
+    .cabling-hero { padding: 5rem 0 1rem; }
+    .cabling-hero .eyebrow, .breadcrumbs { margin-bottom: 0.75rem; }
+    .actions { gap: 0.75rem; margin: 1.2rem 0 0.8rem; }
+    .hero-intro { line-height: 1.6; }
+    .hero-footnote { font-size: 0.75rem; line-height: 1.5; }
+    .cabling-page .btn { padding: 0.75rem 1rem; }
+  }
 </style>
