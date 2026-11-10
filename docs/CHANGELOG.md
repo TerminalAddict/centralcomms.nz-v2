@@ -14,6 +14,9 @@ All notable changes to centralcomms.nz v2.
 
 ### SEO and structured data
 
+- Expanded `/websites-and-hosting.html` with six use cases, WordPress/custom-development experience, responsive websites and landing pages, NZ hosting options, domains, Microsoft 365/Google Workspace, HTTPS, maintenance, SEO basics, 24/7 emergency support and 22 FAQs.
+- Added the owner-confirmed Waikato hosting platform and Western Bay of Plenty backup locations, four existing portfolio examples and Jason's unchanged testimonial. The supplied Proxmox screenshot is a local lossless WebP hero with an accessible image modal; project images and dedicated sharing artwork are also local.
+- Added matching websites/hosting service, person, webpage, breadcrumb and FAQ JSON-LD, consistent search/social metadata, corrected phone links and content/source/asset maintenance guidance in `docs/websites-hosting-content.md`. No unsupported uptime, facility certification, developer-ranking or AI-recommendation guarantees were added.
 - Expanded `/ultra-fast-broadband.html` with six business use cases, UFB/Hyperfibre guidance, managed routers, static IPs, phone/CCTV integration, connection planning, local Hamilton and 24/7 emergency support, resilience planning and 20 FAQs.
 - Added Paul's ISP background and the owner-confirmed Net Enterprises backbone relationship, a clearly qualified customer Hyperfibre result (4,026.98 Mbps down, 3,895.66 Mbps up, 3 ms ping), and Aaron/Jason's unchanged shared testimonials. The supplied screenshot is preserved in a local lossless WebP, with a dedicated 1200 x 630 sharing image and reproducible source.
 - Added matching broadband service/person/organisation/webpage/breadcrumb/FAQ JSON-LD, shared FAQ data, social metadata and related service/project links without a new client dependency. Corrected the broadband phone link and documented content provenance, service boundaries, asset generation and verification in `docs/broadband-content.md`.
