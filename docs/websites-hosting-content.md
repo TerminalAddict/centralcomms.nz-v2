@@ -120,10 +120,37 @@ Sharp lossless WebP conversion produces the durable
 or interface details were redrawn; embedded source-image metadata was dropped
 by the conversion. The source PNG was not modified.
 
-The same WebP is used for the hero, hosting figure, modal and sharing composition,
-all referring to the same platform. It has explicit dimensions and the hero has
-high fetch priority. Other images are lazy-loaded. The hero's empty alt avoids
-duplicating the descriptive image and text in the hosting section.
+The Proxmox WebP is used for the hosting figure, modal and sharing composition,
+all referring to the same platform. The image file, body figure, caption, modal
+and social artwork were left unchanged when the hero was replaced.
+
+On 12 November 2026, the owner supplied two photographs in
+`public/assets/images/tmp/` for a stitched hero:
+
+- `20230831_104709 (1).jpg`: a portrait network rack with patch cables and switches.
+- `20250916_142114 (1).jpg`: a landscape rackmount storage-server photograph.
+
+The built-in image editor combined them into a 3:1 photographic composite, with
+the upright network rack on the left and the storage server on the right. This
+is an AI-assisted composition of two supplied photos, not an unmodified single
+photograph or evidence of a connected rack layout. Do not infer equipment
+specifications, redundancy or hosting capacity from it. The exact composition
+prompt is saved in `scripts/websites-hosting-hero-prompt.txt`. The page uses only
+the durable WebP below, so temporary source uploads can be removed without
+affecting the hero.
+
+The resulting local asset is
+`public/assets/images/websites-hosting/websites-hosting-infrastructure-hero.webp`
+(2172 x 724, 311,980 bytes), encoded with Sharp at WebP quality 84, effort 6,
+without upscaling or embedded source metadata. The hero points directly to this
+asset rather than `hostingPlatform.image`, which remains the Proxmox screenshot.
+At widths up to 1000 pixels, `object-position: 22% center` keeps part of each
+photograph in view. A solid 72% dark overlay maintains readable white text.
+Short landscape viewports use compact hero spacing and fixed-rem type so the
+following topic navigation remains visible; the body layout is unchanged.
+
+The hero has explicit dimensions, high fetch priority and decorative empty alt
+text. The Proxmox body image retains its descriptive alt text and lazy loading.
 
 The following historical project images were proportionally resized from
 `public/assets/images/posts/` to 720 pixels wide and encoded as WebP quality 84:
@@ -137,8 +164,9 @@ The following historical project images were proportionally resized from
 
 The grid uses a stable 3:2 visual crop aligned to the top, while the stored files
 retain their original proportions. Existing local images of Paul and Jason are
-reused for the same people. No remote image hotlinks or AI-generated visuals are
-used.
+reused for the same people. All images are local. The project images and Proxmox
+screenshot retain their original content; only the new hero uses AI-assisted
+composition as described above.
 
 `scripts/websites-hosting-social-image.html` is the reproducible sharing
 composition, using the local Proxmox WebP and CCL logo. Render it at 1200 x 630,
@@ -220,5 +248,23 @@ Verified on 10 November 2026:
 - The lossless Proxmox WebP matched the supplied PNG's normalised RGBA pixels.
   The updated development preview returned HTTP 200 through
   `http://103.123.164.24:4321/websites-and-hosting.html`.
+
+Verified the stitched hero on 12 November 2026:
+
+- Production build: 43 pages; Nu HTML Checker: no errors in the built page;
+  `git diff --check`: clean. Six JSON-LD entities, 22 FAQ/schema matches,
+  metadata, links, headings and the existing testimonial still pass.
+- Chromium checked the six sizes above plus 844x390 landscape. The new local
+  hero loaded without overflow, with following navigation visible. Desktop,
+  wide-screen, narrow mobile and landscape screenshots were reviewed. Main-page
+  Axe checks passed at desktop/mobile sizes. Firefox and WebKit also passed
+  native FAQ/mobile checks and the compact landscape hero check.
+- Proxmox modal tests passed in all three engines at desktop, mobile, narrow
+  mobile and landscape sizes, including focus, dismissal, scroll locking,
+  modified clicks and no-JavaScript/no-dialog fallbacks. Chat was stubbed only
+  during focused tests.
+- SHA-256 comparisons confirmed that the Proxmox WebP and sharing PNG are
+  byte-for-byte unchanged in both `public/` and `dist/`. The body and modal
+  still reference Proxmox; only the hero references the new composite.
 
 Deployment, commit and push are separate operations after content review.

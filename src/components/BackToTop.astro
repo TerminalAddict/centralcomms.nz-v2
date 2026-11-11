@@ -1,0 +1,90 @@
+<a id="back-to-top" class="back-to-top" href="#page-top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+    <path d="m6 10 6-6 6 6M12 4v16" />
+  </svg>
+  <span>Back to top</span>
+</a>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    z-index: 90;
+    left: calc(1rem + env(safe-area-inset-left, 0px));
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px) + var(--back-to-top-lift, 0px));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 9.5rem;
+    height: 3rem;
+    max-width: calc(100vw - 2rem);
+    padding: 0.5rem 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 6px;
+    background: #0369a1;
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: 0;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+  .back-to-top[hidden] { display: none; }
+  .back-to-top svg { flex-shrink: 0; }
+  .back-to-top:hover { background: #075985; }
+  .back-to-top:focus-visible { outline: 3px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 5px #0369a1; }
+</style>
+
+<script>
+  const control = document.querySelector<HTMLAnchorElement>('#back-to-top');
+  const pageTop = document.getElementById('page-top');
+
+  if (control && pageTop) {
+    const offsetTarget = control.closest('footer') ?? control;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const overlays = [...document.querySelectorAll<HTMLElement>('dialog, [role="dialog"][aria-modal="true"], #main-nav .mobile-menu')];
+    const staffBar = document.getElementById('staff-bar');
+    let overlayOpen = false;
+
+    const updateVisibility = () => {
+      const scrollRange = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const threshold = Math.min(300, scrollRange / 2);
+      control.hidden = overlayOpen || (window.scrollY <= threshold && document.activeElement !== control);
+    };
+
+    const updateChrome = () => {
+      overlayOpen = overlays.some(element => element.getClientRects().length > 0 && getComputedStyle(element).visibility !== 'hidden');
+      const lift = staffBar && getComputedStyle(staffBar).position === 'fixed'
+        ? staffBar.getBoundingClientRect().height
+        : 0;
+      offsetTarget.style.setProperty('--back-to-top-lift', `${lift}px`);
+      updateVisibility();
+    };
+
+    control.addEventListener('click', event => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      // Move keyboard focus out of the control before scrolling hides it.
+      pageTop.focus({ preventScroll: true });
+      window.scrollTo({ top: 0, left: 0, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+      updateVisibility();
+    });
+
+    control.addEventListener('blur', updateVisibility);
+    window.addEventListener('scroll', updateVisibility, { passive: true });
+    window.addEventListener('resize', updateChrome, { passive: true });
+    window.addEventListener('pageshow', updateChrome);
+
+    const observer = new MutationObserver(updateChrome);
+    for (const element of [...overlays, ...(staffBar ? [staffBar] : [])]) {
+      observer.observe(element, { attributes: true, attributeFilter: ['open', 'hidden', 'style', 'class', 'aria-hidden'] });
+    }
+    if (staffBar && typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(updateChrome).observe(staffBar);
+    }
+    updateChrome();
+  }
+</script>

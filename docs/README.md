@@ -34,6 +34,7 @@ Complete reference for developing, building, deploying, and managing the Central
 24. [Business broadband content and SEO maintenance](broadband-content.md)
 25. [Websites and hosting content and SEO maintenance](websites-hosting-content.md)
 26. [Content-page heroes and image replacement](content-page-heroes.md)
+27. [Back-to-top control](back-to-top.md)
 
 ---
 
@@ -79,7 +80,8 @@ centralcomms.nz-v2/
 ├── src/
 │   ├── components/
 │   │   ├── Nav.astro          # Responsive navigation with dropdowns
-│   │   └── Footer.astro       # Footer with contact info and links
+│   │   ├── Footer.astro       # Footer with contact info and links
+│   │   └── BackToTop.astro    # Shared, accessible return-to-top control
 │   ├── layouts/
 │   │   └── Layout.astro       # Shared HTML shell — head, OG tags, fonts
 │   ├── pages/

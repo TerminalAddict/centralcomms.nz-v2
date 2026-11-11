@@ -8,6 +8,8 @@ All notable changes to centralcomms.nz v2.
 
 ### Content updates
 
+- Added a labelled back-to-top control through the shared footer for every Astro page, including update articles and 404. It supports keyboard focus, reduced-motion preferences and a no-JavaScript link fallback, clears fixed staff toolbars, and hides while menus or dialogs are open.
+- Replaced the Websites and Hosting hero with a local WebP composite of the owner's network-rack and storage-server photos. Adjusted the narrow-screen crop, contrast overlay and short-landscape hero spacing; the Proxmox image, body content, enlargement modal and sharing artwork are unchanged.
 - Replaced Support's interim hero with the owner's supplied workplace/desk-phone photograph, optimised as a local 2048-pixel-wide WebP. All other hero images and the Support form are unchanged.
 - Replaced the Notifications, About and main Updates page hero placeholders with the owner's supplied photographs, optimised as local 2048-pixel-wide WebP images. Individual update-post heroes are unchanged; original uploads were preserved during conversion.
 - Updated Support, Notifications, About, the Updates index and all update articles to share the service-page hero/header styling: full-bleed local photography, readable white headings, breadcrumbs and green accents. Main-page images are configured in `src/data/page-heroes.ts` and now all use the owner's dedicated photos.

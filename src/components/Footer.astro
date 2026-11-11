@@ -1,4 +1,6 @@
 ---
+import BackToTop from './BackToTop.astro';
+
 const services = [
   { href: '/voip.html',                 label: 'VoIP Phone Systems' },
   { href: '/cctv.html',                 label: 'CCTV & Surveillance' },
@@ -80,13 +82,14 @@ const services = [
       </div>
     </div>
   </div>
+  <BackToTop />
 </footer>
 
 <style>
   footer {
     border-top: 1px solid rgba(14, 165, 233, 0.1);
     background: #071525;
-    padding: 4rem 0 2rem;
+    padding: 4rem 0 calc(5rem + env(safe-area-inset-bottom, 0px) + var(--back-to-top-lift, 0px));
   }
 
   .footer-inner {
