@@ -10,25 +10,28 @@ The shared navigation remains unchanged.
 
 Local image paths, intrinsic dimensions and crop positions are centralised in
 `src/data/page-heroes.ts`. On 11 November 2026, the owner's three supplied photos
-replaced the Notifications, About and Updates index placeholders. Support still
-uses its interim photo; individual update articles retain their featured images.
+replaced the Notifications, About and Updates index placeholders. Support's
+dedicated photo followed on 12 November 2026. Individual update articles retain
+their featured images.
 
 | Page | Image |
 | --- | --- |
-| Support | Paul on the phone (interim, unchanged) |
+| Support | Supplied workplace/desk-phone photo, `page-heroes/support-hero.webp` |
 | Notifications | Supplied network cabinet photo, `page-heroes/notifications-hero.webp` |
 | About | Supplied Central Communications van photo, `page-heroes/about-hero.webp` |
 | Updates index | Supplied router/switch/CCTV cabinet photo, `page-heroes/updates-hero.webp` |
 
-The three new outputs live in `public/assets/images/page-heroes/`. Their sources
-are `notifications.jpg`, `about.png` and `updates.jpg` in
-`public/assets/images/tmp/`; those originals are unchanged. Sharp auto-orients
-the images, resizes them to 2048 pixels wide without enlargement and encodes
-WebP at quality 84, effort 6. This is a format/size conversion, not an AI edit.
-The public WebP derivatives omit EXIF metadata, including source GPS tags.
+The four outputs live in `public/assets/images/page-heroes/`. Their source
+uploads were `support.jpg`, `notifications.jpg`, `about.png` and `updates.jpg`
+in `public/assets/images/tmp/`. Pages use only the permanent WebP files, so
+cleaning up temporary uploads does not affect the heroes. Sharp auto-orients the
+images, resizes them to 2048 pixels wide without enlargement and encodes WebP
+at quality 84, effort 6. This is a format/size conversion, not an AI edit. The
+public WebP derivatives omit EXIF metadata, including source GPS tags.
 
 | Output | Dimensions | Bytes | Object position |
 | --- | --- | --- | --- |
+| `support-hero.webp` | 2048 x 946 | 207,308 | `center top` |
 | `notifications-hero.webp` | 2048 x 946 | 177,772 | `center 45%` |
 | `about-hero.webp` | 2048 x 1152 | 207,656 | `center 20%` |
 | `updates-hero.webp` | 2048 x 922 | 247,014 | `center 45%` |
@@ -145,5 +148,17 @@ Verified the three replacement photos on 11 November 2026:
   Local PHP responses and third-party chat were mocked for those checks.
 - The three optimised images were copied byte-for-byte into `dist/` by the
   build, with no EXIF metadata in the derivatives. Original uploads are intact.
+
+Verified the Support replacement on 12 November 2026:
+
+- Production build: 43 pages; shared-hero regression check: all 31 target pages;
+  Nu HTML Checker: no errors in `support.html`.
+- Chromium checked Support at all six viewports above; Firefox and WebKit checked
+  desktop and mobile. The WebP decoded, filled the hero and kept the heading and
+  following content visible without overflow. Screenshots were reviewed, and
+  hero-scoped Axe checks passed at desktop/mobile sizes.
+- The 207,308-byte WebP is identical in `public/` and `dist/`, with no EXIF
+  metadata. The supplied `tmp/support.jpg` is unchanged; other heroes, Support
+  content and the form were not edited.
 
 Deployment, commit and push remain separate steps after review.
